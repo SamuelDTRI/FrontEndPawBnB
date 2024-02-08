@@ -1,3 +1,4 @@
+//pages
 import {
   Landing,
   Home,
@@ -7,9 +8,14 @@ import {
   DashboardOwner,
   DashboardSitter,
 } from "./Views/indexViews";
-import "./App.css";
+//redux
 import { useSelector, useDispatch } from "react-redux";
 import { sumCount, resCount } from "./redux/countSlice";
+//hook
+import { Routes, Route } from 'react-router-dom';
+//style
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,13 +31,17 @@ function App() {
 
   return (
     <>
-      <h1>Hola xd</h1>
+      {/* <h1>Hola xd</h1>
       <h2>Contador de ejemplo con Redux Toolkit</h2>
       <div>
         <h3>{count.count}</h3>
         <button onClick={()=>resClick()}>Anterior</button>
         <button onClick={()=>sumClick()}>Siguiente</button>
-      </div>
+      </div> */}
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/home' element={<Home />} />
+      </Routes>
     </>
   );
 }

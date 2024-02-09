@@ -9,19 +9,23 @@ import {
 } from "./Views/indexViews";
 import Footer from "./Components/Footer/Footer"
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css"
-import NavBar from "./Components/NavBar/NavBar";
-import LandingPage from "./Components/LandingPage/LandingPage";
 
 function App() {
+  const dispatch = useDispatch();
+  const count = useSelector((state) => state.count);
+
+  const sumClick= () => {
+    dispatch(sumCount());
+  }
+
+  const resClick= () => {
+    dispatch(resCount());
+  }
 
   return (
-    <div>
-       
-      {/* <LandingPage/> */}
-       
-      
-    </div>
+    <>
+      <h1>Hola xd</h1>
+    </>
   );
 }
 

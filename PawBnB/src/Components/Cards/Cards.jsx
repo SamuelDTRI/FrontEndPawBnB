@@ -1,25 +1,26 @@
 import React from "react";
 import Card from "../Card/Card";
 import { useSelector } from "react-redux";
+import { ContainerCards } from "./cards.styled";
 
 const Cards = () => {
-  const dogsisters = useSelector((state) => state.dogsisters);
+  const dogsisters = useSelector((state) => state.dogsister.dogsisters);
   
   return (
-    <div>
+    <ContainerCards>
       <h2>Cuidadores en CABA</h2>
-      <div>
+      <div className="cards">
         {dogsisters.map((allDogsister) => (
           <Card
           key={allDogsister?.id}
           image={allDogsister?.image?.url}
           name={allDogsister?.name}
           city={allDogsister?.city}
-          //aca deberi ir las review
+          rating={'⭐⭐⭐'}
         />
         ))}
       </div>
-    </div>
+    </ContainerCards>
   );
 };
 

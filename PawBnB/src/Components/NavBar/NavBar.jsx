@@ -6,7 +6,7 @@ import style from "./NavBar.module.css"
 const NavBar = () => {  
 return (
   <div className="container-fluid">
-    <nav className="navbar fixed-top border-bottom">
+    <nav className="navbar fixed-top border-bottom bg-white">
         
         <div className={style.imagen}><img src={logo} alt="PawBnb" /></div>
         <div className="m-auto"> <SearchBar /></div>

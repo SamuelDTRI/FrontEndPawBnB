@@ -10,16 +10,16 @@ import {
 import Footer from "./Components/Footer/Footer"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"
-import SearchBar from "./Components/SearchBar/SearchBar";
 import NavBar from "./Components/NavBar/NavBar";
+import LandingPage from "./Components/LandingPage/LandingPage";
 
 function App() {
 
   return (
     <div>
        
-      <NavBar/>
-      <Footer/> 
+      {/* <LandingPage/> */}
+       
       
     </div>
   );

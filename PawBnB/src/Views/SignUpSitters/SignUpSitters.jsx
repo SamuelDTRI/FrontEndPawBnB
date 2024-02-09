@@ -1,3 +1,4 @@
+import Formulario from "../../Helpers/Formulario";
 import React from "react";
 
 const SignUpSitters = () => {

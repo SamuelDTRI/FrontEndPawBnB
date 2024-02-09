@@ -13,7 +13,7 @@ const Cards = () => {
         {dogsisters.map((allDogsister) => (
           <Card
           key={allDogsister?.id}
-          image={allDogsister?.image?.url}
+          image={allDogsister?.photos.url}
           name={allDogsister?.name}
           city={allDogsister?.city}
           rating={'⭐⭐⭐'}

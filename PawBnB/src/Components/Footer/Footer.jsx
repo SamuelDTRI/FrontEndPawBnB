@@ -2,7 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return(
-   <div className='card-group'>
+    
+   <div className='card-group w-100 mt-5'>
+  
     <div div className=" card text-center mb-3 bg-warning">
       <div className="card-body">
         <h3 className="card-title mb-3">Cuidadores locales</h3>

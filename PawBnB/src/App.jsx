@@ -10,14 +10,18 @@ import {
 import Footer from "./Components/Footer/Footer"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"
+import SearchBar from "./Components/SearchBar/SearchBar";
+import NavBar from "./Components/NavBar/NavBar";
 
 function App() {
 
   return (
-    <>
-      <h1>Hola xd</h1>
-       {/* <Footer/> */}
-    </>
+    <div>
+       
+      <NavBar/>
+      <Footer/> 
+      
+    </div>
   );
 }
 

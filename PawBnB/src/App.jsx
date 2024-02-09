@@ -7,9 +7,8 @@ import {
   DashboardOwner,
   DashboardSitter,
 } from "./Views/indexViews";
+import Footer from "./Components/Footer/Footer"
 import "./App.css";
-import { useSelector, useDispatch } from "react-redux";
-import { sumCount, resCount } from "./redux/countSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,12 +25,6 @@ function App() {
   return (
     <>
       <h1>Hola xd</h1>
-      <h2>Contador de ejemplo con Redux Toolkit</h2>
-      <div>
-        <h3>{count.count}</h3>
-        <button onClick={()=>resClick()}>Anterior</button>
-        <button onClick={()=>sumClick()}>Siguiente</button>
-      </div>
     </>
   );
 }

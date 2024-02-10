@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { addDogsister } from "../../redux/dogsisterSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { ContainerHome } from "./home.style";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,9 +23,9 @@ const Home = () => {
   },[])
 
   return(
-    <>
+    <ContainerHome>
       <Cards/>
-    </>
+    </ContainerHome>
   );
 };
 

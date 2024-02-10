@@ -4,7 +4,7 @@ import Formulario from "../../Helpers/Formulario";
 const SignUpOwners = () => {
   
       return (
-        <Formulario text= 'Registrate' />
+        <Formulario text= 'REGISTRATE' />
       )
     
 

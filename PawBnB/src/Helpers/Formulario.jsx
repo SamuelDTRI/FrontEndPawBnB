@@ -77,7 +77,7 @@ const Formulario = (text) => {
             <h2>{text.text}</h2>
            
             <div>
-              <label htmlFor="nombre">Nombre</label>
+               <label htmlFor="nombre">Nombre</label>
               <Field
                 type="text"
                 id="nombre"

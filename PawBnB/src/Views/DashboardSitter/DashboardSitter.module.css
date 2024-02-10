@@ -1,0 +1,28 @@
+.sideBarContainer {
+    border: 1px solid #ffa726;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+
+.profilePicContainer {
+    padding: 10px;
+align-items: center;
+justify-content: center;
+}
+
+.profilePicContainer img {
+width: 100%;
+height: auto;
+}
+
+.sideBarLinks {
+    text-align: left;
+}
+
+.sideBarLinks li {
+    list-style: none;
+}
+
+.sideBarLinks i {
+    color: #ffa726;
+}

@@ -26,14 +26,15 @@ function App() {
 
   return (
     <>
-      <h1>Hola xd</h1>
+      {/* <h1>Hola xd</h1>
       <h2>Contador de ejemplo con Redux Toolkit</h2>
       <div>
         <h3>{count.count}</h3>
         <button onClick={() => resClick()}>Anterior</button>
         <button onClick={() => sumClick()}>Siguiente</button>
-      </div>
+      </div> */}
       {/* <SitterProfile /> */}
+      {/* <DashboardSitter /> */}
     </>
   );
 }

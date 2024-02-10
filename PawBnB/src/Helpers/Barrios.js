@@ -1,0 +1,1 @@
+export const Barrios = ["Agronomía", "Almagro", "Balvanera", "Barracas", "Belgrano", "Boedo", "Caballito","Chacarita","Coghlan", "Colegiales", "CConstitucion", "Flores", "Floresta", "La Boca", "La Paternal", "Liniers", "Mataderos" ];

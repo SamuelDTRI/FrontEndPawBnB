@@ -1,7 +1,10 @@
+import Formulario from "../../Helpers/Formulario";
 import React from "react";
 
 const SignUpSitters = () => {
-  return <div>SignUpSitters</div>;
+  return (
+    <Formulario text= 'Registrate como Cuidador' />
+  )
 };
 
 export default SignUpSitters;

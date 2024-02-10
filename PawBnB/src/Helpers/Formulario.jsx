@@ -47,8 +47,15 @@ const Formulario = (text) => {
           }else if (!/^\d{10}$/.test(valores.telefono)){
             errores.telefono = "Ingresa solo numeros y no más de 10 caracteres.";
           }
+          // Validación Contraseña (Expresion regular)
+          if(!valores.contraseña){
+            errores.contraseña="Por favor ingresa una contraseña.";            
+          }else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+          .test(valores.contraseña)){
+            errores.contraseña = "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
+          }
 
-          //Validacion Codigo Postal (YA NO, USAR BARRIO, SELECCIONAR, 
+          //Validacion Barrio 
           
           if(!valores.barrio){
             errores.barrio="Por favor ingresa un Barrio.";            
@@ -122,6 +129,19 @@ const Formulario = (text) => {
               )} />
             </div>
             <div>
+              <label htmlFor="contraseña">Contraseña</label>
+              <Field
+                type="password"
+                id="contraseña"
+                name="contraseña"
+                placeholder="Tu Contraseña..."
+                
+              />
+              <ErrorMessage name="contraseña" component={() => (
+                <div className={styles.error}>{errors.contraseña}</div>
+              )} />
+            </div>
+            <div>
               <label htmlFor="barrio">Barrio</label>
               <Field name="barrio" as="select">
                 <option selected disabled value="" >Selecciona tu barrio</option>
@@ -134,7 +154,7 @@ const Formulario = (text) => {
             </div>
             <button type="submit">REGISTRARSE</button>
             {formularioEnviado && <p className={styles.exito}>Formulario enviado con exito!</p>}
-            
+
           </Form>
         )}
       </Formik>

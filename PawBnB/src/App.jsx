@@ -44,6 +44,8 @@ function App() {
 
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
+        <Route path="/dashboardSitter" element={<DashboardSitter />} />
+        <Route path="/sitterProfile" element={<SitterProfile />} />
       </Routes>
     </div>
   );

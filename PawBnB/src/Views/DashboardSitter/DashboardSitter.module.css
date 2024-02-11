@@ -26,3 +26,14 @@ height: auto;
 .sideBarLinks i {
     color: #ffa726;
 }
+
+.formContainer {
+    border: 1px solid #ffa726;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+
+.formContainer h2 {
+    margin-top: 20px;
+    font-weight: 700;
+}

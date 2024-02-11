@@ -13,7 +13,7 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { sumCount, resCount } from "./redux/countSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useLocation, Route, Routes } from 'react-router-dom'
+import { useLocation, Route, Routes } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ function App() {
   const resClick = () => {
     dispatch(resCount());
   };
-  const location = useLocation()
+  const location = useLocation();
 
-  const showNav = location.pathname !== '/'
+  const showNav = location.pathname !== "/";
 
   return (
     <div className="App">

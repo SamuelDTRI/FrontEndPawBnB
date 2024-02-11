@@ -18,6 +18,13 @@ body {
 	justify-content: center;
 }
 
+.formulario h2 {
+	color: #101011;
+	font-weight: 600;
+	font-size: 2rem
+
+}
+
 .formulario {
 	min-width: 600px;
 	margin-top: 50px;
@@ -29,12 +36,13 @@ body {
 
 .formulario > div {
 	margin-bottom: 20px;
+	
 }
 
 .formulario label {
 	display: block;
 	font-weight: 600;
-	font-size: 14px;
+	font-size: 16px;
 	margin-bottom: 5px;
 	color: #1f1f1f;
 }
@@ -44,17 +52,17 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	width: 100%;
 	border-radius: 5px;
-	border: 2px solid #e2e2e2;
+	border: 1px solid #d4d1d1;
 	font-size: 18px;
 	padding: 10px;
 	margin-bottom: 5px;
 	color: #1f1f1f;
 }
 
-.formulario input:focus {
+/*.formulario input:focus {
 	outline: none;
 	border: 2px solid #0085FF;
-}
+}*/
 
 .formulario .error {
 	color: #e92b2d;
@@ -64,7 +72,7 @@ body {
 
 .formulario button[type="submit"] {
 	display: block;
-	background: #0085FF;
+	background: #e0ae08;
 	font-weight: 600;
 	font-family: 'Open Sans', sans-serif;
 	border: none;
@@ -78,7 +86,7 @@ body {
 }
 
 .formulario button[type="submit"]:hover {
-	background: #0051ff;
+	background: #daa105;
 }
 
 .formulario .exito {

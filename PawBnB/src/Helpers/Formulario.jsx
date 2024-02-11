@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./Formulario.module.css";
 import { Barrios } from "./Barrios";
@@ -51,8 +51,19 @@ const Formulario = (text) => {
             errores.telefono =
               "Ingresa solo numeros y no más de 10 caracteres.";
           }
+          // Validación Contraseña (Expresion regular)
+          if (!valores.contraseña) {
+            errores.contraseña = "Por favor ingresa una contraseña.";
+          } else if (
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+              valores.contraseña
+            )
+          ) {
+            errores.contraseña =
+              "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
+          }
 
-          //Validacion Codigo Postal (YA NO, USAR BARRIO, SELECCIONAR,
+          //Validacion Barrio
 
           if (!valores.barrio) {
             errores.barrio = "Por favor ingresa un Barrio.";
@@ -60,7 +71,7 @@ const Formulario = (text) => {
 
           return errores;
         }}
-        onSubmit={({ resetForm }) => {
+        onSubmit={(valores, { resetForm }) => {
           resetForm();
           console.log("Se enviaron los datos");
           cambiarFormularioEnviado(true);
@@ -129,6 +140,21 @@ const Formulario = (text) => {
                 name="telefono"
                 component={() => (
                   <div className={styles.error}>{errors.telefono}</div>
+                )}
+              />
+            </div>
+            <div>
+              <label htmlFor="contraseña">Contraseña</label>
+              <Field
+                type="password"
+                id="contraseña"
+                name="contraseña"
+                placeholder="Tu Contraseña..."
+              />
+              <ErrorMessage
+                name="contraseña"
+                component={() => (
+                  <div className={styles.error}>{errors.contraseña}</div>
                 )}
               />
             </div>

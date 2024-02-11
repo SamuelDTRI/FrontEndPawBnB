@@ -42,7 +42,6 @@ function App() {
       </div> */}
       <Routes>
         <Route path="/" element={<Landing />} />
-
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter" element={<DashboardSitter />} />

@@ -13,7 +13,8 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { sumCount, resCount } from "./redux/countSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useLocation, Route, Routes } from "react-router-dom";
+import { useLocation, Route, Routes } from 'react-router-dom'
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
         <Route path="/sitterProfile" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

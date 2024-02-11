@@ -28,7 +28,10 @@ const SitterProfile = () => {
       </section>
       <section className="container mt-5">
         <div className={styles.mapContainer}>
-          <h1>Mapa</h1>
+          <img
+            src="https://res.cloudinary.com/dtyqmfqi2/image/upload/v1707536135/PawBnb/scrnli_31_1_2024_23-12-22_ykcnsf.png"
+            alt=""
+          />
         </div>
       </section>
       <section className="col-12">

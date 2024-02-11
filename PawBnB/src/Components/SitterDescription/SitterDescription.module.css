@@ -1,0 +1,10 @@
+.description {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 15px;
+      box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+  }
+
+  .description p {
+    font-weight: 400;
+  }

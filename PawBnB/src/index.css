@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Montserrat, sans-serif, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #2E2D2D;
   background-color: #242424;
 
   font-synthesis: none;
@@ -14,12 +16,12 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: 600;
+  color: #2E2D2D;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #ffa726;
 }
 
 body {
@@ -28,6 +30,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  scrollbar-color: #ffa726;
+
 }
 
 h1 {
@@ -42,12 +46,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ffa726;
+  color: #ffffff;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #ffffff;
+  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 }
 button:focus,
 button:focus-visible {
@@ -56,13 +62,13 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #2E2D2D;
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #ffa726;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #ffa726;
   }
 }

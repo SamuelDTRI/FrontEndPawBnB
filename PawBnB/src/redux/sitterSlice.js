@@ -21,4 +21,4 @@ const sitterSlice = createSlice({
   },
 });
 
-export default sitterSlice.reducer;
+export default sitterSlice.reducer;          

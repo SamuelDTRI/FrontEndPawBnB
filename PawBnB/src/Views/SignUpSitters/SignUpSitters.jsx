@@ -3,7 +3,8 @@ import React from "react";
 
 const SignUpSitters = () => {
   return (
-    <Formulario text= 'REGISTRATE COMO CUIDADOR' />
+    <Formulario text= 'REGISTRATE COMO CUIDADOR' role= "DogSitter"/>
+    
   )
 };
 

@@ -15,7 +15,6 @@ import { sumCount, resCount } from "./redux/countSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation, Route, Routes } from 'react-router-dom'
 import Footer from "./Components/Footer/Footer";
-import { useLocation, Route, Routes } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +50,7 @@ function App() {
         <Route path="/sitterProfile" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

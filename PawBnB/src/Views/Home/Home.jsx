@@ -1,6 +1,6 @@
 import React from "react";
 import Cards from "../../Components/Cards/Cards";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addDogsister, setLocationFilter } from "../../redux/dogsisterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { ContainerHome } from "./home.style";
 const Home = () => {
   const dispatch = useDispatch();
 
+  const dogsisters = useSelector((state) => state.dogsister.copyDogsisters);
   const priceFilter = useSelector((state) => state.dogsister.priceFilter);
 
   useEffect(() => {
@@ -20,8 +21,8 @@ const Home = () => {
         console.error('Error fetching dogsisters:', error);
       }
     }
-
     dogsisterAsync();
+
   }, [])
 
   const handleLocationFilter = () => {
@@ -31,6 +32,17 @@ const Home = () => {
   const handlePriceFilter = () => {
 
   };
+
+  // Obtener ciudades únicas
+  const [uniqueCities, setUniqueCities] = useState([]);
+
+  useEffect(() => {
+    if (dogsisters.length > 0) {
+      const cities = [...new Set(dogsisters.map(dogSister => dogSister.city))];
+      setUniqueCities(cities);
+    }
+  }, [dogsisters]);
+
 
   return (
     <ContainerHome>
@@ -42,8 +54,9 @@ const Home = () => {
                 <select className='selectBox' onChange={handleLocationFilter}>
                     <option>-Seleccione equipo-</option>
                     <option value="all">Todos</option>
-                    <option value="Lanus">Lanus</option>
-                    <option value="Ramos">Ramos Mejia</option>
+                    {uniqueCities.map((city, index) => (
+                      <option key={index} value={city}>{city}</option>
+                    ))}
                 </select>
         </div>
 

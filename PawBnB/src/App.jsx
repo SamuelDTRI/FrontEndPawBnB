@@ -6,6 +6,7 @@ import {
   SitterProfile,
   DashboardOwner,
   DashboardSitter,
+  Login,
 } from "./Views/indexViews";
 import NavBar from "./Components/NavBar/NavBar";
 import "./App.css";
@@ -30,7 +31,7 @@ function App() {
   const showNav = location.pathname !== '/'
 
   return (
-    <div className='App'>
+    <div className="App">
       {showNav && <NavBar />}
       {/* <h1>Hola xd</h1>
       <h2>Contador de ejemplo con Redux Toolkit</h2>
@@ -40,11 +41,13 @@ function App() {
         <button onClick={()=>sumClick()}>Siguiente</button>
       </div> */}
       <Routes>
-        <Route path='/' element={<Landing />} />
-        
-        <Route path='/SignUp' element={<SignUpOwners />} />
-        <Route path='/SignUpSitters' element={<SignUpSitters />} />
-        
+        <Route path="/" element={<Landing />} />
+
+        <Route path="/SignUp" element={<SignUpOwners />} />
+        <Route path="/SignUpSitters" element={<SignUpSitters />} />
+        <Route path="/dashboardSitter" element={<DashboardSitter />} />
+        <Route path="/sitterProfile" element={<SitterProfile />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </div>
   );

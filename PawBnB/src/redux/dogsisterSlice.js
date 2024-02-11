@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     dogsisters: [],
+    copyDogsisters: [],
     locationFilter: '',
     dateFilter: null,
     priceFilter: null,
@@ -13,11 +14,24 @@ export const dogsisterSlice = createSlice({
     initialState,
     reducers: {
         addDogsister: (state, action) => {
+            state.copyDogsisters = action.payload;
             state.dogsisters = action.payload;
         },
 
         setLocationFilter: (state, action) => {
-            state.locationFilter = action.payload;
+        
+            const copyDogsister = state.copyDogsisters;
+        
+            const filteredDogSisters = copyDogsister.filter((dogSister) => {
+                
+                if (dogSister.city) {
+                    
+                    return action.payload === 'all' || dogSister.city === action.payload;
+                }
+                return false; 
+            });
+            state.dogsisters = filteredDogSisters;
+            
         },
         setDateFilter: (state, action) => {
             state.dateFilter = action.payload;

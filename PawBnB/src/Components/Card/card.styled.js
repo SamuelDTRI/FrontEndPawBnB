@@ -5,21 +5,19 @@ export const ContainerCard = styled.div`
     flex-direction: column;
     width: 250px;
     height: 450px;
-    border-radius: 10px;
-    box-shadow: 3px 5px 14px 3px rgba(0,0,0,0.5);
-    -webkit-box-shadow: 3px 5px 14px 3px rgba(0,0,0,0.5);
-    -moz-box-shadow: 3px 5px 14px 3px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 
     .imgContainer{
         width: 100%;
         height: 55%;
         position: relative;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
 
         img{
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
             height: 100%;
             width: 100%;
             background-position: center top;
@@ -35,8 +33,8 @@ export const ContainerCard = styled.div`
         flex-direction: column;
         row-gap: 7px;
         padding: 0 10px 20px 10px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
 
 
         .infoName{
@@ -76,9 +74,7 @@ export const ContainerCard = styled.div`
                 width: 100%;
                 background-color: #ffffff;
                 color: #FAAF19;
-                -webkit-box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.75);
-                -moz-box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.75);
-                box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.75);
+                box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
             }
         }
     }

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
 
 const initialState = {
     dogsisters: [],
@@ -12,40 +11,31 @@ const initialState = {
 export const dogsisterSlice = createSlice({
     name: 'dogsister',
     initialState,
-    reducers:{
-        addDogsister:async(state) => {
-            try {
-                const { data } = await axios.get('http://localhost:3001/'); //falta definir ruta
-
-                state.dogsisters = data;
-
-            } catch (error) {
-                throw Error(error.message);
-            }
-            
+    reducers: {
+        addDogsister: (state, action) => {
+            state.dogsisters = action.payload;
         },
 
         setLocationFilter: (state, action) => {
             state.locationFilter = action.payload;
-          },
-          setDateFilter: (state, action) => {
+        },
+        setDateFilter: (state, action) => {
             state.dateFilter = action.payload;
-          },
-          setPriceFilter: (state, action) => {
+        },
+        setPriceFilter: (state, action) => {
             state.priceFilter = action.payload;
-          },
-          setReviewFilter: (state, action) => {
+        },
+        setReviewFilter: (state, action) => {
             state.reviewFilter = action.payload;
-          },
-      
+        },
     }
 });
 
 export const { 
     addDogsister,
-    setLocationFilter, 
-    setDateFilter, 
-    setPriceFilter, 
+    setLocationFilter,
+    setDateFilter,
+    setPriceFilter,
     setReviewFilter
- } = dogsisterSlice.actions;
+    } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

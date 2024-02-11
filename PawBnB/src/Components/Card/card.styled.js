@@ -30,6 +30,8 @@ export const ContainerCard = styled.div`
 
     .infoContainer{
         display: flex;
+        height: 45%;
+        justify-content: space-between;
         flex-direction: column;
         row-gap: 7px;
         padding: 0 10px 20px 10px;
@@ -43,8 +45,7 @@ export const ContainerCard = styled.div`
             align-items: flex-start;
 
             p{
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 1.5em;
+                font-size: 1.2em;
                 margin: 0;
                 font-weight: bold;
             }

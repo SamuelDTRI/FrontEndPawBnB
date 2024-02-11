@@ -1,33 +1,53 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setLocationFilter, setDateFilter, setPriceFilter, setReviewFilter } from './dogsisterSlice';
+import React from "react";
+import Cards from "../../Components/Cards/Cards";
+import { useEffect } from "react";
+import { addDogsister } from "../../redux/dogsisterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { ContainerHome } from "./home.style";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const locationFilter = useSelector((state) => state.dogsister.locationFilter);
   const dateFilter = useSelector((state) => state.dogsister.dateFilter);
   const priceFilter = useSelector((state) => state.dogsister.priceFilter);
   const reviewFilter = useSelector((state) => state.dogsister.reviewFilter);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const dogsisterAsync = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:3000/sitters');
+        dispatch(addDogsister(data));
+      } catch (error) {
+        console.error('Error fetching dogsisters:', error);
+      }
+    }
+
+    dogsisterAsync();
+  }, [])
 
   const handleLocationFilter = () => {
-    // Usar el valor de locationFilter y dispatch(setLocationFilter(nuevoValor))
+
   };
 
   const handleDateFilter = () => {
-    // Usar el valor de dateFilter y dispatch(setDateFilter(nuevoValor))
+
   };
 
   const handlePriceFilter = () => {
-    // Usar el valor de priceFilter y dispatch(setPriceFilter(nuevoValor))
+
   };
 
   const handleReviewFilter = () => {
-    // Usar el valor de reviewFilter y dispatch(setReviewFilter(nuevoValor))
-  };
+
+  }
+
+
 
   return (
-    <div>
+    <ContainerHome>
+      <Cards />
       <div className="filters">
 
         <div className="filter-section">
@@ -51,7 +71,8 @@ const Home = () => {
         </div>
 
       </div>
-    </div>
+
+    </ContainerHome>
   );
 };
 

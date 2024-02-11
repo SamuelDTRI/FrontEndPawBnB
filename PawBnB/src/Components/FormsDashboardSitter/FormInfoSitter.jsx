@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./FormInfoSitter.module.css";
 import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentSitter } from "../../redux/sitterSlice";
+import { fetchCurrentSitter, updateSitter } from "../../redux/sitterSlice";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
@@ -90,6 +90,7 @@ const FormInfoSitter = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
+          dispatch(updateSitter(values));
           resetForm();
           setFormSent(true);
           setTimeout(() => setFormSent(false), 5000);

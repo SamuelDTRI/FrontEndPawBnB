@@ -41,11 +41,10 @@ function App() {
       </div> */}
       <Routes>
         <Route path="/" element={<Landing />} />
-
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter" element={<DashboardSitter />} />
-        <Route path="/sitterProfile" element={<SitterProfile />} />
+        <Route path="/sitters" element={<SitterProfile />} />
       </Routes>
     </div>
   );

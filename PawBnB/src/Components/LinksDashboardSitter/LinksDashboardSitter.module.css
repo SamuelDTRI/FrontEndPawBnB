@@ -1,0 +1,11 @@
+.sideBarLinks {
+    text-align: left;
+}
+
+.sideBarLinks li {
+    list-style: none;
+}
+
+.sideBarLinks i {
+    color: #ffa726;
+}

@@ -6,6 +6,7 @@ import {
   SitterProfile,
   DashboardOwner,
   DashboardSitter,
+  Login,
 } from "./Views/indexViews";
 import NavBar from "./Components/NavBar/NavBar";
 import "./App.css";
@@ -46,6 +47,7 @@ function App() {
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter" element={<DashboardSitter />} />
         <Route path="/sitterProfile" element={<SitterProfile />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </div>
   );

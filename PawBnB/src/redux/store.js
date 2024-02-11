@@ -1,8 +1,11 @@
-import {configureStore} from '@reduxjs/toolkit';
-import dogsisterReducer from './dogsisterSlice';
+import { configureStore } from '@reduxjs/toolkit';
+
+import countReducer from './countSlice';
+import authSlice from './authSlice';
 
 export const store = configureStore({
     reducer:{
-        dogsister:dogsisterReducer,
+        count:countReducer,
+        auth: authSlice,
     }
 })

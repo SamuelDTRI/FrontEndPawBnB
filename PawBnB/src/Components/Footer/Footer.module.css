@@ -1,0 +1,11 @@
+
+.principal{
+    background-color: red;
+    width: 100%;
+    display: flex;
+}
+
+.seccion{
+    border: 2px solid blue;
+    width: 33.33%;
+}

@@ -9,10 +9,7 @@ import { ContainerHome } from "./home.style";
 const Home = () => {
   const dispatch = useDispatch();
 
-  const locationFilter = useSelector((state) => state.dogsister.locationFilter);
-  const dateFilter = useSelector((state) => state.dogsister.dateFilter);
   const priceFilter = useSelector((state) => state.dogsister.priceFilter);
-  const reviewFilter = useSelector((state) => state.dogsister.reviewFilter);
 
   useEffect(() => {
     const dogsisterAsync = async () => {
@@ -31,27 +28,16 @@ const Home = () => {
     dispatch(setLocationFilter(event.target.value));
   };
 
-  const handleDateFilter = () => {
-
-  };
-
   const handlePriceFilter = () => {
 
   };
-
-  const handleReviewFilter = () => {
-
-  }
-
-
 
   return (
     <ContainerHome>
       <div className="filters">
 
         <div className="filter-section">
-          <h3>Ordenar por Ubicación</h3>{/* 
-          <button onClick={handleLocationFilter}>Ubicación</button> */}
+          <h3>Ordenar por Ubicación</h3>
           <p>Filtro por equipo:</p>
                 <select className='selectBox' onChange={handleLocationFilter}>
                     <option>-Seleccione equipo-</option>
@@ -62,18 +48,8 @@ const Home = () => {
         </div>
 
         <div className="filter-section">
-          <h3>Ordenar por Fechas</h3>
-          <button onClick={handleDateFilter}>Fecha</button>
-        </div>
-
-        <div className="filter-section">
           <h3>Ordenar por Precios</h3>
           <button onClick={handlePriceFilter}>Precios</button>
-        </div>
-
-        <div className="filter-section">
-          <h3>Ordenar por Review</h3>
-          <button onClick={handleReviewFilter}>Review</button>
         </div>
 
       </div>

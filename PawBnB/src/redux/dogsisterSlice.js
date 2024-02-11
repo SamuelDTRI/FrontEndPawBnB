@@ -3,10 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     dogsisters: [],
     copyDogsisters: [],
-    locationFilter: '',
-    dateFilter: null,
     priceFilter: null,
-    reviewFilter: null,
 }
 
 export const dogsisterSlice = createSlice({
@@ -33,14 +30,8 @@ export const dogsisterSlice = createSlice({
             state.dogsisters = filteredDogSisters;
             
         },
-        setDateFilter: (state, action) => {
-            state.dateFilter = action.payload;
-        },
         setPriceFilter: (state, action) => {
             state.priceFilter = action.payload;
-        },
-        setReviewFilter: (state, action) => {
-            state.reviewFilter = action.payload;
         },
     }
 });
@@ -48,8 +39,6 @@ export const dogsisterSlice = createSlice({
 export const { 
     addDogsister,
     setLocationFilter,
-    setDateFilter,
-    setPriceFilter,
-    setReviewFilter
+    setPriceFilter
     } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

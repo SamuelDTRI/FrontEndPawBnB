@@ -34,16 +34,22 @@ export const dogsisterSlice = createSlice({
       const copyDogsister = state.copyDogsisters;
 
       const filteredDogSisters = copyDogsister.filter((dogSister) => {
-        // Agregamos lógica de filtrado por precio
+        const dogSisterPrice = parseFloat(dogSister.price);
+        const filterPrice = parseFloat(state.priceFilter);
+
         return (
           (state.locationFilter === 'all' || dogSister.city === state.locationFilter) &&
-          (state.priceFilter === null || dogSister.price <= state.priceFilter)
+          (state.priceFilter === null || (dogSisterPrice !== NaN && dogSisterPrice <= filterPrice))
         );
       });
 
-      state.priceFilter = action.payload;
-      state.dogsisters = filteredDogSisters;
+      return {
+        ...state,
+        priceFilter: action.payload,
+        dogsisters: filteredDogSisters,
+      };
     },
+
   },
 });
 

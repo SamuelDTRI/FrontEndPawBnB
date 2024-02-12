@@ -29,9 +29,20 @@ const Home = () => {
     dispatch(setLocationFilter(event.target.value));
   };
 
-  const handlePriceFilter = () => {
+  const handlePriceFilter = (event) => {
+    const selectedOption = event.target.value;
 
+    // Define los rangos de precios
+    const priceRanges = {
+      "0-10000": { min: 0, max: 10000 },
+      "10001-20000": { min: 10001, max: 20000 },
+      "20001-50000": { min: 20001, max: 50000 },
+    };
+
+    // Actualiza el estado de priceFilter según la opción seleccionada
+    setPriceFilter(priceRanges[selectedOption]);
   };
+
 
   // Obtener ciudades únicas
   const [uniqueCities, setUniqueCities] = useState([]);
@@ -62,12 +73,16 @@ const Home = () => {
 
         <div className="filter-section">
           <h3>Ordenar por Precios</h3>
-          <button onClick={handlePriceFilter}>Precios</button>
+          <select className='selectBox' onChange={handlePriceFilter}>
+            <option value="0-10000">0-10.000 ARS</option>
+            <option value="10001-20000">10.001-20.000 ARS</option>
+            <option value="20001-50000">20.001-50.000 ARS</option>
+          </select>
         </div>
 
       </div>
 
-      <Cards />
+      <Cards priceFilter={priceFilter}/>
     </ContainerHome>
   );
 };

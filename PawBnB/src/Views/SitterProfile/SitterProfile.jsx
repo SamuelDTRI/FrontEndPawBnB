@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CardReview from "../../Components/CardReview/CardReview";
 import Gallery from "../../Components/Gallery/Gallery";
 import SitterDescription from "../../Components/SitterDescription/SitterDescription";
@@ -7,27 +7,13 @@ import SitterRates from "../../Components/SitterRates/SitterRates";
 
 import styles from "./SitterProfile.module.css";
 import { useEffect } from "react";
-import { fetchSitterById } from "../../redux/sitterSlice";
-import { useParams } from "react-router-dom";
 
 const SitterProfile = () => {
   const dispatch = useDispatch();
-  //const sitterDetail = useSelector((state) => state.sitter.sitterDetail);
-  //const loading = useSelector((state) => state.sitter.loading);
-  //const error = useSelector((state) => state.sitter.error);
-  const { sitterId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchSitterById(sitterId));
-  }, [dispatch, sitterId]);
-
-  /* if (loading) {
-    return <p>Cargando...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  } */
+    dispatch();
+  }, []);
 
   return (
     <div className="container col-10 my-5">

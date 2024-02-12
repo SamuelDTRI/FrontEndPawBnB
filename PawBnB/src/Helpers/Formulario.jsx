@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./Formulario.module.css";
 import { Barrios } from "./Barrios";
 import { signUpOwner } from "../redux/signUpSlice";
+import { useNavigate } from "react-router-dom";
 
 const Formulario = (text, role) => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const distpatch = useDispatch()
+  const navigate = useNavigate()
     // Traer los datos del store de Redux
   console.log(text.role);
   return (
@@ -18,7 +20,6 @@ const Formulario = (text, role) => {
           surName: "",
           email: "",
           phone: "",
-          city: "",
           password: "",
         }}
         validate={(valores) => {
@@ -51,7 +52,7 @@ const Formulario = (text, role) => {
           //Validacion phone
           if (!valores.phone) {
             errores.phone = "Por favor ingresa un phone.";
-          } else if (!/^\d{1}$/.test(valores.phone)) {
+          } else if (!/^\d{10}$/.test(valores.phone)) {
             errores.phone =
               "Ingresa solo numeros y no más de 10 caracteres.";
           }
@@ -67,17 +68,12 @@ const Formulario = (text, role) => {
               "La password debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
           }
 
-          //Validacion Barrio
-
-          if (!valores.city) {
-            errores.city = "Por favor ingresa un Barrio.";
-          }
 
           return errores;
         }}
         onSubmit={(valores, { resetForm }) => {
           
-            distpatch (signUpOwner(valores,text.role));
+          distpatch (signUpOwner(valores,text.role, navigate));
 
           resetForm();
           console.log("Se enviaron los datos");
@@ -171,33 +167,13 @@ const Formulario = (text, role) => {
                   )}
                   />
             </div>
-            <div className="col-lg-6 col-md-12">
-              <label htmlFor="city">Barrio</label>
-              <Field name="city" as="select">
-                <option disabled value="">
-                  Selecciona tu Barrio
-                </option>
-                {Barrios?.map((barrio) => {
-                  return (
-                    <option key={barrio} value={barrio}>
-                      {barrio}
-                    </option>
-                  );
-                })}
-              </Field>
-              <ErrorMessage
-                name="city"
-                component={() => (
-                  <div className={styles.error}>{errors.city}</div>
-                )}
-                />
-            </div>
             </div>
 
             <button type="submit">REGISTRARSE</button>
-            {formularioEnviado && (
+            {formularioEnviado &&(
               <p className={styles.exito}>Formulario enviado con exito!</p>
               )}
+            
           </div>
           </Form>
         )}

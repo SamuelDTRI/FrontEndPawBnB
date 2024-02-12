@@ -3,97 +3,113 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./FormInfoSitter.module.css";
 import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentSitter, updateSitter } from "../../redux/sitterSlice";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import {sitterInfo} from "../../redux/sitterSlice";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
-
+  const { id } = useParams();
+  const infoSitter = useSelector((state) => state.sitter);
   const dispatch = useDispatch();
-  //const currentSitter = useSelector((state) => state.sitter.currentSitter);
+  
+
+const currentSitter = async () => { 
+      try {
+       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      dispatch(sitterInfo(data));
+      console.log("he despachado")
+      console.log(infoSitter)
+      } catch (error) {
+        console.log("Error al hacer el dispatch")
+      }   
+  };
+
+// const updateSitterInfo=async()=>{
+//   try {
+//     const {data} = await axios.put(`http://localhost:3000/sitters/${id}`);
+//     console.log(data)
+//      dispatch(sitterInfo(data.));
+
+//   } catch (error) {
+//     console.log("error")
+//   }
+// }
+
 
   useEffect(() => {
-    dispatch(fetchCurrentSitter());
-  }, [dispatch]);
+    currentSitter()
+    
+  }, []);
+
 
   return (
     <>
       <Formik
         initialValues={{
-          name: /*  currentSitter?.name ||  */ "",
-          surname: /*  currentSitter?.surname || */ "",
-          phone: /* currentSitter?.phone || */ "",
-          email: /* currentSitter?.email || */ "",
-          address: /* currentSitter?.address || */ "",
-          neighborhood: /* currentSitter?.neighborhood  ||*/ "",
-          city: /* currentSitter?.city || */ "",
-          description: /* currentSitter?.description || */ "",
-          rate: /*currentSitter?.rates || */ "",
+          name: infoSitter?.name || "",
+          surName: infoSitter?.surname || "",
+          phone: infoSitter?.phone || "",
+          email: infoSitter?.email || "",
+          address: infoSitter?.address || "",
+          neighborhood: infoSitter?.neighborhood || "",
+          city: infoSitter?.city || "",
+          description: infoSitter?.description || "",
+          rate: infoSitter?.rates || "",
         }}
         validate={(values) => {
           let errors = {};
-          //Validacion Nombre
-          if (!values.name) {
-            errors.name = "Por favor ingresa un nombre.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-            errors.name = "Ingresa solo letras y no más de 20 caracteres.";
-          }
-          //Validacion Apellido
-          if (!values.surname) {
-            errors.surname = "Por favor ingresa un apellido.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
-            errors.surname = "Ingresa solo letras y no más de 20 caracteres.";
-          }
+          // if (!values.name) {
+          //   errors.name = "Por favor ingresa un nombre.";
+          // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+          //   errors.name = "Ingresa solo letras y no más de 20 caracteres.";
+          // }
+          // if (!values.surname) {
+          //   errors.surname = "Por favor ingresa un apellido.";
+          // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
+          //   errors.surname = "Ingresa solo letras y no más de 20 caracteres.";
+          // }
+          // if (!values.dateOfBirth) {
+          //   errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
+          // }
+          // if (!values.rate) {
+          //   errors.rate = "Por favor ingresa tu tarifa por día.";
+          // } else if (!/^\d+(\.\d{1,2})?$/.test(values.rate)) {
+          //   errors.rate = "Ingresa una tarifa válida.";
+          // }
+          // if (!values.email) {
+          //   errors.email = "Por favor ingresa un mail.";
+          // } else if (
+          //   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+          //     values.email
+          //   )
+          // ) {
+          //   errors.email =
+          //     "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
+          // }
+          // if (!values.phone) {
+          //   errors.phone = "Por favor ingresa un telefono.";
+          // } else if (!/^\d{10}$/.test(values.phone)) {
+          //   errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
+          // }
 
-          if (!values.dateOfBirth) {
-            errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
-          }
-
-          if (!values.rate) {
-            errors.rate = "Por favor ingresa tu tarifa por día.";
-          } else if (!/^\d+(\.\d{1,2})?$/.test(values.rate)) {
-            errors.rate = "Ingresa una tarifa válida.";
-          }
-
-          //Validacion Mail
-          if (!values.email) {
-            errors.email = "Por favor ingresa un mail.";
-          } else if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-              values.email
-            )
-          ) {
-            errors.email =
-              "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
-          }
-
-          //Validacion Telefono
-          if (!values.phone) {
-            errors.phone = "Por favor ingresa un telefono.";
-          } else if (!/^\d{10}$/.test(values.phone)) {
-            errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-          }
-
-          //Validacion Codigo Postal (YA NO, USAR BARRIO, SELECCIONAR,
-
-          if (!values.neighborhood) {
-            errors.neighborhood = "Por favor ingresa un Barrio.";
-          }
-          //validacion ciudad
-          if (!values.city) {
-            errors.city = "Por favor ingresa una ciudad.";
-          }
-          //Validacion descripcion
-          if (!values.description) {
-            errors.description = "Por favor ingresa una descripcion.";
-          }
+          // if (!values.neighborhood) {
+          //   errors.neighborhood = "Por favor ingresa un Barrio.";
+          // }
+          // if (!values.city) {
+          //   errors.city = "Por favor ingresa una ciudad.";
+          // }
+          // if (!values.description) {
+          //   errors.description = "Por favor ingresa una descripcion.";
+          // }
 
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          dispatch(updateSitter(values));
           resetForm();
           setFormSent(true);
           setTimeout(() => setFormSent(false), 5000);
+          updateSitterInfo()
         }}
       >
         {({ errors }) => (
@@ -106,7 +122,8 @@ const FormInfoSitter = () => {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Tu primer nombre..."
+                  placeholder={infoSitter.name}
+                
                 />
                 <ErrorMessage
                   name="name"
@@ -116,15 +133,15 @@ const FormInfoSitter = () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="surname">Apellido</label>
+                <label htmlFor="surName">Apellido</label>
                 <Field
                   type="text"
-                  id="surname"
-                  name="surname"
-                  placeholder="Tu apellido..."
+                  id="surName"
+                  name="surName"
+                  placeholder={infoSitter.surName}
                 />
                 <ErrorMessage
-                  name="surname"
+                  name="surName"
                   component={() => (
                     <div className={styles.error}>{errors.surname}</div>
                   )}
@@ -139,7 +156,7 @@ const FormInfoSitter = () => {
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="ejemplo@email.com"
+                  placeholder={infoSitter.email}
                 />
                 <ErrorMessage
                   name="email"
@@ -154,7 +171,7 @@ const FormInfoSitter = () => {
                   type="number"
                   id="phone"
                   name="phone"
-                  placeholder="Tu telefono..."
+                  placeholder={infoSitter.phone}
                 />
                 <ErrorMessage
                   name="phone"
@@ -171,7 +188,7 @@ const FormInfoSitter = () => {
                   type="date"
                   id="dateOfBirth"
                   name="dateOfBirth"
-                  placeholder="24/04/1996"
+                  value={infoSitter.dateOfBirth}
                 />
                 <ErrorMessage
                   name="dateOfBirth"
@@ -181,15 +198,15 @@ const FormInfoSitter = () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="rate">Tarifa por dia</label>
+                <label htmlFor="rates">Tarifa por dia</label>
                 <Field
                   type="text"
-                  id="rate"
-                  name="rate"
-                  placeholder="Tu tarifa por dia..."
+                  id="rates"
+                  name="rates"
+                  placeholder={infoSitter.rates}
                 />
                 <ErrorMessage
-                  name="rate"
+                  name="rates"
                   component={() => (
                     <div className={styles.error}>{errors.rate}</div>
                   )}
@@ -240,7 +257,7 @@ const FormInfoSitter = () => {
                 type="text"
                 id="Direccion"
                 name="Direccion"
-                placeholder="Ingresa tu dirección..."
+                placeholder={infoSitter.address}
               />
               <ErrorMessage
                 name="Direccion"
@@ -255,8 +272,8 @@ const FormInfoSitter = () => {
                 type="text"
                 id="description"
                 name="description"
-                placeholder="Cuentales a tus futuros clientes sobre ti..."
-              />
+                placeholder={infoSitter.description}
+                />
               <ErrorMessage
                 name="description"
                 component={() => (

@@ -3,58 +3,61 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./FormInfoSitter.module.css";
 import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentSitter, updateSitter } from "../../redux/sitterSlice";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
+  const { id } = useParams();
 
   const dispatch = useDispatch();
-  //const currentSitter = useSelector((state) => state.sitter.currentSitter);
+  const currentSitter = () => {
+    return async () => {
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      dispatch(sitterInfo(data));
+    };
+  };
 
   useEffect(() => {
-    dispatch(fetchCurrentSitter());
-  }, [dispatch]);
+    currentSitter();
+  }, []);
+
+  const sitterInfo = useSelector((state) => state.sitterInfo);
 
   return (
     <>
       <Formik
         initialValues={{
-          name: /*  currentSitter?.name ||  */ "",
-          surname: /*  currentSitter?.surname || */ "",
-          phone: /* currentSitter?.phone || */ "",
-          email: /* currentSitter?.email || */ "",
-          address: /* currentSitter?.address || */ "",
-          neighborhood: /* currentSitter?.neighborhood  ||*/ "",
-          city: /* currentSitter?.city || */ "",
-          description: /* currentSitter?.description || */ "",
-          rate: /*currentSitter?.rates || */ "",
+          name: sitterInfo?.name || "",
+          surName: sitterInfo?.surname || "",
+          phone: sitterInfo?.phone || "",
+          email: sitterInfo?.email || "",
+          address: sitterInfo?.address || "",
+          neighborhood: sitterInfo?.neighborhood || "",
+          city: sitterInfo?.city || "",
+          description: sitterInfo?.description || "",
+          rate: sitterInfo?.rates || "",
         }}
         validate={(values) => {
           let errors = {};
-          //Validacion Nombre
           if (!values.name) {
             errors.name = "Por favor ingresa un nombre.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
-          //Validacion Apellido
           if (!values.surname) {
             errors.surname = "Por favor ingresa un apellido.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
             errors.surname = "Ingresa solo letras y no más de 20 caracteres.";
           }
-
           if (!values.dateOfBirth) {
             errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
           }
-
           if (!values.rate) {
             errors.rate = "Por favor ingresa tu tarifa por día.";
           } else if (!/^\d+(\.\d{1,2})?$/.test(values.rate)) {
             errors.rate = "Ingresa una tarifa válida.";
           }
-
-          //Validacion Mail
           if (!values.email) {
             errors.email = "Por favor ingresa un mail.";
           } else if (
@@ -65,24 +68,18 @@ const FormInfoSitter = () => {
             errors.email =
               "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
           }
-
-          //Validacion Telefono
           if (!values.phone) {
             errors.phone = "Por favor ingresa un telefono.";
           } else if (!/^\d{10}$/.test(values.phone)) {
             errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
           }
 
-          //Validacion Codigo Postal (YA NO, USAR BARRIO, SELECCIONAR,
-
           if (!values.neighborhood) {
             errors.neighborhood = "Por favor ingresa un Barrio.";
           }
-          //validacion ciudad
           if (!values.city) {
             errors.city = "Por favor ingresa una ciudad.";
           }
-          //Validacion descripcion
           if (!values.description) {
             errors.description = "Por favor ingresa una descripcion.";
           }
@@ -90,7 +87,6 @@ const FormInfoSitter = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          dispatch(updateSitter(values));
           resetForm();
           setFormSent(true);
           setTimeout(() => setFormSent(false), 5000);
@@ -116,15 +112,15 @@ const FormInfoSitter = () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="surname">Apellido</label>
+                <label htmlFor="surName">Apellido</label>
                 <Field
                   type="text"
-                  id="surname"
-                  name="surname"
+                  id="surName"
+                  name="surName"
                   placeholder="Tu apellido..."
                 />
                 <ErrorMessage
-                  name="surname"
+                  name="surName"
                   component={() => (
                     <div className={styles.error}>{errors.surname}</div>
                   )}

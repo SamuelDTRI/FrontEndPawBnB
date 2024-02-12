@@ -23,13 +23,16 @@ export const signUpOwner = async (data, role) => {
 
     try {
         if (role==="Owner"){
+            console.log("llegue")
             const endpoint= "http://localhost:3000/owners"
             const response = await axios.post(endpoint,data);
             return response.data;
         }else if (role === "DogSitter"){
+            console.log("Llegue a DogSitters")
             const endpoint= "http://localhost:3000/sitters"
             const response = await axios.post(endpoint,data);
             return response.data;
+            
 
         }
 

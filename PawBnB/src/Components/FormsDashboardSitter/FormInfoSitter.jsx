@@ -5,21 +5,28 @@ import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { sitterSlice } from "../../redux/sitterSlice";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
+  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const dispatch = useDispatch();
-  const currentSitter = () => {
+  const currentSitterInfo = () => {
     return async () => {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
-      dispatch(sitterInfo(data));
+      dispatch(sitterSlice.sitterInfo(data));
     };
   };
 
+  const updatedSitterInfo = async () => {
+    const { data } = await axios.put(`http://localhost:3000/sitters/${id}`);
+    dispatch(sitterSlice.sitterInfo(data.updatedSitter));
+  };
+
   useEffect(() => {
-    currentSitter();
+    currentSitterInfo();
+    /* dispatch(currentSitterInfo()); */
   }, []);
 
   const sitterInfo = useSelector((state) => state.sitterInfo);
@@ -87,6 +94,7 @@ const FormInfoSitter = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
+          updatedSitterInfo();
           resetForm();
           setFormSent(true);
           setTimeout(() => setFormSent(false), 5000);
@@ -145,20 +153,35 @@ const FormInfoSitter = () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="telefono">Telefono</label>
+                <label htmlFor="password">Contraseña</label>
                 <Field
-                  type="number"
-                  id="phone"
-                  name="phone"
-                  placeholder="Tu telefono..."
+                  type="text"
+                  id="password"
+                  name="password"
+                  placeholder="Tu contraseña..."
                 />
                 <ErrorMessage
-                  name="phone"
+                  name="password"
                   component={() => (
-                    <div className={styles.error}>{errors.phone}</div>
+                    <div className={styles.error}>{errors.password}</div>
                   )}
                 />
               </div>
+            </div>
+            <div className="col-12">
+              <label htmlFor="telefono">Telefono</label>
+              <Field
+                type="number"
+                id="phone"
+                name="phone"
+                placeholder="Tu telefono..."
+              />
+              <ErrorMessage
+                name="phone"
+                component={() => (
+                  <div className={styles.error}>{errors.phone}</div>
+                )}
+              />
             </div>
             <div className="row">
               <div className="col-lg-6 col-md-12">

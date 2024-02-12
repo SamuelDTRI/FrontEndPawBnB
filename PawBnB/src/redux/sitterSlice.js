@@ -21,16 +21,17 @@ export const sitterSlice = createSlice({
         surName,
         phone,
         address,
+        dateOfBirth,
         neighborhood,
         city,
         description,
         rate,
       } = action.payload;
-
       state.name = name;
       state.surName = surName;
       state.phone = phone;
       state.address = address;
+      state.dateOfBirth = dateOfBirth;
       state.neighborhood = neighborhood;
       state.city = city;
       state.description = description;

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Formulario = (text, role) => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const distpatch = useDispatch()
+  const navigate = useNavigate()
     // Traer los datos del store de Redux
   console.log(text.role);
   return (
@@ -72,7 +73,7 @@ const Formulario = (text, role) => {
         }}
         onSubmit={(valores, { resetForm }) => {
           
-          distpatch (signUpOwner(valores,text.role));
+          distpatch (signUpOwner(valores,text.role, navigate));
 
           resetForm();
           console.log("Se enviaron los datos");

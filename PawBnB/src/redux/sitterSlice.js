@@ -8,7 +8,7 @@ const initialState = {
   neighborhood: "",
   city: "",
   description: "",
-  rate: "",
+  rates: "",
 };
 
 export const sitterSlice = createSlice({
@@ -16,6 +16,7 @@ export const sitterSlice = createSlice({
   initialState,
   reducers: {
     sitterInfo: (state, action) => {
+      console.log(action.payload.sitter);
       const {
         name,
         surName,
@@ -23,19 +24,21 @@ export const sitterSlice = createSlice({
         address,
         dateOfBirth,
         neighborhood,
-        city,
+        // city (no me devuelve)
         description,
-        rate,
-      } = action.payload;
+        rates,
+        email,
+      } = action.payload.sitter;
       state.name = name;
       state.surName = surName;
       state.phone = phone;
       state.address = address;
       state.dateOfBirth = dateOfBirth;
       state.neighborhood = neighborhood;
-      state.city = city;
+      // state.city = city;
       state.description = description;
-      state.rate = rate;
+      state.rates = rates;
+      state.email = email;
     },
   },
 });

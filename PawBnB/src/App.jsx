@@ -24,13 +24,14 @@ function App() {
     <div className="App">
       {showNav && <NavBar />}
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing/>} />
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
         <Route path="/sitterProfile" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Home" element={<Home />} />
+        <Route path="/Home" element={<Home />} />  
+        
       </Routes>
       <Footer />
     </div>

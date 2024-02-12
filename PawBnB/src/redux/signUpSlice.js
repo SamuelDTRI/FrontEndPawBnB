@@ -19,16 +19,15 @@ const signUpSlice =  createSlice({
 
 export const signUpOwner = async (data, role) => {
     console.log(role)
-    data.role = role;
     
 
     try {
         if (role==="Owner"){
-            const endpoint= "http://localhost:3001/owners"
+            const endpoint= "http://localhost:3000/owners"
             const response = await axios.post(endpoint,data);
             return response.data;
         }else if (role === "DogSitter"){
-            const endpoint= "http://localhost:3001/sitters"
+            const endpoint= "http://localhost:3000/sitters"
             const response = await axios.post(endpoint,data);
             return response.data;
 
@@ -38,8 +37,4 @@ export const signUpOwner = async (data, role) => {
     } catch (error) {
         console.log(error)
     }
-        
-        
-    
-
 }

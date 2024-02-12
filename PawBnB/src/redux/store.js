@@ -7,6 +7,6 @@ export const store = configureStore({
     reducer:{
         auth: authSlice,
         dogsister:dogsisterReducer,
-        sitterSlice: sitterSlice
+        sitter: sitterSlice
     }
 })

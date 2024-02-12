@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const signUpSlice =  createSlice({
     name: 'signup',
     initialState:{
-        loading: false,
-        error: null,
         success:false,
-        userInfo :null
+        
         
     },
     /*reducers: {
@@ -17,7 +16,7 @@ const signUpSlice =  createSlice({
 });
 
 
-export const signUpOwner = async (data, role) => {
+export const signUpOwner = async (data, role, navigate) => {
     console.log(role)
     
 
@@ -26,12 +25,20 @@ export const signUpOwner = async (data, role) => {
             console.log("llegue")
             const endpoint= "http://localhost:3000/owners"
             const response = await axios.post(endpoint,data);
-            return response.data;
+            console.log(response.data)
+            if(response.data.id){
+                navigate("/Login")
+            }
+            
+            
         }else if (role === "DogSitter"){
             console.log("Llegue a DogSitters")
             const endpoint= "http://localhost:3000/sitters"
             const response = await axios.post(endpoint,data);
-            return response.data;
+            if(response.data.id){
+                navigate("/Login")
+            }
+           
             
 
         }

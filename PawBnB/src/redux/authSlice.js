@@ -36,7 +36,7 @@ const authSlice = createSlice({
 export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export const loginUser = (formData) => async (dispatch) => {
-    
+    console.log(formData)
     try {
         const response = await axios.post(`http://localhost:3000/login`, formData); 
         dispatch(loginSuccess(response.data)); 
@@ -54,4 +54,7 @@ export const logOutUser = () => async (dispatch) => {
     dispatch(logout())
 };
 
+export const googleLoginSuccess = (loginData)=> async (dispatch) => {
+    dispatch(loginSuccess(loginData));
+};
 export default authSlice.reducer;

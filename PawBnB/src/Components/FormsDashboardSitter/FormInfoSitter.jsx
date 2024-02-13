@@ -7,6 +7,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 
+
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
   const dispatch = useDispatch();

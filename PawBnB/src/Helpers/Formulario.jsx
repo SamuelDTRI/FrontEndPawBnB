@@ -56,6 +56,7 @@ const Formulario = (text, role) => {
           } else {
             // cambiamos el estado global para completar el logueo
             dispatch(loginUser({ userId: checkId, userRole: checkRole }));
+            navigate("/Home");
           }
         } catch (error) {
           console.error(

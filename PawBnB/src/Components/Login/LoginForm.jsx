@@ -56,7 +56,7 @@ const LoginForm = () => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             navigate({
-              pathname: "/SignUpSitters",
+              pathname: "/SignUp",
               search: createSearchParams({
                 email: `${email}`
               }).toString()
@@ -73,8 +73,7 @@ const LoginForm = () => {
           );
         }
       };
-
-      fetchUserData();
+      fetchUserData()
     }
   }, [googleUser, navigate]);
   return (
@@ -99,7 +98,6 @@ const LoginForm = () => {
         onSubmit={(valores, { resetForm }) => {
           handleSubmit(valores);
           resetForm();
-          console.log("Se enviaron los datos");
           cambiarFormularioEnviado(true);
           setTimeout(() => cambiarFormularioEnviado(false), 5000);
         }}>
@@ -144,7 +142,9 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
+      <br/>
       <GoogleButton
+        className="googleButton"
         label="Inicia sesión con Google"
         onClick={handleGoogleSignIn}
       />

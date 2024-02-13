@@ -72,7 +72,6 @@ const LoginForm = () => {
   }, [error, dispatch]);
 
   useEffect(() => {
-    console.log(userRole)
     // Redireccionamos al usuario después de un inicio de sesión exitoso
     if (userRole === "Owner") {
       navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id

@@ -9,7 +9,7 @@ import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
-import { loginUser } from "../redux/authSlice.js";
+import { googleLoginSuccess } from "../redux/authSlice.js";
 
 
 const Formulario = (text, role) => {
@@ -20,6 +20,8 @@ const Formulario = (text, role) => {
   const currentPath = location.pathname;
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
+  const userRole = useSelector((state) => state.auth.userRole);
+  const userId = useSelector((state) => state.auth.userId);
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -55,8 +57,7 @@ const Formulario = (text, role) => {
               
           } else {
             // cambiamos el estado global para completar el logueo
-            dispatch(loginUser({ userId: checkId, userRole: checkRole }));
-            navigate("/Home");
+            googleLoginSuccess({ userId: checkId, userRole: checkRole });
           }
         } catch (error) {
           console.error(
@@ -68,6 +69,14 @@ const Formulario = (text, role) => {
       fetchUserData()
     }
   }, [googleUser, navigate,dispatch, currentPath]);
+  useEffect(() => {
+    // Redireccionamos al usuario después de un inicio de sesión exitoso
+    if (userRole === "Owner") {
+      navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
+    } else if (userRole === "DogSitter") {
+      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+    }
+  }, [userRole, userId, navigate]);
   return (
     <>
       <Formik

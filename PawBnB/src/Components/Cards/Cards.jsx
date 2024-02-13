@@ -54,6 +54,7 @@ const Cards = ({ priceFilter }) => {
         {items.map((allDogsister) => (
           <Card
             key={allDogsister?.id}
+            id={allDogsister?.id}
             image={allDogsister?.photos[0]?.url}
             name={allDogsister?.name}
             city={allDogsister?.city}

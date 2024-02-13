@@ -10,6 +10,7 @@ const initialState = {
   city: "",
   description: "",
   rates: "",
+  photoProfile: ""
 };
 
 export const sitterSlice = createSlice({
@@ -29,6 +30,7 @@ export const sitterSlice = createSlice({
         description,
         rates,
         email,
+        photoProfile,
       } = action.payload;
 
       state.name = name;
@@ -41,6 +43,7 @@ export const sitterSlice = createSlice({
       state.description = description;
       state.rates = rates;
       state.email = email;
+      state.photoProfile = photoProfile
     },
     updateSitter: async (state, action) => {
       try {

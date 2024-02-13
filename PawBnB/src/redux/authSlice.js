@@ -27,8 +27,8 @@ const authSlice = createSlice({
         },
         logout(state) {
         state.isLoggedIn = false;
-        state.user = null;
-        state.role = null;
+        state.userId = null;
+        state.userRole = null;
         },
     },
 });
@@ -36,8 +36,9 @@ const authSlice = createSlice({
 export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export const loginUser = (formData) => async (dispatch) => {
+    
     try {
-    const response = await axios.post(`http://localhost:3001/login`, formData); 
+        const response = await axios.post(`http://localhost:3000/login`, formData); 
         dispatch(loginSuccess(response.data)); 
     } catch (error) {
         if (error.response) {
@@ -47,6 +48,10 @@ export const loginUser = (formData) => async (dispatch) => {
             dispatch(loginFailure(error.message)); 
         }
     }
+};
+
+export const logOutUser = () => async (dispatch) => {
+    dispatch(logout())
 };
 
 export default authSlice.reducer;

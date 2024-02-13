@@ -6,7 +6,7 @@ import Pagination from "../Pagination/pagination";
 
 const RESULT_PAGE = 12;
 
-const Cards = ({ priceFilter }) => {
+const Cards = () => {
   const dogsisters = useSelector((state) => state.dogsister.dogsisters);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -14,22 +14,13 @@ const Cards = ({ priceFilter }) => {
   const [pages, setPages] = useState(0);
 
   useEffect(() => {
-    // Filtra las dogsisters según el precio si priceFilter está definido
-    const filteredDogSisters = priceFilter
-      ? dogsisters.filter(
-          (dogSister) =>
-            dogSister.price >= priceFilter.min &&
-            dogSister.price <= priceFilter.max
-        )
-      : dogsisters;
-
-    // Actualiza los elementos cuando cambia la lista completa de dogsisters o el filtro de precios
+    // Actualiza los elementos cuando cambia la lista completa de dogsisters
     const startIndex = currentPage * RESULT_PAGE;
     const endIndex = startIndex + RESULT_PAGE;
-    setItems(filteredDogSisters.slice(startIndex, endIndex));
-    const pagesTotal = Math.floor(filteredDogSisters.length / RESULT_PAGE);
+    setItems(dogsisters.slice(startIndex, endIndex));
+    const pagesTotal = Math.floor(dogsisters.length / RESULT_PAGE);
     setPages(pagesTotal);
-  }, [dogsisters, currentPage, priceFilter]);
+  }, [dogsisters, currentPage]);
 
   const nextHandler = () => {
     const totalElementos = items.length;

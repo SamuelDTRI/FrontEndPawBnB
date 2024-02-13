@@ -139,15 +139,17 @@ const LoginForm = () => {
               <p className={styles.exito}>Formulario enviado con éxito!</p>
             )}
             {error && <p>{error}</p>}
+             <div>
+               <GoogleButton
+                  className="googleButton"
+                  label="Inicia sesión con Google"
+                  onClick={handleGoogleSignIn}
+                />
+            </div>
           </Form>
         )}
       </Formik>
       <br/>
-      <GoogleButton
-        className="googleButton"
-        label="Inicia sesión con Google"
-        onClick={handleGoogleSignIn}
-      />
     </div>
   );
 };

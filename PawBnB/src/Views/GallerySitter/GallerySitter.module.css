@@ -1,0 +1,73 @@
+.sideBarContainer {
+    border: 1px solid #ffa726;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+
+.profilePicContainer {
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.profilePicContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.sideBarLinks {
+    text-align: left;
+}
+
+.sideBarLinks li {
+    list-style: none;
+}
+
+.sideBarLinks i {
+    color: #ffa726;
+}
+
+.formContainer {
+    border: 1px solid #ffa726;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+
+.formContainer h2 {
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+
+.rosa{
+    margin-bottom: 50px;
+}
+
+.subirDocumentos{
+    border: 1px solid rgba(128, 128, 128, 0.295);
+    border-radius: 15px;
+    box-shadow: 5px 4px 5px rgba(128, 128, 128, 0.295);
+    margin-bottom: 25px;
+}
+
+.amarillo{
+    background-color: rgb(255, 249, 81);
+}
+
+.btn{
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+.uploadedImg{
+    color: #ffa726;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    font-size: 100px;
+}
+
+.arrastraText{
+    margin-bottom: 36px;
+}

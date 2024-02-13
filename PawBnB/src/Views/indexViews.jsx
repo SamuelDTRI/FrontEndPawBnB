@@ -6,6 +6,7 @@ import SitterProfile from "./SitterProfile/SitterProfile";
 import DashboardOwner from "./DashboardOwner/DashboardOwner";
 import DashboardSitter from "./DashboardSitter/DashboardSitter";
 import Login from "./Login/Login.jsx"
+import GallerySitters from "./GallerySitter/GallerySitter.jsx";
 
 export {
   Landing,
@@ -16,4 +17,5 @@ export {
   DashboardOwner,
   DashboardSitter,
   Login,
+  GallerySitters
 };

@@ -8,6 +8,7 @@ import {
   DashboardOwner,
   DashboardSitter,
   Login,
+  GallerySitters,
 } from "./Views/indexViews";
 import NavBar from "./Components/NavBar/NavBar";
 import "./App.css";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter" element={<DashboardSitter />} />
+        <Route path="/dashboardSitter/gallery" element={<GallerySitters />} />
         <Route path="/sitterProfile" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />

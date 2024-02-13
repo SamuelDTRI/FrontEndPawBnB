@@ -15,18 +15,6 @@ width: 100%;
 height: auto;
 }
 
-.sideBarLinks {
-    text-align: left;
-}
-
-.sideBarLinks li {
-    list-style: none;
-}
-
-.sideBarLinks i {
-    color: #ffa726;
-}
-
 .formContainer {
     border: 1px solid #ffa726;
     border-radius: 15px;

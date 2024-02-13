@@ -5,43 +5,74 @@ import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {sitterInfo} from "../../redux/sitterSlice";
+import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
-  const dispatch = useDispatch();
-  
-
-const currentSitter = async () => { 
-      try {
-       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+  console.log(id);
+  const currentSitter = async () => {
+    console.log("hola");
+    try {
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      console.log(data);
       dispatch(sitterInfo(data));
-      console.log("he despachado")
-      console.log(infoSitter)
-      } catch (error) {
-        console.log("Error al hacer el dispatch")
-      }   
+      console.log("he despachado");
+      console.log(infoSitter);
+    } catch (error) {
+      console.log("Error al hacer el dispatch");
+    }
   };
 
-// const updateSitterInfo=async()=>{
-//   try {
-//     const {data} = await axios.put(`http://localhost:3000/sitters/${id}`);
-//     console.log(data)
-//      dispatch(sitterInfo(data.));
+  const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
+    try {
+      const {
+        name,
+        surName,
+        phone,
+        description,
+        dateOfBirth,
+        email,
+        password,
+        address,
+        neighborhood,
+        city,
+        rates,
+      } = values;
+      console.log("Valores: ", values);
+      // Llamo a la acción updateSitter del slice para enviar los datos actualizados.
+      await dispatch(
+        updateSitter({
+          id: id,
+          updatedSitter: {
+            name,
+            surName,
+            phone,
+            description,
+            dateOfBirth,
+            email,
+            password,
+            address,
+            neighborhood,
+            city,
+            rates,
+          },
+        })
+      );
 
-//   } catch (error) {
-//     console.log("error")
-//   }
-// }
-
+      resetForm();
+      setFormSent(true);
+      setTimeout(() => setFormSent(false), 5000);
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+    }
+  };
 
   useEffect(() => {
-    currentSitter()
-    
-  }, []);
-
+    currentSitter();
+  }, [dispatch]);
 
   return (
     <>
@@ -59,11 +90,11 @@ const currentSitter = async () => {
         }}
         validate={(values) => {
           let errors = {};
-          // if (!values.name) {
-          //   errors.name = "Por favor ingresa un nombre.";
-          // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-          //   errors.name = "Ingresa solo letras y no más de 20 caracteres.";
-          // }
+          /* if (!values.name) {
+             errors.name = "Por favor ingresa un nombre.";
+           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
+           } */
           // if (!values.surname) {
           //   errors.surname = "Por favor ingresa un apellido.";
           // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
@@ -106,14 +137,10 @@ const currentSitter = async () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          resetForm();
-          setFormSent(true);
-          setTimeout(() => setFormSent(false), 5000);
-          updateSitterInfo()
+          handleFormSubmit(values, dispatch, resetForm, setFormSent);
         }}
       >
         {({ errors }) => (
-          //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={`container ${styles.form}`}>
             <div className="row">
               <div className="col-lg-6 col-md-12">
@@ -123,7 +150,6 @@ const currentSitter = async () => {
                   id="name"
                   name="name"
                   placeholder={infoSitter.name}
-                
                 />
                 <ErrorMessage
                   name="name"
@@ -166,20 +192,35 @@ const currentSitter = async () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="telefono">Telefono</label>
+                <label htmlFor="password">Contraseña</label>
                 <Field
-                  type="number"
-                  id="phone"
-                  name="phone"
-                  placeholder={infoSitter.phone}
+                  type="text"
+                  id="password"
+                  name="password"
+                  placeholder="Tu contraseña..."
                 />
                 <ErrorMessage
-                  name="phone"
+                  name="password"
                   component={() => (
-                    <div className={styles.error}>{errors.phone}</div>
+                    <div className={styles.error}>{errors.password}</div>
                   )}
                 />
               </div>
+            </div>
+            <div className="col-12">
+              <label htmlFor="telefono">Telefono</label>
+              <Field
+                type="number"
+                id="phone"
+                name="phone"
+                placeholder="Tu telefono..."
+              />
+              <ErrorMessage
+                name="phone"
+                component={() => (
+                  <div className={styles.error}>{errors.phone}</div>
+                )}
+              />
             </div>
             <div className="row">
               <div className="col-lg-6 col-md-12">
@@ -273,7 +314,7 @@ const currentSitter = async () => {
                 id="description"
                 name="description"
                 placeholder={infoSitter.description}
-                />
+              />
               <ErrorMessage
                 name="description"
                 component={() => (

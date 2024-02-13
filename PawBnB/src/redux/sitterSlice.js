@@ -1,56 +1,65 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchCurrentSitter = createAsyncThunk(
-  "sitter/fetchCurrentSitter",
-  async () => {
-    const response = await axios.get("/api/sitters/current");
-    return response.data;
-  }
-);
+const initialState = {
+  name: "",
+  surName: "",
+  phone: "",
+  address: "",
+  neighborhood: "",
+  city: "",
+  description: "",
+  rates: "",
+  photoProfile: ""
+};
 
-export const updateSitter = createAsyncThunk("sitter/update", async (data) => {
-  const response = await axios.put("http://localhost:3000/sitters", data);
-  return response.data;
-});
-
-export const fetchSitterById = createAsyncThunk(
-  "sitter/fetchSitterById",
-  async (sitterId) => {
-    const response = await axios.get(`/api/sitters/${sitterId}`);
-    return response.data;
-  }
-);
-
-const sitterSlice = createSlice({
+export const sitterSlice = createSlice({
   name: "sitter",
-  initialState: {
-    currentSitter: null,
-    sitterDetail: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSitterById.fulfilled, (state, action) => {
-        state.sitterDetail = action.payload;
-      })
-      .addCase(fetchCurrentSitter.fulfilled, (state, action) => {
-        state.currentSitter = action.payload;
-      });
-    builder
-      .addCase(fetchSitterById.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchSitterById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.sitterDetail = action.payload;
-      })
-      .addCase(fetchSitterById.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
+  initialState,
+  reducers: {
+    sitterInfo: (state, action) => {
+      console.log(action.payload);
+      const {
+        name,
+        surName,
+        phone,
+        address,
+        dateOfBirth,
+        neighborhood,
+        // city (no me devuelve)
+        description,
+        rates,
+        email,
+        photoProfile,
+      } = action.payload;
+
+      state.name = name;
+      state.surName = surName;
+      state.phone = phone;
+      state.address = address;
+      state.dateOfBirth = dateOfBirth;
+      state.neighborhood = neighborhood;
+      // state.city = city;
+      state.description = description;
+      state.rates = rates;
+      state.email = email;
+      state.photoProfile = photoProfile
+    },
+    updateSitter: async (state, action) => {
+      try {
+        const { data } = await axios.put(
+          `http://localhost:3000/sitters/${action.payload.id}`,
+          action.payload.updatedSitter
+        );
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error("Error al actualizar el cuidador:", error);
+        throw error;
+      }
+    },
   },
 });
 
+export const { sitterInfo, updateSitter } = sitterSlice.actions;
 export default sitterSlice.reducer;

@@ -1,5 +1,5 @@
 import SearchBar from "../SearchBar/SearchBar";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../imagenes/logo/logo-pawbnb-horizontal.png";
 import style from "./NavBar.module.css";

@@ -149,8 +149,8 @@ const Formulario = (text, role) => {
           <Form className={styles.formulario}>
             <h2>{text.text}</h2>
             <div className={styles.container}>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+                <div className={`col-12 ${styles.inputContainer}`}>`
                   <label htmlFor="name">Nombre*</label>
                   <Field
                     type="text"
@@ -165,7 +165,7 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-                <div className="col-lg-6 col-md-12">
+                <div className="col-12">
                   <label htmlFor="surName">Apellido*</label>
                   <Field
                     type="text"
@@ -180,9 +180,9 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-              </div>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+              
+                <div className="col-12">
                   <label htmlFor="email">Email*</label>
                   <Field
                     id="email"
@@ -196,8 +196,8 @@ const Formulario = (text, role) => {
                       <div className={styles.error}>{errors.email}</div>
                     )}
                   />
-                </div>
-                <div className="col-lg-6 col-md-12">
+                
+                <div className="col-12">
                   <label htmlFor="phone">Telefono*</label>
                   <Field
                     type="number"
@@ -213,8 +213,8 @@ const Formulario = (text, role) => {
                   />
                 </div>
               </div>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+                <div className="col-12">
                   <label htmlFor="password">Contraseña*</label>
                   <Field
                     type="password"
@@ -229,21 +229,32 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-              </div>
 
-              <button type="submit">REGISTRARSE</button>
-              {formularioEnviado && (
-                <p className={styles.exito}>Formulario enviado con exito!</p>
-              )}
+
+                 <button type="submit">REGISTRARSE</button>
+                  {formularioEnviado && (
+                    <p className={styles.exito}>Formulario enviado con exito!</p>
+                  )}
+
+              <div className={styles.googleButton}>
+                <GoogleButton
+                 className="googleButton"
+                 label="Regístrate con Google"
+                 onClick={handleGoogleSignIn}
+                />
+              </div>
             </div>
           </Form>
         )}
       </Formik>
+<<<<<<< HEAD
+=======
       {!googleUser && (<GoogleButton
         className="googleButton"
         label="Regístrate con Google"
         onClick={handleGoogleSignIn}
       />)}
+>>>>>>> 19cd597a87c4bf7a922fa996f49c39f11d010c0e
     </>
   );
 };

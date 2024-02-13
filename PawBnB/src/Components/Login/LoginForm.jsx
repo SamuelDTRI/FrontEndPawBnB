@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { loginUser } from "../../redux/authSlice.js";
+import { loginUser, googleLoginSuccess } from "../../redux/authSlice.js";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import styles from "./LoginForm.module.css";
 import { UserAuth } from "../../context/AuthContext.jsx";
@@ -31,9 +31,9 @@ const LoginForm = () => {
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
-          const email = googleUser.providerData[0]?.email;
+          const email = googleUser.providerData[0].email;
           // Verificar si el usuario ya está registrado
-          const { exist, checkId, checkRole } = await checkRegistration(email);
+          const {exist, checkId, checkRole} = await checkRegistration(email);
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             navigate({
@@ -45,7 +45,9 @@ const LoginForm = () => {
           } else {
 
             // cambiamos el estado global para completar el logueo
-            dispatch(loginUser({ userId: checkId, userRole: checkRole }));
+            dispatch(
+              googleLoginSuccess({ userId: checkId, userRole: checkRole })
+            );
           }
         } catch (error) {
           console.error(
@@ -70,6 +72,7 @@ const LoginForm = () => {
   }, [error, dispatch]);
 
   useEffect(() => {
+    console.log(userRole)
     // Redireccionamos al usuario después de un inicio de sesión exitoso
     if (userRole === "Owner") {
       navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id

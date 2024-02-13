@@ -5,18 +5,19 @@ import { Barrios } from "../../Helpers/Barrios";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { sitterInfo } from "../../redux/sitterSlice";
+import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
-  const dispatch = useDispatch();
-
+  console.log(id);
   const currentSitter = async () => {
+    console.log("hola");
     try {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      console.log(data);
       dispatch(sitterInfo(data));
       console.log("he despachado");
       console.log(infoSitter);
@@ -25,20 +26,53 @@ const FormInfoSitter = () => {
     }
   };
 
-  // const updateSitterInfo=async()=>{
-  //   try {
-  //     const {data} = await axios.put(`http://localhost:3000/sitters/${id}`);
-  //     console.log(data)
-  //      dispatch(sitterInfo(data.));
+  const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
+    try {
+      const {
+        name,
+        surName,
+        phone,
+        description,
+        dateOfBirth,
+        email,
+        password,
+        address,
+        neighborhood,
+        city,
+        rates,
+      } = values;
+      console.log("Valores: ", values);
+      // Llamo a la acción updateSitter del slice para enviar los datos actualizados.
+      await dispatch(
+        updateSitter({
+          id: id,
+          updatedSitter: {
+            name,
+            surName,
+            phone,
+            description,
+            dateOfBirth,
+            email,
+            password,
+            address,
+            neighborhood,
+            city,
+            rates,
+          },
+        })
+      );
 
-  //   } catch (error) {
-  //     console.log("error")
-  //   }
-  // }
+      resetForm();
+      setFormSent(true);
+      setTimeout(() => setFormSent(false), 5000);
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+    }
+  };
 
   useEffect(() => {
     currentSitter();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -56,11 +90,11 @@ const FormInfoSitter = () => {
         }}
         validate={(values) => {
           let errors = {};
-          // if (!values.name) {
-          //   errors.name = "Por favor ingresa un nombre.";
-          // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-          //   errors.name = "Ingresa solo letras y no más de 20 caracteres.";
-          // }
+          /* if (!values.name) {
+             errors.name = "Por favor ingresa un nombre.";
+           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
+           } */
           // if (!values.surname) {
           //   errors.surname = "Por favor ingresa un apellido.";
           // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
@@ -103,15 +137,10 @@ const FormInfoSitter = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          updatedSitterInfo();
-          resetForm();
-          setFormSent(true);
-          setTimeout(() => setFormSent(false), 5000);
-          updateSitterInfo();
+          handleFormSubmit(values, dispatch, resetForm, setFormSent);
         }}
       >
         {({ errors }) => (
-          //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={`container ${styles.form}`}>
             <div className="row">
               <div className="col-lg-6 col-md-12">

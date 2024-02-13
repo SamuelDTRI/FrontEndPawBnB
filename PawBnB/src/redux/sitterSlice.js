@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   name: "",
@@ -16,7 +17,7 @@ export const sitterSlice = createSlice({
   initialState,
   reducers: {
     sitterInfo: (state, action) => {
-      console.log(action.payload.sitter);
+      console.log(action.payload);
       const {
         name,
         surName,
@@ -28,7 +29,8 @@ export const sitterSlice = createSlice({
         description,
         rates,
         email,
-      } = action.payload.sitter;
+      } = action.payload;
+
       state.name = name;
       state.surName = surName;
       state.phone = phone;
@@ -40,8 +42,21 @@ export const sitterSlice = createSlice({
       state.rates = rates;
       state.email = email;
     },
+    updateSitter: async (state, action) => {
+      try {
+        const { data } = await axios.put(
+          `http://localhost:3000/sitters/${action.payload.id}`,
+          action.payload.updatedSitter
+        );
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error("Error al actualizar el cuidador:", error);
+        throw error;
+      }
+    },
   },
 });
 
-export const { sitterInfo } = sitterSlice.actions;
+export const { sitterInfo, updateSitter } = sitterSlice.actions;
 export default sitterSlice.reducer;

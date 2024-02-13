@@ -30,7 +30,7 @@ const NavBar = () => {
     <div className="container-fluid">
       <nav className="navbar fixed-top border-bottom bg-white">
         <div className={style.imagen}>
-          <img src={logo} alt="PawBnb" />
+          <Link to="/"><img src={logo} alt="PawBnb" /></Link>
         </div>
         <div className="m-auto">
           {" "}
@@ -42,10 +42,11 @@ const NavBar = () => {
                                   onClick={handleSignOut}>
                                     LogOut</button>):
           (<>
-            <button className="btn  me-2 border-warning text-warning">
+            <Link to="/SignUp"><button className="btn  me-2 border-warning text-warning">
               Sign up
             </button>
-            <button className="btn border-warning text-warning">Login</button>
+            </Link>
+            <Link to="/Login"><button className="btn border-warning text-warning">Login</button></Link>
           </>
           )}
         </div>

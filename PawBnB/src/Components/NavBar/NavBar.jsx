@@ -34,7 +34,7 @@ const NavBar = () => {
     <div className="container-fluid">
       <nav className="navbar fixed-top border-bottom bg-white">
         <div className={style.imagen}>
-          <img src={logo} alt="PawBnb" />
+          <Link to="/"><img src={logo} alt="PawBnb" /></Link>
         </div>
         <div className="m-auto">
           {" "}

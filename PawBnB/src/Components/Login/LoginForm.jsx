@@ -14,29 +14,10 @@ const LoginForm = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
-
-  const { googleSignIn, googleUser} = UserAuth();
-
-  const handleSubmit = async (formData) => {
-    dispatch(loginUser(formData));
-  };
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      dispatch({ type: "auth/loginFailure", payload: null });
-    }, 5000);
-    return () => clearTimeout(timeoutId);
-  }, [error, dispatch]);
-  useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home`);// Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
-    }
-  }, [userRole, userId, navigate]);
 
   const handleGoogleSignIn = async () => {
     try{
@@ -50,7 +31,7 @@ const LoginForm = () => {
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
-          const email = googleUser.providerData[0].email;
+          const email = googleUser.providerData[0]?.email;
           // Verificar si el usuario ya está registrado
           const { exist, checkId, checkRole } = await checkRegistration(email);
           // Si el usuario no está registrado, redirigir al formulario de registro
@@ -62,7 +43,7 @@ const LoginForm = () => {
               }).toString()
             });
           } else {
-            console.log(checkId, checkRole)
+
             // cambiamos el estado global para completar el logueo
             dispatch(loginUser({ userId: checkId, userRole: checkRole }));
           }
@@ -75,7 +56,28 @@ const LoginForm = () => {
       };
       fetchUserData()
     }
-  }, [googleUser, navigate]);
+  }, [googleUser, navigate,dispatch]);
+
+  const handleSubmit = async (formData) => {
+    dispatch(loginUser(formData));
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch({ type: "auth/loginFailure", payload: null });
+    }, 5000);
+    return () => clearTimeout(timeoutId);
+  }, [error, dispatch]);
+
+  useEffect(() => {
+    // Redireccionamos al usuario después de un inicio de sesión exitoso
+    if (userRole === "Owner") {
+      navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
+    } else if (userRole === "DogSitter") {
+      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+    }
+  }, [userRole, userId, navigate]);
+  
   return (
     <div>
       <Formik

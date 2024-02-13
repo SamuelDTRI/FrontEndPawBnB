@@ -19,7 +19,7 @@ const Formulario = (text, role) => {
   const location = useLocation();
   const currentPath = location.pathname;
     // Traer los datos del store de Redux
-  const { googleSignIn, googleUser } = UserAuth
+  const { googleSignIn, googleUser } = UserAuth();
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -126,7 +126,7 @@ const Formulario = (text, role) => {
         }}
         onSubmit={(valores, { resetForm }) => {
           dispatch(
-            signUpOwner(valores, text.role, navigate("/dashboardSitter"))
+            signUpOwner(valores, text.role, navigate("/Login"))
           );
 
           resetForm();
@@ -229,11 +229,11 @@ const Formulario = (text, role) => {
           </Form>
         )}
       </Formik>
-      <GoogleButton
+      {!googleUser && (<GoogleButton
         className="googleButton"
         label="Regístrate con Google"
         onClick={handleGoogleSignIn}
-      />
+      />)}
     </>
   );
 };

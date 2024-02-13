@@ -78,7 +78,7 @@ const Formulario = (text, role) => {
     }
   }, [userRole, userId, navigate]);
   return (
-    <>
+    
       <Formik
         initialValues={{
           name: "",
@@ -91,13 +91,13 @@ const Formulario = (text, role) => {
           let errores = {};
           //Validacion name
           if (!valores.name) {
-            errores.name = "Por favor ingresa un name.";
+            errores.name = "Por favor ingresa un nombre.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.name)) {
             errores.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
           //Validacion Apellido
           if (!valores.surName) {
-            errores.surName = "Por favor ingresa un surName.";
+            errores.surName = "Por favor ingresa un apellido.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.surName)) {
             errores.surName = "Ingresa solo letras y no más de 20 caracteres.";
           }
@@ -124,7 +124,7 @@ const Formulario = (text, role) => {
           if (!valores.password) {
             errores.password = "Por favor ingresa una password.";
           } else if (
-            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&]{8,}$/.test(
               valores.password
             )
           ) {
@@ -235,7 +235,7 @@ const Formulario = (text, role) => {
                   {formularioEnviado && (
                     <p className={styles.exito}>Formulario enviado con exito!</p>
                   )}
-
+                  
               <div className={styles.googleButton}>
                {!googleUser && (<GoogleButton
                   className="googleButton"
@@ -248,7 +248,7 @@ const Formulario = (text, role) => {
         )}
       </Formik>
       
-    </>
+    
   );
 };
 

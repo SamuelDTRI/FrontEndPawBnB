@@ -46,11 +46,7 @@ const Cards = () => {
         {items.map((allDogsister) => (
           <Card
           key={allDogsister?.id}
-<<<<<<< HEAD
-          //image={allDogsister?.photos[0]?.url}
-=======
           // image={allDogsister?.photos[0]?.url}
->>>>>>> 19cd597a87c4bf7a922fa996f49c39f11d010c0e
           name={allDogsister?.name}
           city={allDogsister?.city}
           rating={'⭐⭐⭐'}

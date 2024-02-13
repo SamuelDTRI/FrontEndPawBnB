@@ -237,24 +237,17 @@ const Formulario = (text, role) => {
                   )}
 
               <div className={styles.googleButton}>
-                <GoogleButton
-                 className="googleButton"
-                 label="Regístrate con Google"
-                 onClick={handleGoogleSignIn}
-                />
+               {!googleUser && (<GoogleButton
+                  className="googleButton"
+                  label="Regístrate con Google"
+                  onClick={handleGoogleSignIn}
+                />)}
               </div>
             </div>
           </Form>
         )}
       </Formik>
-<<<<<<< HEAD
-=======
-      {!googleUser && (<GoogleButton
-        className="googleButton"
-        label="Regístrate con Google"
-        onClick={handleGoogleSignIn}
-      />)}
->>>>>>> 19cd597a87c4bf7a922fa996f49c39f11d010c0e
+      
     </>
   );
 };

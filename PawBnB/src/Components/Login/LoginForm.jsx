@@ -108,6 +108,7 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
+            <h2>LOG IN</h2>
             <div>
               <label htmlFor="correo">Email</label>
               <Field
@@ -143,7 +144,8 @@ const LoginForm = () => {
               <p className={styles.exito}>Formulario enviado con éxito!</p>
             )}
             {error && <p>{error}</p>}
-             <div>
+               <br/>
+             <div className={styles.googleButton}>
                <GoogleButton
                   className="googleButton"
                   label="Inicia sesión con Google"
@@ -153,7 +155,6 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
-      <br/>
     </div>
   );
 };

@@ -16,6 +16,8 @@ import { useLocation, Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
 
 function App() {
+
+  console.log("deploy test");
   const location = useLocation();
 
   const showNav = location.pathname !== "/";

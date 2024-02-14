@@ -18,7 +18,7 @@
 }
 
 .formulario {
-	border: 1px solid #ffa726;
+	border: 2px solid #ffa726;
     border-radius: 15px;
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
@@ -65,15 +65,20 @@
 
 .formulario input:focus {
 	outline: none;
-	border: 2px solid #ffa726;
+	/*border: 1px solid #ffa726;*/
+	box-shadow: inset 0 0 0 2px #ffa726;
 }
+
 
 .formulario .error {
 	color: #e92b2d;
 	font-weight: 600;
 	font-size: 12px;
+	text-align: left;
+
 }
 .googleButton{
+	justify-content: right;
 	margin-top: 25px;
 	border-radius: 15px;
 }

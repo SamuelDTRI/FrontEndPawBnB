@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* {showNav && <NavBar />} */}
+      {showNav && <NavBar />}
       <Routes>
         <Route path="/" element={<Landing/>} />
         <Route path="/SignUp" element={<SignUpOwners />} />

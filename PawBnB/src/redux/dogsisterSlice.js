@@ -3,8 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   dogsisters: [],
   copyDogsisters: [],
-  /* locationFilter: 'all', // Agregamos un filtro de ubicación predeterminado
-  priceFilter: null, */
 };
 
 export const dogsisterSlice = createSlice({
@@ -41,27 +39,6 @@ export const dogsisterSlice = createSlice({
       });
 
       state.dogsisters = filteredDogSistersRates;
-
-      /* const copyDogsister = state.copyDogsisters;
-
-      const filteredDogSisters = copyDogsister.filter((dogSister) => {
-        const dogSisterPrice = parseFloat(dogSister.price);
-        const filterPrice = parseFloat(state.priceFilter);
-
-        return (
-          (state.locationFilter === 'all' || dogSister.city === state.locationFilter) &&
-          (state.priceFilter === null || (dogSisterPrice !== NaN && dogSisterPrice <= filterPrice))
-        );
-      });
-
-      return {
-        ...state,
-        priceFilter: action.payload,
-        dogsisters: filteredDogSisters,
-      }; */
-
-
-
     },
 
   },

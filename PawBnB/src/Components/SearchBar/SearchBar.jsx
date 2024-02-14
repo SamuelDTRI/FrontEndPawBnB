@@ -15,7 +15,7 @@ const [cuidador, setCuidador] = useState("")
   return (
       <div className={style.contenedor}>
         <div className={style.searchbar}>
-       <input type="text" placeholder="Encuentra un cuidador..." onChange={handleChange}/>    
+       <input type="text" placeholder="Ingresa tu barrio..." onChange={handleChange}/>    
       <button onClick={handleSubmit}>🔎</button>
       </div>
       </div>

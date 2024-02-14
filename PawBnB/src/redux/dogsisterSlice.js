@@ -33,8 +33,16 @@ export const dogsisterSlice = createSlice({
         setPriceFilter: (state, action) => {
             state.priceFilter = action.payload;
         },
+        filterSearchbar:(state,action)=>{
+            const lowercasePayload = action.payload.toLowerCase();
+            const newFilteredCopyDogSisters = state.copyDogsisters.filter((sisters) =>
+             sisters.city.toLowerCase().startsWith(lowercasePayload))
+             state.copyDogsisters = newFilteredCopyDogSisters;
+        }
+
+        }
     }
-});
+)
 
 export const { 
     addDogsister,

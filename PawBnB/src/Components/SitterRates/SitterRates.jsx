@@ -1,22 +1,16 @@
+/* eslint-disable react/prop-types */
 import styles from "./SitterRates.module.css";
 
-const SitterRates = () => {
+const SitterRates = ({ infoSitter }) => {
   return (
     <div className={`row mt-5 ${styles.ratesContainer}`}>
-      <div className="col-4">
+      <div className="col-12">
         <h3>Precio por dia</h3>
-        <br />
-        <h3>$12.000</h3>
+        <h3>${infoSitter.rates}</h3>
       </div>
-      <div className="col-4">
-        <h3>Tarifas de Jorge</h3>
+      <div className="col-12">
         <br />
         <button>RESERVAR AHORA</button>
-      </div>
-      <div className="col-4">
-        <h3>Dias festivos</h3>
-        <br />
-        <h3>+30%</h3>
       </div>
     </div>
   );

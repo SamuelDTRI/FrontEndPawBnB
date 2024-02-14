@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import styles from "./SitterPresentation.module.css";
 
-const SitterPresentation = () => {
+const SitterPresentation = ({ infoSitter }) => {
   return (
     <div className="container">
       <div className="row">
         <div className="col">
           <div className={styles.imageContainer}>
             <img
-              src="https://res.cloudinary.com/dtyqmfqi2/image/upload/v1707330140/enzo-y-yp_ozsk8j.jpg"
+              src={infoSitter.photoProfile}
               alt="profile pic"
               className={styles.img}
             />
@@ -18,10 +19,10 @@ const SitterPresentation = () => {
             <div className={styles.textContainer}>
               <h3>Hola!</h3>
               <h2>
-                Soy <strong>JORGE</strong>
+                Soy <strong>{infoSitter.name}</strong>
               </h2>
               <h3>
-                Cuidador en <strong>Palermo</strong>
+                Cuidador en <strong>{infoSitter.neighborhood}</strong>
               </h3>
             </div>
             <div className={styles.reservationContainer}>
@@ -29,7 +30,7 @@ const SitterPresentation = () => {
                 <h2>5.0/5.0 ⭐</h2>
                 <p>(9 reseñas)</p>
               </div>
-              <button>Reserva con Jorge</button>
+              <button>Reserva con {infoSitter.name}</button>
               <h4>
                 La reserva no se le cobrara hasta que jorge confirme la reserva
                 puede cancelar hasta 48hs antes y obtener un reembolso del 100%

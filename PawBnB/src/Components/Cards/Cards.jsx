@@ -1,15 +1,14 @@
-import React from "react";
-import Card from "../Card/Card";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Card from "../Card/Card";
 import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
-import { useState, useEffect } from "react";
 
 const RESULT_PAGE = 12;
 
 const Cards = () => {
   const dogsisters = useSelector((state) => state.dogsister.dogsisters);
-  
+
   const [currentPage, setCurrentPage] = useState(0);
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(0);
@@ -24,19 +23,19 @@ const Cards = () => {
   }, [dogsisters, currentPage]);
 
   const nextHandler = () => {
-    const totalElementos = dogsisters.length;
+    const totalElementos = items.length;
     const nextPage = currentPage + 1;
     const firstIndex = nextPage * RESULT_PAGE;
 
     if (firstIndex < totalElementos) {
-        setCurrentPage(nextPage);
+      setCurrentPage(nextPage);
     }
   };
 
   const prevHandler = () => {
-      if (currentPage > 0) {
-          setCurrentPage(currentPage - 1);
-      }
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -45,15 +44,21 @@ const Cards = () => {
       <div className="cards">
         {items.map((allDogsister) => (
           <Card
-          key={allDogsister?.id}
-          // image={allDogsister?.photos[0]?.url}
-          name={allDogsister?.name}
-          neighborhood={allDogsister?.neighborhood}
-          rating={'⭐⭐⭐'}
-        />
+            key={allDogsister?.id}
+            id={allDogsister?.id}
+            image={allDogsister?.photos[0]?.url}
+            name={allDogsister?.name}
+            neighborhood={allDogsister?.neighborhood}
+            rating={"⭐⭐⭐"}
+          />
         ))}
       </div>
-      <Pagination pages={pages} currentPage={currentPage} prevHandler={prevHandler} nextHandler={nextHandler} />
+      <Pagination
+        pages={pages}
+        currentPage={currentPage}
+        prevHandler={prevHandler}
+        nextHandler={nextHandler}
+      />
     </ContainerCards>
   );
 };

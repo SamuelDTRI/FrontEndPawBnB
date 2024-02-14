@@ -74,6 +74,7 @@
 	font-size: 12px;
 }
 .googleButton{
+	justify-content: right;
 	margin-top: 25px;
 	border-radius: 15px;
 }

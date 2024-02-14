@@ -115,21 +115,21 @@ const Formulario = (text, role) => {
           }
 
           //Validacion phone
-          // if (!valores.phone) {
-          //   errores.phone = "Por favor ingresa un phone.";
-          // } else if (!/^\d{10}$/.test(valores.phone)) {
-          //   errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-          // }
+           if (!valores.phone) {
+             errores.phone = "Por favor ingresa un phone.";
+           } else if (!/^\d{10}$/.test(valores.phone)) {
+             errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
+           }
           // Validación password (Expresion regular)
           if (!valores.password) {
-            errores.password = "Por favor ingresa una password.";
+            errores.password = "Por favor ingresa una contraseña.";
           } else if (
-            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
               valores.password
             )
           ) {
             errores.password =
-              "La password debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
+              "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
           }
 
           return errores;
@@ -200,7 +200,7 @@ const Formulario = (text, role) => {
                 <div className="col-12">
                   <label htmlFor="phone">Telefono*</label>
                   <Field
-                    type="number"
+                    type="text"
                     id="phone"
                     name="phone"
                     placeholder="Tu telefono..."

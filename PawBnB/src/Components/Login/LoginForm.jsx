@@ -72,7 +72,6 @@ const LoginForm = () => {
   }, [error, dispatch]);
 
   useEffect(() => {
-    console.log(userRole)
     // Redireccionamos al usuario después de un inicio de sesión exitoso
     if (userRole === "Owner") {
       navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
@@ -109,6 +108,7 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
+            <h2>LOG IN</h2>
             <div>
               <label htmlFor="correo">Email</label>
               <Field
@@ -144,15 +144,17 @@ const LoginForm = () => {
               <p className={styles.exito}>Formulario enviado con éxito!</p>
             )}
             {error && <p>{error}</p>}
+               <br/>
+             <div className={styles.googleButton}>
+               <GoogleButton
+                  className="googleButton"
+                  label="Inicia sesión con Google"
+                  onClick={handleGoogleSignIn}
+                />
+            </div>
           </Form>
         )}
       </Formik>
-      <br/>
-      <GoogleButton
-        className="googleButton"
-        label="Inicia sesión con Google"
-        onClick={handleGoogleSignIn}
-      />
     </div>
   );
 };

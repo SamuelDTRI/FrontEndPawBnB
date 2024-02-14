@@ -5,7 +5,7 @@
 	margin-top: 8%;
 	margin-left: 4px;
 	color: #101011;
-	font-weight: 600;
+	font-weight: 700;
 	font-size: 2rem;
 
 }
@@ -22,8 +22,8 @@
     border-radius: 15px;
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
-	margin-top: 150px;
-	margin-left: 180px;
+	margin-top: 80px;
+	margin-left: 350px;
 	height: 30%;
     width: 40%;
 	background: #f9f5f3;
@@ -48,12 +48,19 @@
 .formulario textarea {
 	font-family: 'Open Sans', sans-serif;
 	width: 100%;
-	border-radius: 5px;
-	border: 1px solid #d4d1d1;
+	border-radius: 15px;
+	border: none;
 	font-size: 18px;
 	padding: 10px;
 	margin-bottom: 5px;
-	color: #2E2D2D;
+	color: #2d2d2d;
+	background-color: #f4f4f4;
+	
+}
+.inputContainer {
+	align-items: center;
+
+
 }
 
 .formulario input:focus {
@@ -66,8 +73,13 @@
 	font-weight: 600;
 	font-size: 12px;
 }
+.googleButton{
+	margin-top: 25px;
+	border-radius: 15px;
+}
 
 .formulario button[type="submit"] {
+	margin-top: 25px;
 	display: block;
 	background: #ffa726;
 	font-weight: 600;
@@ -80,12 +92,14 @@
 	color: #fff;
 	font-size: 16px;
 	transition: .3s ease all;
+	border-radius: 15px;
 }
 
 .formulario button[type="submit"]:hover {
 	background-color: #ffa319;
     border-color: #ffffff;
-  box-shadow: 2px 2px 10px rgba(128, 128, 128, 0.420);
+    box-shadow: 2px 2px 10px rgba(128, 128, 128, 0.420);
+	border-radius: 15px;
 }
 
 .formulario .exito {
@@ -99,7 +113,7 @@
 	width: auto;
 }
 
-.form select {
+/*.form select {
     width: 100%;
     background-color: #f4f4f4;
     border-radius: 15px;
@@ -119,4 +133,4 @@
     background-color: #f4f4f4;
     color: #2E2D2D;
     scrollbar-color: #ffa726;
-  }
+  }*/

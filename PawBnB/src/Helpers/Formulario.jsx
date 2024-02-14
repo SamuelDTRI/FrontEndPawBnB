@@ -9,7 +9,7 @@ import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
-import { loginUser } from "../redux/authSlice.js";
+import { googleLoginSuccess } from "../redux/authSlice.js";
 
 
 const Formulario = (text, role) => {
@@ -20,6 +20,8 @@ const Formulario = (text, role) => {
   const currentPath = location.pathname;
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
+  const userRole = useSelector((state) => state.auth.userRole);
+  const userId = useSelector((state) => state.auth.userId);
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -55,8 +57,7 @@ const Formulario = (text, role) => {
               
           } else {
             // cambiamos el estado global para completar el logueo
-            dispatch(loginUser({ userId: checkId, userRole: checkRole }));
-            navigate("/Home");
+            googleLoginSuccess({ userId: checkId, userRole: checkRole });
           }
         } catch (error) {
           console.error(
@@ -68,8 +69,16 @@ const Formulario = (text, role) => {
       fetchUserData()
     }
   }, [googleUser, navigate,dispatch, currentPath]);
+  useEffect(() => {
+    // Redireccionamos al usuario después de un inicio de sesión exitoso
+    if (userRole === "Owner") {
+      navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
+    } else if (userRole === "DogSitter") {
+      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+    }
+  }, [userRole, userId, navigate]);
   return (
-    <>
+    
       <Formik
         initialValues={{
           name: "",
@@ -82,13 +91,13 @@ const Formulario = (text, role) => {
           let errores = {};
           //Validacion name
           if (!valores.name) {
-            errores.name = "Por favor ingresa un name.";
+            errores.name = "Por favor ingresa un nombre.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.name)) {
             errores.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
           //Validacion Apellido
           if (!valores.surName) {
-            errores.surName = "Por favor ingresa un surName.";
+            errores.surName = "Por favor ingresa un apellido.";
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.surName)) {
             errores.surName = "Ingresa solo letras y no más de 20 caracteres.";
           }
@@ -115,7 +124,7 @@ const Formulario = (text, role) => {
           if (!valores.password) {
             errores.password = "Por favor ingresa una password.";
           } else if (
-            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&]{8,}$/.test(
               valores.password
             )
           ) {
@@ -140,8 +149,8 @@ const Formulario = (text, role) => {
           <Form className={styles.formulario}>
             <h2>{text.text}</h2>
             <div className={styles.container}>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+                <div className={`col-12 ${styles.inputContainer}`}>`
                   <label htmlFor="name">Nombre*</label>
                   <Field
                     type="text"
@@ -156,7 +165,7 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-                <div className="col-lg-6 col-md-12">
+                <div className="col-12">
                   <label htmlFor="surName">Apellido*</label>
                   <Field
                     type="text"
@@ -171,9 +180,9 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-              </div>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+              
+                <div className="col-12">
                   <label htmlFor="email">Email*</label>
                   <Field
                     id="email"
@@ -187,8 +196,8 @@ const Formulario = (text, role) => {
                       <div className={styles.error}>{errors.email}</div>
                     )}
                   />
-                </div>
-                <div className="col-lg-6 col-md-12">
+                
+                <div className="col-12">
                   <label htmlFor="phone">Telefono*</label>
                   <Field
                     type="number"
@@ -204,8 +213,8 @@ const Formulario = (text, role) => {
                   />
                 </div>
               </div>
-              <div className="">
-                <div className="col-lg-6 col-md-12">
+              
+                <div className="col-12">
                   <label htmlFor="password">Contraseña*</label>
                   <Field
                     type="password"
@@ -220,22 +229,26 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-              </div>
 
-              <button type="submit">REGISTRARSE</button>
-              {formularioEnviado && (
-                <p className={styles.exito}>Formulario enviado con exito!</p>
-              )}
+
+                 <button type="submit">REGISTRARSE</button>
+                  {formularioEnviado && (
+                    <p className={styles.exito}>Formulario enviado con exito!</p>
+                  )}
+                  
+              <div className={styles.googleButton}>
+               {!googleUser && (<GoogleButton
+                  className="googleButton"
+                  label="Regístrate con Google"
+                  onClick={handleGoogleSignIn}
+                />)}
+              </div>
             </div>
           </Form>
         )}
       </Formik>
-      {!googleUser && (<GoogleButton
-        className="googleButton"
-        label="Regístrate con Google"
-        onClick={handleGoogleSignIn}
-      />)}
-    </>
+      
+    
   );
 };
 

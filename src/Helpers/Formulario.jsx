@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 import styles from "./Formulario.module.css";
 import { Barrios } from "./Barrios";
 import { signUpOwner } from "../redux/signUpSlice";
@@ -10,6 +11,15 @@ import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
 import { googleLoginSuccess } from "../redux/authSlice.js";
+
+const SignupSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/, 'La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.')
+    .required('Por favor ingresa una contraseña'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir')
+    .required('Es necesario repetir la contraseña'),
+});
 
 
 const Formulario = (text, role) => {
@@ -86,8 +96,10 @@ const Formulario = (text, role) => {
           email: "",
           phone: "",
           password: "",
+          confirmPassword: '',
         }}
         validate={(valores) => {
+          
           let errores = {};
           //Validacion name
           if (!valores.name) {
@@ -121,7 +133,7 @@ const Formulario = (text, role) => {
              errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
            }
           // Validación password (Expresion regular)
-          if (!valores.password) {
+          /*if (!valores.password) {
             errores.password = "Por favor ingresa una contraseña.";
           } else if (
             !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
@@ -130,10 +142,16 @@ const Formulario = (text, role) => {
           ) {
             errores.password =
               "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
-          }
+          }*/
+          //VAlidacion de ambas contraseñas
+          
+
+          
 
           return errores;
         }}
+        validationSchema={SignupSchema}
+        
         onSubmit={(valores, { resetForm }) => {
           dispatch(
             signUpOwner(valores, text.role, navigate("/Login"))
@@ -226,6 +244,21 @@ const Formulario = (text, role) => {
                     name="password"
                     component={() => (
                       <div className={styles.error}>{errors.password}</div>
+                    )}
+                  />
+                </div>
+                <div className="col-12">
+                  <label htmlFor="confirmPassword">Repetir Contraseña*</label>
+                  <Field
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Tu Contraseña..."
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component={() => (
+                      <div className={styles.error}>{errors.confirmPassword}</div>
                     )}
                   />
                 </div>

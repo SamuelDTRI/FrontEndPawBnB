@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -10,8 +10,22 @@ const initialState = {
   city: "",
   description: "",
   rates: "",
-  photoProfile: ""
+  photoProfile: "",
+  photos: "",
 };
+
+export const fetchSitter = createAsyncThunk(
+  "sitter/fetchSitter",
+  async (id) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener la información del cuidador:", error);
+      throw error;
+    }
+  }
+);
 
 export const sitterSlice = createSlice({
   name: "sitter",
@@ -26,7 +40,7 @@ export const sitterSlice = createSlice({
         address,
         dateOfBirth,
         neighborhood,
-        // city (no me devuelve)
+        city,
         description,
         rates,
         email,
@@ -39,11 +53,11 @@ export const sitterSlice = createSlice({
       state.address = address;
       state.dateOfBirth = dateOfBirth;
       state.neighborhood = neighborhood;
-      // state.city = city;
+      state.city = city;
       state.description = description;
       state.rates = rates;
       state.email = email;
-      state.photoProfile = photoProfile
+      state.photoProfile = photoProfile;
     },
     updateSitter: async (state, action) => {
       try {
@@ -51,7 +65,6 @@ export const sitterSlice = createSlice({
           `http://localhost:3000/sitters/${action.payload.id}`,
           action.payload.updatedSitter
         );
-        console.log(data);
         return data;
       } catch (error) {
         console.error("Error al actualizar el cuidador:", error);

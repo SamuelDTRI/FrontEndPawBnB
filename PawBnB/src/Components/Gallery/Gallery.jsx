@@ -39,7 +39,7 @@ const Gallery = () => {
     <div className={styles.galleryContainer}>
       <ImageGallery
         items={images}
-        thumbnailPosition={"left"}
+        thumbnailPosition={"bottom"}
         showPlayButton={false}
       />
     </div>

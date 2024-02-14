@@ -8,6 +8,7 @@ import {
   DashboardOwner,
   DashboardSitter,
   Login,
+  Pay,
 } from "./Views/indexViews";
 import { NavBar, Footer } from "./Components/indexComponents";
 import "./App.css";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/sitterProfile/:id" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Pay" element={<Pay />} />
       </Routes>
       <Footer />
     </div>

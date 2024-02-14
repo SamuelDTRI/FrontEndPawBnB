@@ -9,11 +9,10 @@ import {
   DashboardSitter,
   Login,
 } from "./Views/indexViews";
-import NavBar from "./Components/NavBar/NavBar";
+import { NavBar, Footer } from "./Components/indexComponents";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation, Route, Routes } from "react-router-dom";
-import Footer from "./Components/Footer/Footer";
 
 function App() {
   const location = useLocation();

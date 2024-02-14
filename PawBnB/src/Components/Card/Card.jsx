@@ -1,7 +1,7 @@
 import React from "react";
 import { ContainerCard } from "./card.styled";
 
-const Card = ({image, name, city, rating}) => {
+const Card = ({image, name,neighborhood, rating}) => {
   return (
     <ContainerCard>
       <div className="imgContainer">
@@ -10,7 +10,7 @@ const Card = ({image, name, city, rating}) => {
       <div className="infoContainer">
         <div className="infoName">
           <p>{name}</p>
-          <p>{city}</p>
+          <p>{neighborhood}</p>
         </div>
         <div className="infoReview">
           <p>{rating}</p>

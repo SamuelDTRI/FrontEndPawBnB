@@ -8,10 +8,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 
-
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
-  const [reRender, setReRender] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
@@ -21,7 +21,7 @@ const FormInfoSitter = () => {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
-      console.log("Error al hacer el dispatch");
+      console.error(error.message);
     }
   };
 
@@ -59,10 +59,10 @@ const FormInfoSitter = () => {
           },
         })
       );
-      setReRender((prev) => !prev);
+      await currentSitter();
       resetForm();
       setFormSent(true);
-      setTimeout(() => setFormSent(false), 1000);
+      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -70,7 +70,7 @@ const FormInfoSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch, reRender]);
+  }, [dispatch, forceUpdate]);
 
   return (
     <>
@@ -88,39 +88,49 @@ const FormInfoSitter = () => {
         }}
         validate={(values) => {
           let errors = {};
-          if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-            errors.name = "Ingresa solo letras y no más de 20 caracteres.";
-          }
-          if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surName)) {
-            errors.surname = "Ingresa solo letras y no más de 20 caracteres.";
-          }
-          if (!values.dateOfBirth) {
-            errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
-          }
-          if (!/^\d+(\.\d{1,2})?$/.test(values.rate)) {
-            errors.rate = "Ingresa una tarifa válida.";
-          }
-          /* if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-              values.email
-            )
-          ) {
-            errors.email =
-              "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
-          }
-          if (!/^\d{10}$/.test(values.phone)) {
-            errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-          }
+          /* if (!values.name) {
+             errors.name = "Por favor ingresa un nombre.";
+           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
+           } */
+          // if (!values.surname) {
+          //   errors.surname = "Por favor ingresa un apellido.";
+          // } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surname)) {
+          //   errors.surname = "Ingresa solo letras y no más de 20 caracteres.";
+          // }
+          // if (!values.dateOfBirth) {
+          //   errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
+          // }
+          // if (!values.rate) {
+          //   errors.rate = "Por favor ingresa tu tarifa por día.";
+          // } else if (!/^\d+(\.\d{1,2})?$/.test(values.rate)) {
+          //   errors.rate = "Ingresa una tarifa válida.";
+          // }
+          // if (!values.email) {
+          //   errors.email = "Por favor ingresa un mail.";
+          // } else if (
+          //   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+          //     values.email
+          //   )
+          // ) {
+          //   errors.email =
+          //     "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
+          // }
+          // if (!values.phone) {
+          //   errors.phone = "Por favor ingresa un telefono.";
+          // } else if (!/^\d{10}$/.test(values.phone)) {
+          //   errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
+          // }
 
-          if (!values.neighborhood) {
-            errors.neighborhood = "Por favor selecciona un Barrio.";
-          }
-          if (!values.city) {
-            errors.city = "Por favor selecciona tu ciudad.";
-          }
-          if (!values.description) {
-            errors.description = "Por favor ingresa una descripcion.";
-          } */
+          // if (!values.neighborhood) {
+          //   errors.neighborhood = "Por favor ingresa un Barrio.";
+          // }
+          // if (!values.city) {
+          //   errors.city = "Por favor ingresa una ciudad.";
+          // }
+          // if (!values.description) {
+          //   errors.description = "Por favor ingresa una descripcion.";
+          // }
 
           return errors;
         }}
@@ -196,7 +206,7 @@ const FormInfoSitter = () => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="telefono">Telefono</label>
+              <label htmlFor="phone">Telefono</label>
               <Field
                 type="number"
                 id="phone"
@@ -244,11 +254,11 @@ const FormInfoSitter = () => {
             </div>
             <div className="row">
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="city">ciudad</label>
+                <label htmlFor="city">Ciudad</label>
                 <Field name="city" as="select">
                   {Cities?.map((city) => {
                     return (
-                      <option key={city} value={infoSitter.city}>
+                      <option key={city} value={city}>
                         {city}
                       </option>
                     );
@@ -265,17 +275,16 @@ const FormInfoSitter = () => {
                 <label htmlFor="neighborhood">Barrio</label>
                 <Field name="neighborhood" as="select">
                   <option disabled value="">
-                    {infoSitter.neighborhood}
+                    {infoSitter.neighborhood
+                      ? infoSitter.neighborhood
+                      : "Selecciona tu barrio"}
                   </option>
                   {Barrios?.map((barrio) => {
-                    if (barrio !== infoSitter.neighborhood) {
-                      return (
-                        <option key={barrio} value={barrio}>
-                          {barrio}
-                        </option>
-                      );
-                    }
-                    return null;
+                    return (
+                      <option key={barrio} value={barrio}>
+                        {barrio}
+                      </option>
+                    );
                   })}
                 </Field>
                 <ErrorMessage
@@ -297,7 +306,7 @@ const FormInfoSitter = () => {
               <ErrorMessage
                 name="address"
                 component={() => (
-                  <div className={styles.error}>{errors.address}</div>
+                  <div className={styles.error}>{errors.Direccion}</div>
                 )}
               />
             </div>

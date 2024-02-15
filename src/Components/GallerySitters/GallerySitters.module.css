@@ -1,0 +1,31 @@
+
+.galleryContainer {
+  .react-grid-gallery-image img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.uploadImg{
+  
+  color: #ffa726;
+  height: 180px;
+  margin-top: 15px;
+  font-size: 120px;
+  transition: font-size 0.3s, color 0.3s;
+}
+.uploadImg:hover {
+  font-size: 130px;
+  /* Hacer el ícono más grande cuando se pasa el cursor */
+}
+
+.formContianer{
+  box-shadow: 2px 2px 10px rgba(128, 128, 128, 0.420);
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.btn{
+  margin-top: 10px;
+  margin-bottom: 13px;
+}

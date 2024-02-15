@@ -31,16 +31,12 @@ const NavBar = () => {
     navigate("/Login");
   };
   return (
-    <div className="container-fluid">
-      <nav className="navbar fixed-top border-bottom bg-white">
+    <div className={`container-fluid ${style.navbar}`}>
+      <nav className="navbar border-bottom bg-white">
         <div className={style.imagen}>
           <Link to="/"><img src={logo} alt="PawBnb" /></Link>
         </div>
-        <div className="m-auto">
-          {" "}
-          <SearchBar />
-        </div>
-
+ 
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (
             <button

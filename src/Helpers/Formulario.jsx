@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import styles from "./Formulario.module.css";
 import { Barrios } from "./Barrios";
 import { signUpOwner } from "../redux/signUpSlice";
-import { createSearchParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
@@ -28,10 +28,10 @@ const Formulario = (text, role) => {
   const navigate = useNavigate()
   const location = useLocation();
   const currentPath = location.pathname;
+  console.log(currentPath)
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
-  const userRole = useSelector((state) => state.auth.userRole);
-  const userId = useSelector((state) => state.auth.userId);
+
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -49,25 +49,29 @@ const Formulario = (text, role) => {
           const { exist, checkId, checkRole } = await checkRegistration(email);
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
-            if (currentPath === "/SignUpSitters"){
-              navigate({
-                pathname: "/SignUpSitters",
-                search: createSearchParams({
-                  email: `${email}`,
-                }).toString(),
-              });
+            if (currentPath == "/SignUpSitters"){
+              const { userId, userRole } = await dispatch(
+                signUpOwner({ email: email }, "DogSitter")
+              );
+              if(userRole){
+                navigate(`/dashboardSitter/${userId}`);
+              }
             } else {
-              navigate({
-                pathname: "/SignUp",
-                search: createSearchParams({
-                  email: `${email}`,
-                }).toString(),
-              });
-            }
-              
+              const { userId, userRole } = await dispatch(
+                signUpOwner({ email: email }, "Owner")
+                );
+              if(userRole){
+                navigate(`/Home`);
+              }
+            }   
           } else {
             // cambiamos el estado global para completar el logueo
             googleLoginSuccess({ userId: checkId, userRole: checkRole });
+            if (checkRole === "Owner") {
+              navigate(`/Home`);
+            } else if (checkRole === "DogSitter") {
+              navigate(`/dashboardSitter/${checkId}`);
+            }
           }
         } catch (error) {
           console.error(
@@ -76,17 +80,10 @@ const Formulario = (text, role) => {
           );
         }
       };
-      fetchUserData()
+      fetchUserData();
     }
-  }, [googleUser, navigate,dispatch, currentPath]);
-  useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
-    }
-  }, [userRole, userId, navigate]);
+  }, [googleUser, navigate, dispatch, currentPath]);
+
   return (
     
       <Formik
@@ -127,11 +124,11 @@ const Formulario = (text, role) => {
           }
 
           //Validacion phone
-           if (!valores.phone) {
-             errores.phone = "Por favor ingresa un phone.";
-           } else if (!/^\d{10}$/.test(valores.phone)) {
-             errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-           }
+          if (!valores.phone) {
+            errores.phone = "Por favor ingresa un phone.";
+          } else if (!/^\d{10}$/.test(valores.phone)) {
+            errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
+          }
           // Validación password (Expresion regular)
           /*if (!valores.password) {
             errores.password = "Por favor ingresa una contraseña.";
@@ -143,7 +140,7 @@ const Formulario = (text, role) => {
             errores.password =
               "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
           }*/
-          //VAlidacion de ambas contraseñas
+          //Validacion de ambas contraseñas
           
 
           
@@ -152,11 +149,11 @@ const Formulario = (text, role) => {
         }}
         validationSchema={SignupSchema}
         
-        onSubmit={(valores, { resetForm }) => {
-          dispatch(
+        onSubmit= {async (valores, { resetForm }) => {
+          const {userRole}= await dispatch(
             signUpOwner(valores, text.role, navigate("/Login"))
           );
-
+            if(userRole) navigate("/Login");
           resetForm();
           console.log("Se enviaron los datos");
           cambiarFormularioEnviado(true);

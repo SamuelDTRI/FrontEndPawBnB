@@ -40,7 +40,7 @@ setBarrio(event.target.value)
              <span 
                  onClick={handleMostrarOpciones} className={style.spann}><i className="bi bi-geo-alt"></i> {barrioCargado}</span> 
            </div>
-           <button onClick={handleSubmit}>Buscar</button> 
+           <button onClick={handleSubmit}> <i class="bi bi-search"></i> Buscar </button> 
         </div>
   
        { mostrarOpciones===true &&  

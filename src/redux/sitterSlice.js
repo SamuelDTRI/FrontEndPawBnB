@@ -10,8 +10,8 @@ const initialState = {
   city: "",
   description: "",
   rates: "",
-  photoProfile: "",
-  photos: "",
+  photoProfile: [],
+  photos: [],
 };
 
 export const fetchSitter = createAsyncThunk(
@@ -45,6 +45,7 @@ export const sitterSlice = createSlice({
         rates,
         email,
         photoProfile,
+        photos,
       } = action.payload;
 
       state.name = name;
@@ -57,7 +58,8 @@ export const sitterSlice = createSlice({
       state.description = description;
       state.rates = rates;
       state.email = email;
-      state.photoProfile = photoProfile;
+      state.photoProfile = photoProfile
+      state.photos = photos
     },
     updateSitter: async (state, action) => {
       try {

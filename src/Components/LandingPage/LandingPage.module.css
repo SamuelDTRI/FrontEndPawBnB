@@ -26,14 +26,6 @@
    
     
 }
-.input{
-    font-size: 17px;
-    margin: 10px;
-    background-color:  rgba(204, 204, 204, 0.5);
-    border: none;
-    border-radius: 10px;
-    text-align: center;
-}
  
 .imagenBoxer {
     object-fit:scale-down;

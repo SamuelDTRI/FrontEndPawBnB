@@ -25,3 +25,35 @@ height: auto;
     margin-top: 20px;
     font-weight: 700;
 }
+
+
+.imageContainer {
+    position: relative;
+    /* Contenedor relativo para los elementos hijos posicionados absolutamente */
+}
+
+.iconImg {
+    position: absolute;
+    /* Posición absoluta para colocar el ícono sobre la imagen */
+    top: 50%;
+    /* Alinear el ícono verticalmente en el centro */
+    left: 50%;
+    /* Alinear el ícono horizontalmente en el centro */
+    transform: translate(-50%, -50%);
+    /* Centrar el ícono */
+    color: rgba(153, 149, 147, 0.664);
+    font-size: 100px;
+    transition: font-size 0.3s, color 0.3s;
+    /* Agregar transición suave */
+}
+
+.iconImg:hover {
+    color: #ffa726;
+    /* Cambiar el color cuando se pasa el cursor */
+    font-size: 120px;
+    /* Hacer el ícono más grande cuando se pasa el cursor */
+}
+/* 
+.imageContainer:hover .iconImg {
+    display: block;
+} */

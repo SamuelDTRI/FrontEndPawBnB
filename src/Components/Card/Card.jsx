@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { ContainerCard } from "./card.styled";
 
-const Card = ({image, name, city, rating, id}) => {
+const Card = ({image, name,neighborhood, rating, id}) => {
   return (
     <ContainerCard>
       <div className="imgContainer">
@@ -11,7 +11,7 @@ const Card = ({image, name, city, rating, id}) => {
       <div className="infoContainer">
         <div className="infoName">
           <p>{name}</p>
-          <p>{city}</p>
+          <p>{neighborhood}</p>
         </div>
         <div className="infoReview">
           <p>{rating}</p>

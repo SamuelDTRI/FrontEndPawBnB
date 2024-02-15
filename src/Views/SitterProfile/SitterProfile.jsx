@@ -1,48 +1,62 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardReview from "../../Components/CardReview/CardReview";
-import GallerySitters from "../../Components/GallerySitters/GallerySitters";
+import Gallery from "../../Components/Gallery/Gallery";
 import SitterDescription from "../../Components/SitterDescription/SitterDescription";
 import SitterPresentation from "../../Components/SitterPresentation/SitterPresentation";
 import SitterRates from "../../Components/SitterRates/SitterRates";
+import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
 
 import styles from "./SitterProfile.module.css";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const SitterProfile = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const infoSitter = useSelector((state) => state.sitter);
 
   useEffect(() => {
-    dispatch();
-  }, []);
+    const fetchSitterData = async () => {
+      try {
+        const actionResult = await dispatch(fetchSitter(id));
+
+        if (fetchSitter.fulfilled.match(actionResult)) {
+          const sitterData = actionResult.payload;
+          dispatch(sitterInfo(sitterData));
+        } else {
+          console.error(
+            "Error al obtener la información del cuidador:",
+            actionResult.error
+          );
+        }
+      } catch (error) {
+        console.error("Error al obtener la información del cuidador:", error);
+      }
+    };
+
+    fetchSitterData();
+  }, [dispatch, id]);
 
   return (
     <div className="container col-10 my-5">
       <section className="container mx-4">
-        <SitterPresentation /* sitterDetail={sitterDetail} */ />
+        <SitterPresentation infoSitter={infoSitter} />
       </section>
       <section className="container mt-4">
-        <h2>Acerca de Jorge</h2>
-        <SitterDescription /* sitterDetail={sitterDetail} */ />
+        <h2>Acerca de {infoSitter.name}</h2>
+        <SitterDescription infoSitter={infoSitter} />
       </section>
       <section className="container mt-4">
-        <h2>Reseñas de Jorge</h2>
-        <CardReview /* sitterDetail={sitterDetail} */ />
+        <h2>Reseñas de {infoSitter.name}</h2>
+        <CardReview infoSitter={infoSitter} />
         <button className="mt-4">Ver mas Reviews</button>
       </section>
       <section className="container mt-4">
-        <h2>Galeria de Jorge</h2>
-        <GallerySitters /* sitterDetail={sitterDetail} */ />
-      </section>
-      <section className="container mt-5">
-        <div className={styles.mapContainer}>
-          <img
-            src="https://res.cloudinary.com/dtyqmfqi2/image/upload/v1707536135/PawBnb/scrnli_31_1_2024_23-12-22_ykcnsf.png"
-            alt=""
-          />
-        </div>
+        <h2>Galeria de {infoSitter.name}</h2>
+        <Gallery infoSitter={infoSitter} />
       </section>
       <section className="col-12">
-        <SitterRates /* sitterDetail={sitterDetail} */ />
+        <SitterRates infoSitter={infoSitter} />
       </section>
     </div>
   );

@@ -2,29 +2,26 @@ import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./FormInfoSitter.module.css";
 import { Barrios } from "../../Helpers/Barrios";
+import { Cities } from "../../Helpers/Cities";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 
-
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
-  console.log(id);
-  
+
   const currentSitter = async () => {
-    console.log("hola");
     try {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
-      console.log(data);
       dispatch(sitterInfo(data));
-      console.log("he despachado");
-      console.log(infoSitter);
     } catch (error) {
-      console.log("Error al hacer el dispatch");
+      console.error(error.message);
     }
   };
 
@@ -43,7 +40,6 @@ const FormInfoSitter = () => {
         city,
         rates,
       } = values;
-      console.log("Valores: ", values);
       // Llamo a la acción updateSitter del slice para enviar los datos actualizados.
       await dispatch(
         updateSitter({
@@ -63,10 +59,10 @@ const FormInfoSitter = () => {
           },
         })
       );
-
+      await currentSitter();
       resetForm();
       setFormSent(true);
-      setTimeout(() => setFormSent(false), 5000);
+      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -74,7 +70,7 @@ const FormInfoSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch]);
+  }, [dispatch, forceUpdate]);
 
   return (
     <>
@@ -210,12 +206,12 @@ const FormInfoSitter = () => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="telefono">Telefono</label>
+              <label htmlFor="phone">Telefono</label>
               <Field
                 type="number"
                 id="phone"
                 name="phone"
-                placeholder="Tu telefono..."
+                placeholder={infoSitter.phone}
               />
               <ErrorMessage
                 name="phone"
@@ -258,13 +254,16 @@ const FormInfoSitter = () => {
             </div>
             <div className="row">
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="city">ciudad</label>
-                <Field
-                  type="text"
-                  id="city"
-                  name="city"
-                  placeholder="Ingresa tu ciudad..."
-                />
+                <label htmlFor="city">Ciudad</label>
+                <Field name="city" as="select">
+                  {Cities?.map((city) => {
+                    return (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    );
+                  })}
+                </Field>
                 <ErrorMessage
                   name="city"
                   component={() => (
@@ -276,7 +275,9 @@ const FormInfoSitter = () => {
                 <label htmlFor="neighborhood">Barrio</label>
                 <Field name="neighborhood" as="select">
                   <option disabled value="">
-                    Selecciona tu barrio
+                    {infoSitter.neighborhood
+                      ? infoSitter.neighborhood
+                      : "Selecciona tu barrio"}
                   </option>
                   {Barrios?.map((barrio) => {
                     return (
@@ -298,12 +299,12 @@ const FormInfoSitter = () => {
               <label htmlFor="address">Direccion</label>
               <Field
                 type="text"
-                id="Direccion"
-                name="Direccion"
+                id="address"
+                name="address"
                 placeholder={infoSitter.address}
               />
               <ErrorMessage
-                name="Direccion"
+                name="address"
                 component={() => (
                   <div className={styles.error}>{errors.Direccion}</div>
                 )}

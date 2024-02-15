@@ -16,7 +16,7 @@
 }
 
 .formulario {
-	border: 1px solid #ffa726;
+	border: 2px solid #ffa726;
     border-radius: 15px;
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
@@ -56,7 +56,8 @@
 
 .formulario input:focus {
 	outline: none;
-	border: 2px solid #ffa726;
+	/*border: 1px solid #ffa726;*/
+	box-shadow: inset 0 0 0 3px #ffa726;
 }
 
 .formulario .error {

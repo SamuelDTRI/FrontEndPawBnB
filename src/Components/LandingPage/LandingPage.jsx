@@ -11,6 +11,7 @@ import conveniencia from "../imagenes/conveniencia/convenince-pic.jpg"
 import soportePersonasReales from "../imagenes/soporte-personas-reales/help-center.jpg"
 import cuidadoresConfianza from "../imagenes/cuidadoresConfianza/cuidadoresDeConfianza..jpg"
 import dogPhoto from "../imagenes//programaMeet/dogdog.jpg"
+import SearchBar from "../SearchBar/SearchBar";
 
 const LandingPage=()=>{
     return(
@@ -30,9 +31,7 @@ const LandingPage=()=>{
                         de cuidadores! 
                         </div>    
                         <div className={style.contenedorInputs}>
-                            <input type="text" className={style.input} placeholder="Codigo postal "></input>
-                            <input type="text" className={style.input} placeholder="Agregar fechas"></input>
-                            <button className={style.boton}>Buscar</button>
+                           <SearchBar/> 
                         </div>
                     </div> 
                                     

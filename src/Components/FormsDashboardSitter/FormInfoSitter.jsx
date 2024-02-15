@@ -14,6 +14,7 @@ const FormInfoSitter = () => {
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
   console.log(id);
+  
   const currentSitter = async () => {
     console.log("hola");
     try {

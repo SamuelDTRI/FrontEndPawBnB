@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import CardReview from "../../Components/CardReview/CardReview";
-import Gallery from "../../Components/Gallery/Gallery";
+import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import SitterDescription from "../../Components/SitterDescription/SitterDescription";
 import SitterPresentation from "../../Components/SitterPresentation/SitterPresentation";
 import SitterRates from "../../Components/SitterRates/SitterRates";
@@ -31,7 +31,7 @@ const SitterProfile = () => {
       </section>
       <section className="container mt-4">
         <h2>Galeria de Jorge</h2>
-        <Gallery /* sitterDetail={sitterDetail} */ />
+        <GallerySitters /* sitterDetail={sitterDetail} */ />
       </section>
       <section className="container mt-5">
         <div className={styles.mapContainer}>

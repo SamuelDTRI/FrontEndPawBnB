@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./LinksDashboardSitter.module.css";
-import Gallery from "../Gallery/Gallery";
+import Gallery from "../GallerySitters/GallerySitters";
 import {useDispatch } from "react-redux";
 import { infoLink } from "../../redux/dashboardsitter";
 

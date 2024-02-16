@@ -66,16 +66,35 @@ export const ContainerFilter = styled.div`
             }
          }
 
+         .select{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
 
-         .select-box{
-            border: none;
-            appearance: none;
-            background-color: #FFFFFF;
-            color: #959595;
-            border-radius: 8px;
-            width: 80px;
-            padding-left: 5px;
-            height: 30px;
+            .select-box{
+               border: none;
+               appearance: none;
+               background-color: #FFFFFF;
+               color: #959595;
+               border-radius: 8px;
+               width: 120px;
+               padding-left: 7px;
+               height: 30px;
+            }
+
+            .arrow{
+               display: flex;
+               width: 13px;
+               height: 13px;
+               right: 7px;
+               position: absolute;
+
+               img{
+                  width: 100%;
+                  height: 100%;
+               }
+            }
          }
       }
 

@@ -5,6 +5,7 @@ import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
 
 const RESULT_PAGE = 12;
+const imgDefautl = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
 
 const Cards = () => {
   const dogsisters = useSelector((state) => state.dogsister.dogsisters);
@@ -46,10 +47,12 @@ const Cards = () => {
           <Card
             key={allDogsister?.id}
             id={allDogsister?.id}
-            // image={allDogsister?.photos[0]?.url}
+            image={allDogsister?.photos? allDogsister?.photos[0]?.url : imgDefautl }
             name={allDogsister?.name}
-            neighborhood={allDogsister?.neighborhood}
+            neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
             rating={"⭐⭐⭐"}
+            city={allDogsister?.city}
+            pay={allDogsister?.pay}
           />
         ))}
       </div>

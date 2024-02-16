@@ -18,8 +18,8 @@ export const dogsisterSlice = createSlice({
       const copyDogsister = state.dogsisters;
 
       const filteredDogSisters = copyDogsister.filter((dogSister) => {
-        if (dogSister.city) {
-          return action.payload === 'all' || dogSister.city === action.payload;
+        if (dogSister.neighborhood) {
+          return action.payload === 'all' || dogSister.neighborhood === action.payload;
         }
         return false;
       });
@@ -32,9 +32,9 @@ export const dogsisterSlice = createSlice({
 
       const filteredDogSistersRates = copyDogsister.filter(dogsister => {
 
-        if(dogsister.rates){
-          let rates = parseInt(dogsister.rates);
-          return rates >= action.payload.minRates && rates <= action.payload.maxRates;
+        if(dogsister.pay){
+          let pay = parseInt(dogsister.pay);
+          return pay >= action.payload.minRates && pay <= action.payload.maxRates;
         }
       });
 

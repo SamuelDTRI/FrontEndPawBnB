@@ -9,7 +9,7 @@ const SitterPresentation = ({ infoSitter }) => {
           <div className={styles.imageContainer}>
             <img
               src={infoSitter.photoProfile}
-              alt="profile pic"
+              alt={infoSitter.name}
               className={styles.img}
             />
           </div>

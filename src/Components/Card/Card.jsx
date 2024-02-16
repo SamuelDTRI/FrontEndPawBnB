@@ -19,7 +19,7 @@ const Card = ({image, name,neighborhood, rating, id, city, pay}) => {
         </div>
         <div className="infoBtn">
           <button className="btnBooking">Reservar ahora</button>
-          <Link to={`/sitters/${id}`}>
+          <Link to={`/sitterProfile/${id}`}>
             <button className="btnProfile">Ver perfil</button>
           </Link>
         </div>

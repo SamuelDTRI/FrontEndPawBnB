@@ -3,15 +3,15 @@ import CardReview from "../../Components/CardReview/CardReview";
 import SitterDescription from "../../Components/SitterDescription/SitterDescription";
 import SitterPresentation from "../../Components/SitterPresentation/SitterPresentation";
 import SitterRates from "../../Components/SitterRates/SitterRates";
-import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
-
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Gallery from "../../Components/Gallery/Gallery";
 
+import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 const SitterProfile = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const infoSitter = useSelector((state) => state.sitter);
 
   useEffect(() => {

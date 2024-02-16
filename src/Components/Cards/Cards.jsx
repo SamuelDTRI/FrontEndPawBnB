@@ -28,7 +28,7 @@ const Cards = () => {
     const nextPage = currentPage + 1;
     const firstIndex = nextPage * RESULT_PAGE;
 
-    if (firstIndex < totalElementos) {
+    if (firstIndex >= totalElementos) {
       setCurrentPage(nextPage);
     }
   };

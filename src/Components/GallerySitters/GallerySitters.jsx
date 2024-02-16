@@ -10,7 +10,7 @@ const GallerySitters = () => {
   //const { id } = useParams();
 
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
 
   const [file, setFile] = useState(null);
@@ -40,21 +40,21 @@ const GallerySitters = () => {
   };
 
   const handleFormSubmit = async () => {
-    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
-      photos: imgGallery
-    })
     try {
+      const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
+        photos: imgGallery,
+      });
       console.log(result.data);
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleDeletePhoto = async (index) => {
     try {
       await axios.delete(`http://localhost:3000/sitters/${id}/photos/${index}`);
       currentSitter(); //actualizamos la galeria despues de la eliminacion
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -65,13 +65,11 @@ const GallerySitters = () => {
 
   return (
     <div className={styles.galleryContainer}>
-
-      <div className={styles.tituloContainer}> 
+      <div className={styles.tituloContainer}>
         <h1 className={styles.titulo}>MI GALERIA</h1>
       </div>
 
       <div className={styles.formContainer}>
-
         <div>
           <div className={styles.iconContainer}>
             <i className="bi bi-cloud-upload"></i>
@@ -79,47 +77,54 @@ const GallerySitters = () => {
 
           <div className={styles.uploadContainer}>
             <Formik
-            initialValues={{
-              photos: infoSitter?.photos || [],
-            }}
-            onSubmit={async (values) => {
-              handleFormSubmit(values, dispatch);
-            }}
+              initialValues={{
+                photos: infoSitter?.photos || [],
+              }}
+              onSubmit={async (values) => {
+                handleFormSubmit(values, dispatch);
+              }}
             >
-            {() => (
-              <Form>
-                <input
-                className={styles.inputStyle}
-                  onChange={handleChange}
-                  name="image"
-                  type="file"
-                  id="fileInput"
-                  required
-                  accept="image/png, image/jpeg, image/jpg, image/jfif"
-                />
-                <button type="submit" className={styles.btnSubmit}>
-                  SUBIR IMAGEN
-                </button>
-              </Form>
-            )}
+              {() => (
+                <Form>
+                  <input
+                    className={styles.inputStyle}
+                    onChange={handleChange}
+                    name="image"
+                    type="file"
+                    id="fileInput"
+                    required
+                    accept="image/png, image/jpeg, image/jpg, image/jfif"
+                  />
+                  <button type="submit" className={styles.btnSubmit}>
+                    SUBIR IMAGEN
+                  </button>
+                </Form>
+              )}
             </Formik>
           </div>
-
         </div>
       </div>
 
       <div className={styles.imgsRender}>
         <div className={styles.gallery}>
-          <img src={imgGallery} alt="Aqui Ira Tu Image" className={styles.photoContainer}/>
+          <img
+            src={imgGallery}
+            alt="Aqui Ira Tu Image"
+            className={styles.photoContainer}
+          />
           {infoSitter.photos?.map((photo, index) => (
             <div key={index} className={styles.photoContainer}>
               <img src={photo.url} alt={`Photo ${index}`} />
-              <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
+              <button
+                onClick={() => handleDeletePhoto(index)}
+                className={styles.deleteButton}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>
       </div>
-
     </div>
   );
 };

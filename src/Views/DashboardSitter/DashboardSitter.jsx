@@ -6,18 +6,20 @@ import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
+import { useParams } from "react-router-dom";
 
 const DashboardSitter = () => {
   const [file, setFile] = useState("");
   const [imgProfile, setImgProfile] = useState("");
   const dispatch = useDispatch();
+  const {id} = useParams();
 
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
@@ -41,7 +43,7 @@ const DashboardSitter = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await axios.put("http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9", {
+    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
       photoProfile: imgProfile
     })
     try {

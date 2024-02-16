@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Card from "../Card/Card";
 import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
+import dogSad from '../../assets/img/dogSad.png';
 
 const RESULT_PAGE = 12;
 const imgDefautl = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
@@ -42,20 +43,27 @@ const Cards = () => {
   return (
     <ContainerCards>
       <h2>Cuidadores en CABA</h2>
-      <div className="cards">
-        {items.map((allDogsister) => (
-          <Card
-            key={allDogsister?.id}
-            id={allDogsister?.id}
-            image={allDogsister?.photos? allDogsister?.photos[0]?.url : imgDefautl }
-            name={allDogsister?.name}
-            neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
-            rating={"⭐⭐⭐"}
-            city={allDogsister?.city}
-            pay={allDogsister?.pay}
-          />
-        ))}
-      </div>
+      {items.length>0?
+        <div className="cards">
+          {items.map((allDogsister) => (
+            <Card
+              key={allDogsister?.id}
+              id={allDogsister?.id}
+              image={allDogsister?.photos? allDogsister?.photos[0]?.url : imgDefautl }
+              name={allDogsister?.name}
+              neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
+              rating={"⭐⭐⭐"}
+              city={allDogsister?.city}
+              pay={allDogsister?.pay}
+            />
+          ))}
+        </div>
+        :
+        <div className="empty">
+          <div className="dogSad"><img src={dogSad} alt="Perro triste" /></div>
+          <h3>Cuidadores no encontrados.</h3>
+        </div>
+      }
       <Pagination
         pages={pages}
         currentPage={currentPage}

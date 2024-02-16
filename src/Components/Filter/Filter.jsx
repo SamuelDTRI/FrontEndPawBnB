@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { setLocationFilter, setPriceFilter } from "../../redux/dogsisterSlice";
+import { setFilters } from "../../redux/dogsisterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ContainerFilter } from "./filter.styled";
 import filterIcon from '../../assets/img/filterIcon.svg';
@@ -12,25 +12,7 @@ import star from '../../assets/img/star.svg';
 const Filter = () => {
     const dispatch = useDispatch();
     
-    const dogsisters = useSelector((state) => state.dogsister.dogsisters);
-    let select = null;
-    const handleLocationFilter = (event) => {
-        if(event.target.value == 'all'){
-            select = null;
-            dispatch(setLocationFilter(event.target.value));
-        }else{
-            select = true;
-            dispatch(setLocationFilter(event.target.value));
-        }
-    };
-
-    const handlePriceFilter = (event) => {
-        const minRates = parseInt(document.getElementById('minRates').value);
-        const maxRates = parseInt(document.getElementById('maxRates').value);
-
-        dispatch(setPriceFilter({ minRates, maxRates }));
-    };
-
+    const dogsisters = useSelector((state) => state.dogsister.copyDogsisters);
 
     // Obtener ciudades únicas
     const [uniqueNeighborhood, setUniqueNeighborhood] = useState([]);
@@ -42,6 +24,23 @@ const Filter = () => {
         }
     }, [dogsisters]);
 
+    const handleFilters = (event) => {
+        const objFilter = {location:null, price:null};
+
+        if(document.getElementById('location').value){
+            objFilter.location = document.getElementById('location').value;
+        }
+
+        if(document.getElementById('minRates').value && document.getElementById('maxRates').value){
+            const minRates = parseInt(document.getElementById('minRates').value);
+            const maxRates = parseInt(document.getElementById('maxRates').value);
+
+            objFilter.price = { minRates:minRates, maxRates:maxRates };
+        }
+        console.log(objFilter);
+        dispatch(setFilters(objFilter));
+    }
+
     return(
         <ContainerFilter>
             <div className="filter-title"><img src={filterIcon} alt="filterIcon" /><span>FILTROS</span></div>
@@ -52,22 +51,15 @@ const Filter = () => {
                         <p className="city-ubi">Ubicación</p>
                     </div>
                     <div className="select">
-                        <select className='select-box' onChange={handleLocationFilter}>
+                        <select className='select-box' id="location" onChange={handleFilters}>
                             <option value="all">Todos</option>
                             {uniqueNeighborhood.map((city, index) => (
                                 <option key={index} value={city}>{city}</option>
                             ))}
                         </select>
-                        {
-                            select?
-                            <div className="arrow">
-                                <p>X</p>
-                            </div>:
-                            <div className="arrow">
-                                <img src={arrowIcon} alt="arrow down" />
-                            </div>
-                            
-                        }
+                        <div className="arrow">
+                            <img src={arrowIcon} alt="arrow down" />
+                        </div>
                     </div>
                 </div>
 
@@ -76,7 +68,7 @@ const Filter = () => {
                     <div className="rates-inputs">
                         <input className="input-rates" type="text" name="minRates" id="minRates" placeholder="Mínimo" />
                         <input className="input-rates" type="text" name="maxRates" id="maxRates" placeholder="Máximo" />
-                        <button className="btn-rates" onClick={handlePriceFilter}>Filtrar</button>
+                        <button className="btn-rates" onClick={handleFilters}>Filtrar</button>
                     </div>
                 </div>
 

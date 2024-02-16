@@ -14,35 +14,35 @@ export const dogsisterSlice = createSlice({
       state.dogsisters = action.payload;
     },
 
-    setLocationFilter: (state, action) => {
-      const copyDogsister = state.dogsisters;
-
-      const filteredDogSisters = copyDogsister.filter((dogSister) => {
-        if (dogSister.neighborhood) {
-          return action.payload === 'all' || dogSister.neighborhood === action.payload;
-        }
-        return false;
-      });
-
+    setFilters: (state, action) => {
+      const { location, price } = action.payload;
+      let filteredDogSisters = state.copyDogsisters;
+    
+      if (location) {
+        filteredDogSisters = filteredDogSisters.filter(dogSister => {
+          if (dogSister.neighborhood) {
+            return location === 'all' || dogSister.neighborhood === location;
+          }
+          return false;
+        });
+      }
+    
+      if (price) {
+        const { minRates, maxRates } = price;
+        filteredDogSisters = filteredDogSisters.filter(dogsister => {
+          if (dogsister.pay) {
+            let pay = parseInt(dogsister.pay);
+            return pay >= minRates && pay <= maxRates;
+          }
+          return false;
+        });
+      }
+    
       state.dogsisters = filteredDogSisters;
-    },
-
-    setPriceFilter: (state, action) => {
-      const copyDogsister = state.dogsisters;
-
-      const filteredDogSistersRates = copyDogsister.filter(dogsister => {
-
-        if(dogsister.pay){
-          let pay = parseInt(dogsister.pay);
-          return pay >= action.payload.minRates && pay <= action.payload.maxRates;
-        }
-      });
-
-      state.dogsisters = filteredDogSistersRates;
     },
 
   },
 });
 
-export const { addDogsister, setLocationFilter, setPriceFilter } = dogsisterSlice.actions;
+export const { addDogsister, setFilters } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

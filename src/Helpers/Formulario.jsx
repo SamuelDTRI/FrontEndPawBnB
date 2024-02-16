@@ -259,20 +259,17 @@ const Formulario = (text, role) => {
                     )}
                   />
                 </div>
-
-
-                 <button type="submit">REGISTRARSE</button>
+                  <button type="submit">REGISTRARSE</button>
                   {formularioEnviado && (
                     <p className={styles.exito}>Formulario enviado con exito!</p>
                   )}
-                  
-              <div className={styles.googleButton}>
-               {!googleUser && (<GoogleButton
-                  className="googleButton"
-                  label="Regístrate con Google"
-                  onClick={handleGoogleSignIn}
-                />)}
-              </div>
+                  <div className={styles.googleButton}>
+                  {!googleUser && (<GoogleButton
+                      className="googleButton"
+                      label="Regístrate con Google"
+                      onClick={handleGoogleSignIn}
+                    />)}
+                  </div>
             </div>
           </Form>
         )}

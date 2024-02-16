@@ -110,49 +110,51 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
-            <h2>LOG IN</h2>
-            <div>
-              <label htmlFor="correo">Email</label>
-              <Field
-                type="email"
-                id="correo"
-                name="email"
-                placeholder="example@gmail.com"
-              />
-              <ErrorMessage
-                name="email"
-                component={() => (
-                  <div className={styles.error}>{errors.email}</div>
-                )}
-              />
-            </div>
-            <div>
-              <label htmlFor="contraseña">Contraseña</label>
-              <Field
-                type="password"
-                id="contraseña"
-                name="password"
-                placeholder="Tu Contraseña..."
-              />
-              <ErrorMessage
-                name="password"
-                component={() => (
-                  <div className={styles.error}>{errors.password}</div>
-                )}
-              />
-            </div>
-            <button type="submit">Iniciar Sesión</button>
-            {formularioEnviado && (
-              <p className={styles.exito}>Formulario enviado con éxito!</p>
-            )}
-            {error && <p>{error}</p>}
-              <br/>
-            <div className={styles.googleButton}>
-              <GoogleButton
+            <div className={styles.container}>
+              <h2>LOG IN</h2>
+              <div>
+                <label htmlFor="correo">Email</label>
+                <Field
+                  type="email"
+                  id="correo"
+                  name="email"
+                  placeholder="example@gmail.com"
+                />
+                <ErrorMessage
+                  name="email"
+                  component={() => (
+                    <div className={styles.error}>{errors.email}</div>
+                  )}
+                />
+              </div>
+              <div>
+                <label htmlFor="contraseña">Contraseña</label>
+                <Field
+                  type="password"
+                  id="contraseña"
+                  name="password"
+                  placeholder="Tu Contraseña..."
+                />
+                <ErrorMessage
+                  name="password"
+                  component={() => (
+                    <div className={styles.error}>{errors.password}</div>
+                  )}
+                />
+              </div>
+              <button type="submit">Iniciar Sesión</button>
+              {formularioEnviado && (
+                <p className={styles.exito}>Formulario enviado con éxito!</p>
+              )}
+              {error && <p>{error}</p>}
+              <br />
+              <div className={styles.googleButton}>
+                <GoogleButton
                   className="googleButton"
                   label="Inicia sesión con Google"
                   onClick={handleGoogleSignIn}
                 />
+              </div>
             </div>
           </Form>
         )}

@@ -28,6 +28,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner/>} />
         <Route path="/sitterProfile/:id" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />

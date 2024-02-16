@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  linkActive : "miInfo"
+  linkActive : "miInfo",
+  linksActiveOwner : "miInfo"
 };
 
 export const dashboardsitterSlice = createSlice({
@@ -12,8 +13,12 @@ export const dashboardsitterSlice = createSlice({
     infoLink: (state, action) => {
       state.linkActive = action.payload;
     },
+    infoLinkOwner: (state,action)=>{
+      state.linksActiveOwner = action.payload
+    }
   },
+
 });
 
-export const {infoLink} = dashboardsitterSlice.actions;
+export const {infoLink, infoLinkOwner} = dashboardsitterSlice.actions;
 export default dashboardsitterSlice.reducer;

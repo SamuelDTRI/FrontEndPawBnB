@@ -115,6 +115,7 @@ const GallerySitters = () => {
       {uploadSuccess && (
         <div className={styles.notification}>La imagen se ha subido con éxito</div>
       )}
+      
         <div className={styles.gallery}>
           <img src={imgGallery} alt="Asi se vera tu imagen" />
           {infoSitter.photos?.map((photo, index) => (

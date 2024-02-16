@@ -5,7 +5,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sitterInfo } from "../../redux/sitterSlice";
-import imgLogo from "../../Components/imagenes/welcome/imgLogo.jpg";
 
 const GallerySitters = () => {
   const { id } = useParams();
@@ -108,29 +107,23 @@ const GallerySitters = () => {
                 </button>
               </Form>
             )}
-
             </Formik>
           </div>
-
         </div>
       </div>
 
       {uploadSuccess && (
         <div className={styles.notification}>La imagen se ha subido con éxito</div>
       )}
-
-    
-          <div className={styles.gallery}>
-            <img src={imgGallery} alt="Asi se vera tu imagen" />
-            {infoSitter.photos?.map((photo, index) => (
-              <div key={index} className={styles.photoContainer}>
-                <img src={photo.url} alt={`Photo ${index}`} />
-                <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
-              </div>
-            ))}    
-        
+        <div className={styles.gallery}>
+          <img src={imgGallery} alt="Asi se vera tu imagen" />
+          {infoSitter.photos?.map((photo, index) => (
+            <div key={index} className={styles.photoContainer}>
+              <img src={photo.url} alt={`Photo ${index}`} />
+              <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
+            </div>
+        ))}      
       </div>
-
     </div>
   );
 };

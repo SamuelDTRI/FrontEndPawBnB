@@ -11,6 +11,7 @@ import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
 import { googleLoginSuccess } from "../redux/authSlice.js";
+import DogSignUp from "../Components/imagenes/DogSignUp/DogSignUp.png";
 
 const SignupSchema = Yup.object().shape({
   password: Yup.string()
@@ -32,6 +33,7 @@ const Formulario = (text, role) => {
   const { googleSignIn, googleUser } = UserAuth();
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
+
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -79,6 +81,15 @@ const Formulario = (text, role) => {
       fetchUserData()
     }
   }, [googleUser, navigate,dispatch, currentPath]);
+
+  /*useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch({ type: "SignUp", payload: null });
+    }, 5000);
+    return () => clearTimeout(timeoutId);
+  }, [error, dispatch]);*/
+
+
   useEffect(() => {
     // Redireccionamos al usuario después de un inicio de sesión exitoso
     if (userRole === "Owner") {
@@ -87,6 +98,7 @@ const Formulario = (text, role) => {
       navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
     }
   }, [userRole, userId, navigate]);
+
   return (
     
       <Formik
@@ -284,5 +296,6 @@ const Formulario = (text, role) => {
     
   );
 };
+
 
 export default Formulario;

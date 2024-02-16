@@ -144,7 +144,7 @@ const LoginForm = () => {
               <p className={styles.exito}>Formulario enviado con éxito!</p>
             )}
             {error && <p>{error}</p>}
-               <br/>
+              
              <div className={styles.googleButton}>
                <GoogleButton
                   className="googleButton"

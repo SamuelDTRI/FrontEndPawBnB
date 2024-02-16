@@ -9,7 +9,6 @@
 
 }
 .contenedor {
-	min-height: 100vh;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
@@ -67,6 +66,7 @@
 	text-align: left;
 }
 .googleButton{
+	justify-content: right;
 	margin-top: 25px;
 	border-radius: 15px;
 }

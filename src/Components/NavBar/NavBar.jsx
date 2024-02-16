@@ -12,6 +12,11 @@ const NavBar = () => {
   const navigate = useNavigate();
   const userRole = useSelector((state) => state.auth.userRole);
 
+  const logOutButtonText= " SALIR";
+  const registerButtonText = "REGISTRATE";
+  const loginButtonText = "INGRESAR";
+
+
   const handleSignOut = async ()=>{
     try {
       // deslogueo de google
@@ -34,7 +39,9 @@ const NavBar = () => {
     <div className={`container-fluid ${style.navbar}`}>
       <nav className="navbar border-bottom bg-white">
         <div className={style.imagen}>
-          <Link to="/"><img src={logo} alt="PawBnb" /></Link>
+          <Link to="/">
+            <img src={logo} alt="PawBnb" />
+          </Link>
         </div>
  
         <div className="col-12 col-md-3 m-1">
@@ -42,19 +49,22 @@ const NavBar = () => {
             <button
               className="btn border-warning text-warning"
               onClick={handleSignOut}>
-              LogOut
+              <span className="iconButton">
+                <i className="bi bi-box-arrow-right"></i>
+              </span>
+              {`${logOutButtonText}`}
             </button>
           ) : (
             <>
               <button
-                className="btn  me-2 border-warning text-warning"
+                className="btn btn-warning me-2 border-warning text-light"
                 onClick={handleSingUpRedir}>
-                Regístrate
+                {`${registerButtonText}`}
               </button>
               <button
                 className="btn border-warning text-warning"
                 onClick={handleLoginRedir}>
-                Login
+                {`${loginButtonText}`}
               </button>
             </>
           )}

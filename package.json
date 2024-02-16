@@ -16,6 +16,7 @@
     "bootstrap-icons": "^1.11.3",
     "firebase": "^10.8.0",
     "formik": "^2.4.5",
+    "mdb-ui-kit": "^7.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "2.10.0",
     "react-dom": "^18.2.0",

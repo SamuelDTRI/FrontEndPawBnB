@@ -5,16 +5,17 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sitterInfo } from "../../redux/sitterSlice";
+import imgLogo from "../../Components/imagenes/welcome/imgLogo.jpg";
 
 const GallerySitters = () => {
-  //const { id } = useParams();
+  const { id } = useParams();
 
   const dispatch = useDispatch();
-  const {id} = useParams();
   const infoSitter = useSelector((state) => state.sitter);
 
   const [file, setFile] = useState(null);
   const [imgGallery, setImgGallery] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const currentSitter = async () => {
     try {
@@ -40,11 +41,13 @@ const GallerySitters = () => {
   };
 
   const handleFormSubmit = async () => {
-    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
-      photos: imgGallery
-    })
     try {
+      const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
+        photos: imgGallery
+      })
       console.log(result.data);
+      setUploadSuccess(true);
+      currentSitter();
     } catch(error){
       console.log(error);
     }
@@ -74,7 +77,9 @@ const GallerySitters = () => {
 
         <div>
           <div className={styles.iconContainer}>
-            <i className="bi bi-cloud-upload"></i>
+            <label htmlFor="fileInputs">
+              <i className="bi bi-cloud-upload"></i>
+            </label>
           </div>
 
           <div className={styles.uploadContainer}>
@@ -93,31 +98,37 @@ const GallerySitters = () => {
                   onChange={handleChange}
                   name="image"
                   type="file"
-                  id="fileInput"
+                  id="fileInputs"
                   required
                   accept="image/png, image/jpeg, image/jpg, image/jfif"
+                  style={{ display: "none" }}
                 />
                 <button type="submit" className={styles.btnSubmit}>
                   SUBIR IMAGEN
                 </button>
               </Form>
             )}
+
             </Formik>
           </div>
 
         </div>
       </div>
 
-      <div className={styles.imgsRender}>
-        <div className={styles.gallery}>
-          <img src={imgGallery} alt="Aqui Ira Tu Image" className={styles.photoContainer}/>
-          {infoSitter.photos?.map((photo, index) => (
-            <div key={index} className={styles.photoContainer}>
-              <img src={photo.url} alt={`Photo ${index}`} />
-              <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
-            </div>
-          ))}
-        </div>
+      {uploadSuccess && (
+        <div className={styles.notification}>La imagen se ha subido con éxito</div>
+      )}
+
+    
+          <div className={styles.gallery}>
+            <img src={imgGallery} alt="Asi se vera tu imagen" />
+            {infoSitter.photos?.map((photo, index) => (
+              <div key={index} className={styles.photoContainer}>
+                <img src={photo.url} alt={`Photo ${index}`} />
+                <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
+              </div>
+            ))}    
+        
       </div>
 
     </div>

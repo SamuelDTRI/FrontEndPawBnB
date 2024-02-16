@@ -4,15 +4,48 @@
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 }
 
+/* ESTILOS EN CASO DE ESTAR EN PERFIL CON FOTO */
+
+.imgProfileContainer {
+    position: relative;
+    padding-top: 30px;
+    padding-left: 19px;
+}
+
+/* ESTILOS EN CASO DE ESTAR EN LA PERFIL SIN FOTO */
+
+.noImgProfileContainer {
+    padding-top: 10px;
+}
+
+.textDeNoImg {
+    margin: 20px;
+}
+
+/* ESTILOS EN CASO DE ESTAR EN LA DASHBOARD CON FOTO */
+
 .profilePicContainer {
     padding: 10px;
-align-items: center;
-justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .profilePicContainer img {
-width: 100%;
-height: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.imgGalleryContainer {
+    position: relative;
+    padding-top: 30px;
+}
+
+.imageProfile {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 20px;
+    overflow: hidden;
 }
 
 .formContainer {
@@ -27,33 +60,26 @@ height: auto;
 }
 
 
-.imageContainer {
-    position: relative;
-    /* Contenedor relativo para los elementos hijos posicionados absolutamente */
-}
+/* ESTILOS EN CASO DE ESTAR EN LA DASHBOARD SIN FOTO */
 
 .iconImg {
     position: absolute;
-    /* Posición absoluta para colocar el ícono sobre la imagen */
     top: 50%;
-    /* Alinear el ícono verticalmente en el centro */
     left: 50%;
-    /* Alinear el ícono horizontalmente en el centro */
     transform: translate(-50%, -50%);
-    /* Centrar el ícono */
     color: rgba(153, 149, 147, 0.664);
     font-size: 100px;
     transition: font-size 0.3s, color 0.3s;
-    /* Agregar transición suave */
 }
 
 .iconImg:hover {
     color: #ffa726;
-    /* Cambiar el color cuando se pasa el cursor */
     font-size: 120px;
-    /* Hacer el ícono más grande cuando se pasa el cursor */
 }
-/* 
-.imageContainer:hover .iconImg {
-    display: block;
-} */
+
+
+/* OTROS */
+
+.btn{
+    margin-top: 15px;
+}

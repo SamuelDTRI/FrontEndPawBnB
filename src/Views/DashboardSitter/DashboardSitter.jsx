@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
 import { useParams } from "react-router-dom";
+import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 
 const DashboardSitter = () => {
   const [file, setFile] = useState("");
@@ -68,33 +69,58 @@ const DashboardSitter = () => {
             
             {
               linkActivo === "miGaleria"? (
-              <div className={styles.imageContainer}>
-                <img
-                  src={imgProfile || lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
+                
+              <div className={styles.imageProfileContainer}>
 
-                <div className={styles.iconImg}>
-                  <i className="bi bi-card-image"></i>
-                </div>
+                  {
+                    lastPhoto ? (
+                      <div className={styles.imgGalleryContainer}>
+                        <img
+                          src={imgProfile || lastPhoto}
+                          alt={infoSitter.name}
+                          className={styles.imageProfile}
+                        />
+                        <label htmlFor="fileInput" className={styles.iconImg}>
+                          <i className="bi bi-person-bounding-box"></i>
+                        </label>   
+                      </div>
+                    ) : (
+                      <div className={styles.imgProfileContainer}>
+                        <img
+                          src={imgProfile || NoPhotoProfile}
+                          alt={infoSitter.name}
+                          className={styles.imageProfile}
+                        />
+                        <label htmlFor="fileInput" className={styles.iconImg}>
+                          <i className="bi bi-person-bounding-box"></i>
+                        </label>    
+                      </div>
+                  )}
 
                 <div>
                   <form onSubmit={event => handleSubmit(event)}>
                     <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
-                    accept='image/png, image/jpeg, image/jpg, image/jfif' />    
+                    accept='image/png, image/jpeg, image/jpg, image/jfif'  style={{ display: "none" }}/>    
                     <div>
                       <button className={styles.btn}>ACTUALIZAR FOTO DE PERFIL</button>
                     </div>        
                   </form>            
                 </div>
+
               </div>) : (
-              <div className={styles.imageContainer}>
-                <img
-                  src={lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
+              <div className={styles.noImgProfileContainer}>
+                { lastPhoto ? (
+                  <img
+                    src={lastPhoto}
+                    alt={infoSitter.name}
+                    className={styles.imageProfile}
+                  />) : (
+                    <div className={styles.noImgProfileContainer}>
+                      <img className={styles.imageProfile} src={NoPhotoProfile} alt="No hay foto de perfil" />
+                      <p className={styles.textDeNoImg}>Actualiza Tu Foto De Perfil En Mi Galeria</p>
+                    </div>
+                  )
+                }
               </div>)
             }
           </div>

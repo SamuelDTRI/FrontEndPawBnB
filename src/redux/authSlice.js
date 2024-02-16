@@ -36,10 +36,17 @@ const authSlice = createSlice({
 export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export const loginUser = (formData) => async (dispatch) => {
+    dispatch(loginStart());
     console.log(formData)
     try {
         const response = await axios.post(`http://localhost:3000/login`, formData); 
+        const { userId, userRole} = response.data
         dispatch(loginSuccess(response.data)); 
+        console.log(response.data)
+        return {
+            userId,
+            userRole
+        }
     } catch (error) {
         if (error.response) {
             const errorMessage = error.response.data.error;

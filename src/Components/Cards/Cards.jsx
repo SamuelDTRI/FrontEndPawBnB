@@ -48,7 +48,7 @@ const Cards = () => {
             id={allDogsister?.id}
             // image={allDogsister?.photos[0]?.url}
             name={allDogsister?.name}
-            city={allDogsister?.city}
+            neighborhood={allDogsister?.neighborhood}
             rating={"⭐⭐⭐"}
           />
         ))}

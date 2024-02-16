@@ -118,6 +118,13 @@
 	width: auto;
 }
 
+.imagenDogSignUp {
+    object-fit:scale-down;
+    width: 500px;
+    height: 430px; 
+
+}
+
 /*.form select {
     width: 100%;
     background-color: #f4f4f4;

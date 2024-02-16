@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import CardReview from "../../Components/CardReview/CardReview";
-import Gallery from "../../Components/Gallery/Gallery";
 import SitterDescription from "../../Components/SitterDescription/SitterDescription";
 import SitterPresentation from "../../Components/SitterPresentation/SitterPresentation";
 import SitterRates from "../../Components/SitterRates/SitterRates";
+import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
 
-import styles from "./SitterProfile.module.css";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -53,7 +52,7 @@ const SitterProfile = () => {
       </section>
       <section className="container mt-4">
         <h2>Galeria de {infoSitter.name}</h2>
-        <Gallery infoSitter={infoSitter} />
+        <GallerySitters infoSitter={infoSitter} />
       </section>
       <section className="col-12">
         <SitterRates infoSitter={infoSitter} />

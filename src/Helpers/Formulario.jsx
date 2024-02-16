@@ -11,6 +11,7 @@ import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
 import { googleLoginSuccess } from "../redux/authSlice.js";
+import DogSignUp from "../Components/imagenes/DogSignUp/DogSignUp.png";
 
 const SignupSchema = Yup.object().shape({
   password: Yup.string()
@@ -278,5 +279,6 @@ const Formulario = (text, role) => {
     
   );
 };
+
 
 export default Formulario;

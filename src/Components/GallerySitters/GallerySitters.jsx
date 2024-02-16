@@ -17,7 +17,7 @@ const GallerySitters = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);

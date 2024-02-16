@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./LinksDashboardSitter.module.css";
 import Gallery from "../GallerySitters/GallerySitters";
 import {useDispatch } from "react-redux";
-import { infoLink } from "../../redux/dashboardsitter";
+import { infoLink } from "../../redux/linksActives";
 
 const LinksDashboardSitter = () => {
 const dispatch = useDispatch()

@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { sitterInfo } from "../../redux/sitterSlice";
 
 const GallerySitters = () => {
-  const { id } = useParams();
+  //const { id } = useParams();
 
   const dispatch = useDispatch();
+  const {id} = useParams();
   const infoSitter = useSelector((state) => state.sitter);
 
   const [file, setFile] = useState(null);
@@ -17,7 +18,7 @@ const GallerySitters = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
@@ -39,7 +40,7 @@ const GallerySitters = () => {
   };
 
   const handleFormSubmit = async () => {
-    const result = await axios.put(`http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9`, {
+    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
       photos: imgGallery
     })
     try {
@@ -51,7 +52,7 @@ const GallerySitters = () => {
 
   const handleDeletePhoto = async (index) => {
     try {
-      await axios.delete(`http://localhost:3000/sitters/f1e014dd-db26-4836-9ffc-ea102887b4d9/photos/${index}`);
+      await axios.delete(`http://localhost:3000/sitters/${id}/photos/${index}`);
       currentSitter(); //actualizamos la galeria despues de la eliminacion
     } catch(error) {
       console.log(error);
@@ -65,15 +66,18 @@ const GallerySitters = () => {
   return (
     <div className={styles.galleryContainer}>
 
-      <div className={styles.formContainer}>
-        
-        <div>
+      <div className={styles.tituloContainer}> 
+        <h1 className={styles.titulo}>MI GALERIA</h1>
+      </div>
 
-          <div className={styles.uploadImg}>
+      <div className={styles.formContainer}>
+
+        <div>
+          <div className={styles.iconContainer}>
             <i className="bi bi-cloud-upload"></i>
           </div>
-          
-          <div>
+
+          <div className={styles.uploadContainer}>
             <Formik
             initialValues={{
               photos: infoSitter?.photos || [],
@@ -85,6 +89,7 @@ const GallerySitters = () => {
             {() => (
               <Form>
                 <input
+                className={styles.inputStyle}
                   onChange={handleChange}
                   name="image"
                   type="file"
@@ -92,8 +97,8 @@ const GallerySitters = () => {
                   required
                   accept="image/png, image/jpeg, image/jpg, image/jfif"
                 />
-                <button type="submit" className={styles.btn}>
-                  SUBIR IMAGENES
+                <button type="submit" className={styles.btnSubmit}>
+                  SUBIR IMAGEN
                 </button>
               </Form>
             )}
@@ -101,18 +106,18 @@ const GallerySitters = () => {
           </div>
 
         </div>
-
       </div>
 
       <div className={styles.imgsRender}>
-        <img src={imgGallery} alt="" />
-
-        {infoSitter.photos?.map((photo, index) => (
-          <div key={index}>
-            <img className={styles.imgs} src={photo.url} alt={`Photo ${index}`} />
-            <button onClick={() => handleDeletePhoto(index)}>X</button>
-          </div>
-        ))}
+        <div className={styles.gallery}>
+          <img src={imgGallery} alt="Aqui Ira Tu Image" className={styles.photoContainer}/>
+          {infoSitter.photos?.map((photo, index) => (
+            <div key={index} className={styles.photoContainer}>
+              <img src={photo.url} alt={`Photo ${index}`} />
+              <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>
@@ -120,4 +125,3 @@ const GallerySitters = () => {
 };
 
 export default GallerySitters;
-

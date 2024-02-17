@@ -24,7 +24,7 @@ const Filter = () => {
         }
     }, [dogsisters]);
 
-    const handleFilters = (event) => {
+    const handleFilters = () => {
         const objFilter = {location:null, price:null};
 
         if(document.getElementById('location').value){
@@ -37,7 +37,7 @@ const Filter = () => {
 
             objFilter.price = { minRates:minRates, maxRates:maxRates };
         }
-        console.log(objFilter);
+
         dispatch(setFilters(objFilter));
     }
 

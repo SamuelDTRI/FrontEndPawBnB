@@ -8,15 +8,19 @@ import {
   DashboardOwner,
   DashboardSitter,
   Login,
+  ReservationRequest,
 } from "./Views/indexViews";
 import NavBar from "./Components/NavBar/NavBar";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation, Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
+  const user = useSelector((state) => state.auth);
+  console.log(user.userId)
 
   const showNav = location.pathname !== "/";
 
@@ -29,6 +33,7 @@ function App() {
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
         <Route path="/sitterProfile/:id" element={<SitterProfile />} />
+        <Route path="/reservation" element={user.userId? <ReservationRequest/> : <SignUpOwners />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
       </Routes>

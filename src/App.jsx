@@ -32,6 +32,7 @@ function App() {
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
         <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner/>} />
         <Route path="/sitterProfile/:id" element={<SitterProfile />} />
         <Route path="/reservation" element={user.userId? <ReservationRequest/> : <SignUpOwners />} />
         <Route path="/Login" element={<Login />} />

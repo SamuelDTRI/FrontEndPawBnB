@@ -30,9 +30,9 @@ export const dogsisterSlice = createSlice({
       if (price) {
         const { minRates, maxRates } = price;
         filteredDogSisters = filteredDogSisters.filter(dogsister => {
-          if (dogsister.pay) {
-            let pay = parseInt(dogsister.pay);
-            return pay >= minRates && pay <= maxRates;
+          if (dogsister.rates) {
+            let rates = parseInt(dogsister.rates);
+            return rates >= minRates && rates <= maxRates;
           }
           return false;
         });
@@ -41,8 +41,36 @@ export const dogsisterSlice = createSlice({
       state.dogsisters = filteredDogSisters;
     },
 
+    setOrder: (state, action) => {
+      let orderDogsister = state.dogsisters;
+
+      switch(action.payload){
+        case 'orderNameA':
+              orderDogsister = orderDogsister.sort((a, b) => a.name.localeCompare(b.name));
+              state.dogsisters = orderDogsister;
+          break;
+
+        case 'orderNameD':
+              orderDogsister = orderDogsister.sort((a, b) => b.name.localeCompare(a.name));
+              state.dogsisters = orderDogsister;
+          break;
+
+        case 'orderRatesA':
+              orderDogsister = orderDogsister.sort((a, b) => a.rates - b.rates);
+              state.dogsisters = orderDogsister;
+          break;
+
+        case 'orderRatesD':
+          orderDogsister = orderDogsister.sort((a, b) => b.rates - a.rates);
+          state.dogsisters = orderDogsister;
+        break;
+
+        default: state.dogsisters = state.dogsisters;
+
+      }
+    },
   },
 });
 
-export const { addDogsister, setFilters } = dogsisterSlice.actions;
+export const { addDogsister, setFilters, setOrder } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

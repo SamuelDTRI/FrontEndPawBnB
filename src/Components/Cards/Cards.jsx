@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Card from "../Card/Card";
+import Order from "../Order/Order";
 import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
 import dogSad from '../../assets/img/dogSad.png';
@@ -44,7 +45,14 @@ const Cards = () => {
 
   return (
     <ContainerCards>
-      <h2>Cuidadores en CABA</h2>
+      <div className="title-order">
+        <div className="title"><h2>Cuidadores en CABA</h2></div>
+        {items.length>1?
+          <Order/>
+          :
+          <></>
+        }
+      </div>
       {items.length>0?
         <div className="cards">
           {items.map((allDogsister) => (
@@ -56,7 +64,7 @@ const Cards = () => {
               neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
               rating={"⭐⭐⭐"}
               city={allDogsister?.city}
-              pay={allDogsister?.pay}
+              rates={allDogsister?.rates}
             />
           ))}
         </div>

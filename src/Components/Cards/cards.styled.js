@@ -11,6 +11,20 @@ export const ContainerCards = styled.div`
     gap: 20px;
     padding: 2% 5%;
 
+    .title-order{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        column-gap: 10px;
+
+        .title{
+
+        }
+    }
+
     .cards{
         display: flex;
         justify-content: start;

@@ -1,38 +1,45 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { setLocationFilter, setPriceFilter } from "../../redux/dogsisterSlice";
+import { setFilters } from "../../redux/dogsisterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ContainerFilter } from "./filter.styled";
 import filterIcon from '../../assets/img/filterIcon.svg';
 import mapIcon from '../../assets/img/mapIcon.svg';
 import dolarIcon from '../../assets/img/dollarIcon.svg';
+import arrowIcon from '../../assets/img/arrowDown.svg';
+import star from '../../assets/img/star.svg';
 
 const Filter = () => {
     const dispatch = useDispatch();
     
-    const dogsisters = useSelector((state) => state.dogsister.dogsisters);
-
-    const handleLocationFilter = (event) => {
-        dispatch(setLocationFilter(event.target.value));
-    };
-
-    const handlePriceFilter = (event) => {
-        const minRates = parseInt(document.getElementById('minRates').value);
-        const maxRates = parseInt(document.getElementById('maxRates').value);
-
-        dispatch(setPriceFilter({ minRates, maxRates }));
-    };
-
+    const dogsisters = useSelector((state) => state.dogsister.copyDogsisters);
 
     // Obtener ciudades únicas
-    const [uniqueCities, setUniqueCities] = useState([]);
+    const [uniqueNeighborhood, setUniqueNeighborhood] = useState([]);
 
     useEffect(() => {
         if (dogsisters.length > 0) {
-        const cities = [...new Set(dogsisters.map(dogSister => dogSister.city))];
-        setUniqueCities(cities);
+        const neighborhood = [...new Set(dogsisters.map(dogSister => dogSister.neighborhood))];
+        setUniqueNeighborhood(neighborhood);
         }
     }, [dogsisters]);
+
+    const handleFilters = () => {
+        const objFilter = {location:null, price:null};
+
+        if(document.getElementById('location').value){
+            objFilter.location = document.getElementById('location').value;
+        }
+
+        if(document.getElementById('minRates').value && document.getElementById('maxRates').value){
+            const minRates = parseInt(document.getElementById('minRates').value);
+            const maxRates = parseInt(document.getElementById('maxRates').value);
+
+            objFilter.price = { minRates:minRates, maxRates:maxRates };
+        }
+
+        dispatch(setFilters(objFilter));
+    }
 
     return(
         <ContainerFilter>
@@ -43,13 +50,17 @@ const Filter = () => {
                         <img src={mapIcon} alt="mapIcon" />
                         <p className="city-ubi">Ubicación</p>
                     </div>
-                    <select className='select-box' onChange={handleLocationFilter}>
-                        <option>Ubicación</option>
-                        <option value="all">Todos</option>
-                        {uniqueCities.map((city, index) => (
-                            <option key={index} value={city}>{city}</option>
-                        ))}
-                    </select>
+                    <div className="select">
+                        <select className='select-box' id="location" onChange={handleFilters}>
+                            <option value="all">Todos</option>
+                            {uniqueNeighborhood.map((city, index) => (
+                                <option key={index} value={city}>{city}</option>
+                            ))}
+                        </select>
+                        <div className="arrow">
+                            <img src={arrowIcon} alt="arrow down" />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="filter filter-rates">
@@ -57,7 +68,27 @@ const Filter = () => {
                     <div className="rates-inputs">
                         <input className="input-rates" type="text" name="minRates" id="minRates" placeholder="Mínimo" />
                         <input className="input-rates" type="text" name="maxRates" id="maxRates" placeholder="Máximo" />
-                        <button className="btn-rates" onClick={handlePriceFilter}>Filtrar</button>
+                        <button className="btn-rates" onClick={handleFilters}>Filtrar</button>
+                    </div>
+                </div>
+
+                <div className="filter filter-city">
+                    <div className="city-title">
+                        <img src={star} alt="mapIcon" />
+                        <p className="city-ubi">Rating</p>
+                    </div>
+                    <div className="select">
+                        <select className='select-box'>
+                            <option value="all">Todos</option>
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>
+                        <div className="arrow">
+                                <img src={arrowIcon} alt="arrow down" />
+                        </div>
                     </div>
                 </div>
             </div>

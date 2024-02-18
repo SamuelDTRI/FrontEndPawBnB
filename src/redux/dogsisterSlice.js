@@ -14,35 +14,63 @@ export const dogsisterSlice = createSlice({
       state.dogsisters = action.payload;
     },
 
-    setLocationFilter: (state, action) => {
-      const copyDogsister = state.dogsisters;
-
-      const filteredDogSisters = copyDogsister.filter((dogSister) => {
-        if (dogSister.city) {
-          return action.payload === 'all' || dogSister.city === action.payload;
-        }
-        return false;
-      });
-
+    setFilters: (state, action) => {
+      const { location, price } = action.payload;
+      let filteredDogSisters = state.copyDogsisters;
+    
+      if (location) {
+        filteredDogSisters = filteredDogSisters.filter(dogSister => {
+          if (dogSister.neighborhood) {
+            return location === 'all' || dogSister.neighborhood === location;
+          }
+          return false;
+        });
+      }
+    
+      if (price) {
+        const { minRates, maxRates } = price;
+        filteredDogSisters = filteredDogSisters.filter(dogsister => {
+          if (dogsister.rates) {
+            let rates = parseInt(dogsister.rates);
+            return rates >= minRates && rates <= maxRates;
+          }
+          return false;
+        });
+      }
+    
       state.dogsisters = filteredDogSisters;
     },
 
-    setPriceFilter: (state, action) => {
-      const copyDogsister = state.dogsisters;
+    setOrder: (state, action) => {
+      let orderDogsister = state.dogsisters;
 
-      const filteredDogSistersRates = copyDogsister.filter(dogsister => {
+      switch(action.payload){
+        case 'orderNameA':
+              orderDogsister = orderDogsister.sort((a, b) => a.name.localeCompare(b.name));
+              state.dogsisters = orderDogsister;
+          break;
 
-        if(dogsister.rates){
-          let rates = parseInt(dogsister.rates);
-          return rates >= action.payload.minRates && rates <= action.payload.maxRates;
-        }
-      });
+        case 'orderNameD':
+              orderDogsister = orderDogsister.sort((a, b) => b.name.localeCompare(a.name));
+              state.dogsisters = orderDogsister;
+          break;
 
-      state.dogsisters = filteredDogSistersRates;
+        case 'orderRatesA':
+              orderDogsister = orderDogsister.sort((a, b) => a.rates - b.rates);
+              state.dogsisters = orderDogsister;
+          break;
+
+        case 'orderRatesD':
+          orderDogsister = orderDogsister.sort((a, b) => b.rates - a.rates);
+          state.dogsisters = orderDogsister;
+        break;
+
+        default: state.dogsisters = state.dogsisters;
+
+      }
     },
-
   },
 });
 
-export const { addDogsister, setLocationFilter, setPriceFilter } = dogsisterSlice.actions;
+export const { addDogsister, setFilters, setOrder } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

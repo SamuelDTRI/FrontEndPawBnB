@@ -40,5 +40,5 @@ const dogsSlice = createSlice({
   },
 });
 
-export const { setDogsList, setCurrentDog, createdDog } = dogsSlice.actions;
+export const { setDogsList, setCurrentDog } = dogsSlice.actions;
 export default dogsSlice.reducer;

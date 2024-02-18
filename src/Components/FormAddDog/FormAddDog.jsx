@@ -1,53 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createDog } from "../../redux/dogsSlice";
-//import axios from "axios";
 
 import styles from "./FormAddDog.module.css";
 
 const FormAddDog = () => {
   const [formSent, setFormSent] = useState(false);
-  //const [forceUpdate, setForceUpdate] = useState(false);
 
   const dispatch = useDispatch();
   const { id } = useParams();
-  const ownerId = id;
-  console.log(ownerId);
-  //const infoDog = useSelector((state) => state.dogs.currentDog);
-  /* const handleFormSubmit = async (values, resetForm, setFormSent) => {
-    console.log("Values:", values);
-    try {
-      const valuesWithOwnerId = {
-        ...values,
-        ownerId,
-      };
-      console.log(ownerId);
-      const response = await axios.post(
-        "http://localhost:3000/dogs",
-        valuesWithOwnerId
-      );
 
-      if (response.status === 201) {
-        const newDog = response.data;
-        dispatch(setDogsList((prevList) => [...prevList, newDog]));
-        resetForm();
-        //setForceUpdate((prev) => !prev);
-      } else {
-        console.error("Error al crear el perro: ", response.status);
-      }
-      setFormSent(true);
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error.response);
-    }
-  }; */
   const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
     console.log(values);
     try {
       const {
         name,
-        race,
+        breed,
         dateOfBirth,
         gender,
         description,
@@ -58,11 +28,10 @@ const FormAddDog = () => {
         vaccination,
         behavior,
       } = values;
-      // Llamo a la acción updateSitter del slice para enviar los datos actualizados.
       await dispatch(
         createDog({
           name,
-          race,
+          breed,
           dateOfBirth,
           gender,
           description,
@@ -77,27 +46,25 @@ const FormAddDog = () => {
       );
       resetForm();
       setFormSent(true);
-      //setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   };
-  //useEffect(() => {}, [dispatch, forceUpdate]);
 
   return (
     <>
       <Formik
         initialValues={{
-          name: /* infoDog?.name  ||*/ "",
-          race: /* infoDog?.breed || */ "",
-          dateOfBirth: /* infoDog?.dateOfBirth || */ "",
-          gender: /* infoDog?.gender || */ "",
-          description: /* infoDog?.description || */ "",
-          feedingInstructions: /* infoDog?.feedingInstruccions || */ "",
-          allergies: /* infoDog?.allergies || */ "",
-          medication: /* infoDog?.medication || */ "",
-          medicalCondition: /* infoDog?.medicalCondition || */ "",
-          behavior: /* infoDog?.behavior || */ "",
+          name: "",
+          breed: "",
+          dateOfBirth: "",
+          gender: "",
+          description: "",
+          feedingInstructions: "",
+          allergies: "",
+          medication: "",
+          medicalCondition: "",
+          behavior: "",
         }}
         validate={(values) => {
           let errors = {};
@@ -106,11 +73,11 @@ const FormAddDog = () => {
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
-          if (!values.race) {
-            errors.race =
+          if (!values.breed) {
+            errors.breed =
               "Por favor ingresa la raza de tu perro. Ej: Mestizo, Border Collie, Caniche, etc...";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.race)) {
-            errors.race = "Ingresa solo letras y no más de 20 caracteres.";
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.breed)) {
+            errors.breed = "Ingresa solo letras y no más de 20 caracteres.";
           }
 
           if (!values.dateOfBirth) {
@@ -179,17 +146,17 @@ const FormAddDog = () => {
                 />
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="race">Raza</label>
+                <label htmlFor="breed">Raza</label>
                 <Field
                   type="text"
-                  id="race"
-                  name="race"
+                  id="breed"
+                  name="breed"
                   placeholder="La raza de tu perro"
                 />
                 <ErrorMessage
-                  name="ratingContainer"
+                  name="breed"
                   component={() => (
-                    <div className={styles.error}>{errors.race}</div>
+                    <div className={styles.error}>{errors.breed}</div>
                   )}
                 />
               </div>
@@ -343,9 +310,9 @@ const FormAddDog = () => {
                 )}
               />
             </div>
-            <button type="submit">GUARDAR CAMBIOS</button>
+            <button type="submit">AGREGAR PERRO</button>
             {formSent && (
-              <p className={styles.success}>Cambios guardados con exito!</p>
+              <p className={styles.success}>Perrito agregado con exito!</p>
             )}
           </Form>
         )}

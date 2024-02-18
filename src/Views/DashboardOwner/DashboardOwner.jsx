@@ -16,6 +16,7 @@ const DashboardOwner = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const dogsList = useSelector((state) => state.dogs.dogsList);
   const linkActivo = useSelector((state) => state.dashboard.linksActiveOwner);
   const ownerInfo = useSelector((state) => state.owner);
 
@@ -121,7 +122,6 @@ const DashboardOwner = () => {
         </div>
         <div className="container my-5 ">
           <div className="row">
-            {/* Otras partes del código */}
             <div
               className={`col-md-8 col-sm-12 ms-3 ms-sm-4 sm-my-3 ${styles.formContainer}`}
             >
@@ -137,8 +137,8 @@ const DashboardOwner = () => {
                     ))}
                     <span className="badge bg-success mx-1">Agregar Nuevo</span>
                   </div> */}
+                  <h2>INFORMACION DE MI PERRO</h2>
                   <FormAddDog />
-                  {/* Resto del código */}
                 </>
               )}
             </div>

@@ -9,7 +9,14 @@ const Order = () => {
     const dispatch = useDispatch();
 
     const handlerOrder = () => {
-        if(document.getElementById('order').value){
+        if(document.getElementById('order').value == 'default'){
+            document.getElementById('order').style.backgroundColor='#FFFFFF';
+            document.getElementById('order').style.border='0px solid #ffa726';
+
+        }else{
+            document.getElementById('order').style.backgroundColor='#ffa72615';
+            document.getElementById('order').style.border='2px solid #ffa726';
+
             dispatch(setOrder(document.getElementById('order').value))
         }
     }
@@ -19,7 +26,7 @@ const Order = () => {
             <div className="text"><img src={order} alt="" /><p>Ordenar por:</p></div>
             <div className="select">
                 <select id="order" className='select-box' onChange={handlerOrder}>
-                    <option value="">Selecciona un orden</option>
+                    <option value="default">Selecciona un orden</option>
                     <option value="orderNameA">Nombre de A a Z</option>
                     <option value="orderNameD">Nombre de Z a A</option>
                     <option value="orderRatesA">Precio: de menor a mayor</option>

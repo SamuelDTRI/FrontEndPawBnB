@@ -63,26 +63,24 @@ const DashboardOwner = () => {
 
   // console.log(linkActivo);
   return (
-
     <div className="container my-5 ">
       <div className="row">
         <div className={`col-md-3 col-sm-12 ${styles.sideBarContainer}`}>
-          
           <div className="row">
             <h3>{ownerInfo.name}</h3>
           </div>
           <hr />
-          <LinksDashboardOwner/>
+          <LinksDashboardOwner />
         </div>
         <div className="container my-5 col-8 b-warning">
-          
- 
-              {linkActivo === "miPerro" ? (
-                <><h2>INFORMACION DE MI PERRO</h2>
-                <FormAddDog/> </>
-              ) : (
-                <>
-                  {/* <div className="d-flex">
+          {linkActivo === "miPerro" ? (
+            <>
+              <h2>INFORMACION DE MI PERRO</h2>
+              <FormAddDog />{" "}
+            </>
+          ) : (
+            <>
+              {/* <div className="d-flex">
                     {dogsList.map((dog) => (
                       <span key={dog.id} className="badge bg-secondary mx-1">
                         {dog.name}
@@ -90,14 +88,12 @@ const DashboardOwner = () => {
                     ))}
                     <span className="badge bg-success mx-1">Agregar Nuevo</span>
                   </div> */}
-                  <FormDashboardDueño/>
-                </>
-              )}
-          
-        
+              <FormDashboardDueño />
+            </>
+          )}
         </div>
       </div>
-    
+    </div>
   );
 };
 

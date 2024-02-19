@@ -17,8 +17,9 @@ import Footer from "./Components/Footer/Footer";
 
 function App() {
   const location = useLocation();
-
+ 
   const showNav = location.pathname !== "/";
+  //const showAlert = !infoSitter.completedProfille;
 
   return (
     <div className="App">
@@ -31,6 +32,7 @@ function App() {
         <Route path="/sitterProfile/:id" element={<SitterProfile />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Home/:id" element={<Home />} /> 
       </Routes>
       <Footer />
     </div>

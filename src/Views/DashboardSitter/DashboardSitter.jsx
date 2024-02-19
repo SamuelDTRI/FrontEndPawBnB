@@ -17,7 +17,8 @@ const DashboardSitter = () => {
 
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
-
+  const [isSubmit, setIsSubmit] = useState(false);
+  
   const currentSitter = async () => {
     try {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
@@ -43,6 +44,10 @@ const DashboardSitter = () => {
   };
 
   const handleSubmit = async (event) => {
+    if(!imgProfile) {
+      alert("Debes Seleccionar Una Imagen.");
+      return;
+    }
     event.preventDefault();
     const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
       photoProfile: imgProfile
@@ -58,7 +63,7 @@ const DashboardSitter = () => {
     currentSitter();
   }, [dispatch]);
 
-  const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
+  //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
   console.log(linkActivo)
   return (
@@ -73,10 +78,10 @@ const DashboardSitter = () => {
               <div className={styles.imageProfileContainer}>
 
                   {
-                    lastPhoto ? (
+                    infoSitter.photoProfile ? (
                       <div className={styles.imgGalleryContainer}>
                         <img
-                          src={imgProfile || lastPhoto}
+                          src={imgProfile || infoSitter.photoProfile}
                           alt={infoSitter.name}
                           className={styles.imageProfile}
                         />
@@ -102,16 +107,23 @@ const DashboardSitter = () => {
                     <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
                     accept='image/png, image/jpeg, image/jpg, image/jfif'  style={{ display: "none" }}/>    
                     <div>
-                      <button className={styles.btn}>ACTUALIZAR FOTO DE PERFIL</button>
+                      <button 
+                      className={styles.btn}
+                      type="button"
+                      onClick={(event) => {
+                        setIsSubmit(true);
+                        handleSubmit(event)
+                      }}
+                      >ACTUALIZAR FOTO DE PERFIL</button>
                     </div>        
                   </form>            
                 </div>
 
               </div>) : (
               <div className={styles.noImgProfileContainer}>
-                { lastPhoto ? (
+                { infoSitter.photoProfile ? (
                   <img
-                    src={lastPhoto}
+                    src={infoSitter.photoProfile}
                     alt={infoSitter.name}
                     className={styles.imageProfile}
                   />) : (

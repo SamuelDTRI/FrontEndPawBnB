@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { ContainerCard } from "./card.styled";
 
-const Card = ({image, name,neighborhood, rating, id}) => {
+const Card = ({image, name, neighborhood, rating, id}) => {
+  
   return (
     <ContainerCard>
       <div className="imgContainer">

@@ -74,7 +74,7 @@ const LoginForm = () => {
   useEffect(() => {
     // Redireccionamos al usuario después de un inicio de sesión exitoso
     if (userRole === "Owner") {
-      navigate(`/Home`); // Redirige al dashboard del cliente en base a la Id
+      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
     } else if (userRole === "DogSitter") {
       navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
     }

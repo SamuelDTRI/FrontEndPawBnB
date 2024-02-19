@@ -5,6 +5,7 @@ import SitterPresentation from "../../Components/SitterPresentation/SitterPresen
 import SitterRates from "../../Components/SitterRates/SitterRates";
 import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
 import Gallery from "../../Components/Gallery/Gallery";
+import style from "./SitterProfile.module.css";
 
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -13,7 +14,10 @@ const SitterProfile = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const infoSitter = useSelector((state) => state.sitter);
+  const completedProfile = useSelector((state) => state.sitter.completedProfile);
 
+  const noPhotos =  infoSitter.photos.length === 0 || !infoSitter.photos;
+  
   useEffect(() => {
     const fetchSitterData = async () => {
       try {
@@ -38,6 +42,10 @@ const SitterProfile = () => {
 
   return (
     <div className="container col-10 my-5">
+      {!completedProfile && <div className={`alert alert-warning ${style.alertYellow}`} role="alert">
+        <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
+        Completa tu perfil para poder recibir mas reservas. <a href={`/dashboardSitter/${id}`} className="alert-link">Completar perfil</a>. 
+      </div>}
       <section className="container mx-4">
         <SitterPresentation infoSitter={infoSitter} />
       </section>
@@ -50,15 +58,20 @@ const SitterProfile = () => {
         <CardReview infoSitter={infoSitter} />
         <button className="mt-4">Ver mas Reviews</button>
       </section>
+      {noPhotos ? (
       <section className="container mt-4">
+        <h2>Agrega fotos en <a href={`/dashboardSitter/${id}`} className={style.link}>Mi Galeria</a>.</h2>
+        <Gallery infoSitter={infoSitter} id={id}/>
+      </section>) : (<section className="container mt-4">
         <h2>Galeria de {infoSitter.name}</h2>
-        <Gallery infoSitter={infoSitter} />
-      </section>
+        <Gallery infoSitter={infoSitter} id={id}/>
+      </section>)}
       <section className="col-12">
         <SitterRates infoSitter={infoSitter} />
       </section>
     </div>
   );
 };
+
 
 export default SitterProfile;

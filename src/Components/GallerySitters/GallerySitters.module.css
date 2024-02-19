@@ -1,6 +1,6 @@
 .iconContainer {
   color: #ffa726;
-  height: 200px;
+  height: 235px;
   margin-top: 15px;
   font-size: 120px;
   transition: font-size 0.3s, color 0.3s;
@@ -98,4 +98,9 @@
 
 .textFotos p:first-child {
   font-weight: bold;
+}
+
+.seleccionUnaImg p {
+  font-size: 20px;
+  color: #333;
 }

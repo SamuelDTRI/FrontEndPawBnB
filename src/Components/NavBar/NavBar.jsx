@@ -12,6 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const userRole = useSelector((state) => state.auth.userRole);
 
+
   const handleSignOut = async ()=>{
     try {
       // deslogueo de google
@@ -31,35 +32,39 @@ const NavBar = () => {
     navigate("/Login");
   };
   return (
-    <div className={`container-fluid ${style.navbar}`}>
-      <nav className="navbar border-bottom bg-white">
-        <div className={style.imagen}>
-          <Link to="/"><img src={logo} alt="PawBnb" /></Link>
-        </div>
- 
-        <div className="col-12 col-md-3 m-1">
-          {googleUser || userRole ? (
-            <button
-              className="btn border-warning text-warning"
-              onClick={handleSignOut}>
-              LogOut
-            </button>
-          ) : (
-            <>
-              <button
-                className="btn  me-2 border-warning text-warning"
-                onClick={handleSingUpRedir}>
-                Regístrate
-              </button>
+    <div>
+
+      <div className={`container-fluid ${style.navbar}`}>
+        <nav className="navbar border-bottom bg-white">
+          <div className={style.imagen}>
+            <Link to="/"><img src={logo} alt="PawBnb" /></Link>
+          </div>
+                                                                                                                                          
+          <div className="col-12 col-md-3 m-1">
+            {googleUser || userRole ? (
               <button
                 className="btn border-warning text-warning"
-                onClick={handleLoginRedir}>
-                Login
+                onClick={handleSignOut}>
+                LogOut
               </button>
-            </>
-          )}
-        </div>
-      </nav>
+            ) : (
+              <>
+                <button
+                  className="btn  me-2 border-warning text-warning"
+                  onClick={handleSingUpRedir}>
+                  Regístrate
+               </button>
+
+                <button
+                  className="btn border-warning text-warning"
+                  onClick={handleLoginRedir}>
+                  Login
+                </button>
+              </>
+            )}
+          </div>
+        </nav>
+      </div>
     </div>
   );
 };

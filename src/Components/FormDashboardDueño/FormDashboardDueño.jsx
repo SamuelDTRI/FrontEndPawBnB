@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import styles from "./FormDashboardDueño.module.css"
 import { Barrios } from "../../Helpers/Barrios";
 import { Cities } from "../../Helpers/Cities";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { infoOwner, updateOwner } from "../../redux/OwnerSlice";
+import axios from "axios";
+import styles from "./FormDashboardDueño.module.css"
 
 
 const FormDashboardDueño=()=>{
@@ -159,7 +159,8 @@ const FormDashboardDueño=()=>{
                 />
               </div>
             </div>
-            <div className="col-12">
+             <div className="row">
+            <div className="col-lg-6 col-md-12">
               <label htmlFor="phone">Telefono</label>
               <Field
                 type="number"
@@ -174,8 +175,7 @@ const FormDashboardDueño=()=>{
                 )}
               />
             </div>
-            <div className="row">
-              <div className="col-lg-6 col-md-12">
+             <div className="col-lg-6 col-md-12">
                 <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
                 <Field
                   type="date"
@@ -191,6 +191,7 @@ const FormDashboardDueño=()=>{
                 />
               </div>
             </div>
+            
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="city">Ciudad</label>

@@ -12,6 +12,7 @@ const NavBar = () => {
   const userRole = useSelector((state) => state.auth.userRole);
   const adminRole = useSelector((state) => state.adminUsers.adminRole )
 
+
   const logOutButtonText= " SALIR";
   const registerButtonText = "REGISTRATE";
   const loginButtonText = "INGRESAR";
@@ -35,6 +36,9 @@ const NavBar = () => {
   const handleLoginRedir = () => {
     navigate("/Login");
   };
+
+  
+
   return (
     <div className={`container-fluid ${style.navbar}`}>
       <nav className="navbar border-bottom bg-white">
@@ -43,11 +47,14 @@ const NavBar = () => {
             <img src={logo} alt="PawBnb" />
           </Link>
         </div>
+
+        <button onClick={()=>navigate("Home")}>HOME</button>
+        {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
  
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole || adminRole ? (
             <button
-              className="btn border-warning text-warning"
+              className="btn border-warning text-warning bg.dar"
               onClick={handleSignOut}>
               <span className="iconButton">
                 <i className="bi bi-box-arrow-right"></i>
@@ -57,18 +64,18 @@ const NavBar = () => {
           ) : (
             <>
               <button
-                className="btn btn-warning me-2 border-warning text-light"
                 onClick={handleSingUpRedir}>
                 {`${registerButtonText}`}
               </button>
               <button
-                className="btn border-warning text-warning"
+                className={style.botones}
                 onClick={handleLoginRedir}>
                 {`${loginButtonText}`}
               </button>
             </>
           )}
         </div>
+       
       </nav>
     </div>
   );

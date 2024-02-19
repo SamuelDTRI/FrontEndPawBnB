@@ -21,13 +21,16 @@ import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
 
 function App() {
   const location = useLocation();
+
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
   const userDeleted = useSelector((state) => state.auth.userDeleted);
   const adminRole = useSelector((state)=> state.adminUsers.adminRole);
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
 
+
   const showNav = location.pathname !== "/";
+  //const showAlert = !infoSitter.completedProfille;
 
   return (
     <div className="App">
@@ -72,6 +75,7 @@ function App() {
         />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
+
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/dashboardAdmin"
@@ -85,6 +89,7 @@ function App() {
               <DashboardAdmin />
           }
         />
+
       </Routes>
       <Footer />
     </div>

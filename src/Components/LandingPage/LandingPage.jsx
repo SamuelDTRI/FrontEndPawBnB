@@ -13,6 +13,7 @@ import cuidadoresConfianza from "../imagenes/cuidadoresConfianza/cuidadoresDeCon
 import dogPhoto from "../imagenes//programaMeet/dogdog.jpg"
 import SearchBar from "../SearchBar/SearchBar";
 
+
 const LandingPage=()=>{
     return(
         <div>

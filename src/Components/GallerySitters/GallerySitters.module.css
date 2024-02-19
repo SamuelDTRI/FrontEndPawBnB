@@ -1,6 +1,6 @@
 .iconContainer {
   color: #ffa726;
-  height: 200px;
+  height: 235px;
   margin-top: 15px;
   font-size: 120px;
   transition: font-size 0.3s, color 0.3s;
@@ -76,6 +76,31 @@
   margin-bottom: 50px;
 }
 
-.fotoEscogida{
-  
+.notification {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.textFotos {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.textFotos p {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #333;
+}
+
+.textFotos p:first-child {
+  font-weight: bold;
+}
+
+.seleccionUnaImg p {
+  font-size: 20px;
+  color: #333;
 }

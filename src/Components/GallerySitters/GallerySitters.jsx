@@ -52,6 +52,10 @@ const GallerySitters = () => {
       const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
         photos: imgGallery
       })
+    try {
+      const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
+        photos: imgGallery,
+      });
       console.log(result.data);
       setUploadSuccess(true);
       currentSitter();
@@ -60,15 +64,16 @@ const GallerySitters = () => {
         setUploadSuccess(false)
       }, 5000);
     } catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleDeletePhoto = async (index) => {
     try {
       await axios.delete(`http://localhost:3000/sitters/${id}/photos/${index}`);
       currentSitter(); //actualizamos la galeria despues de la eliminacion
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -79,13 +84,11 @@ const GallerySitters = () => {
 
   return (
     <div className={styles.galleryContainer}>
-
-      <div className={styles.tituloContainer}> 
+      <div className={styles.tituloContainer}>
         <h1 className={styles.titulo}>MI GALERIA</h1>
       </div>
 
       <div className={styles.formContainer}>
-
         <div>
           <div className={styles.iconContainer}>
             <label htmlFor="fileInputs">
@@ -98,12 +101,12 @@ const GallerySitters = () => {
 
           <div className={styles.uploadContainer}>
             <Formik
-            initialValues={{
-              photos: infoSitter?.photos || [],
-            }}
-            onSubmit={async (values) => {
-              handleFormSubmit(values, dispatch);
-            }}
+              initialValues={{
+                photos: infoSitter?.photos || [],
+              }}
+              onSubmit={async (values) => {
+                handleFormSubmit(values, dispatch);
+              }}
             >
             {() => (
               <Form>
@@ -142,7 +145,12 @@ const GallerySitters = () => {
           {infoSitter.photos?.map((photo, index) => (
             <div key={index} className={styles.photoContainer}>
               <img src={photo.url} alt={`Photo ${index}`} />
-              <button onClick={() => handleDeletePhoto(index)} className={styles.deleteButton}>X</button>
+              <button
+                onClick={() => handleDeletePhoto(index)}
+                className={styles.deleteButton}
+              >
+                X
+              </button>
             </div>
         ))}      
       </div>

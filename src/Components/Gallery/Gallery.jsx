@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import ImageGallery from "react-image-gallery";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 import "react-image-gallery/styles/css/image-gallery.css";

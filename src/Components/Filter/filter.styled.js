@@ -10,7 +10,6 @@ export const ContainerFilter = styled.div`
    padding: 15px 25px;
    max-width: 80%;
 
-   
 
    .filter-title{
       font-size: 1.4em;
@@ -42,6 +41,7 @@ export const ContainerFilter = styled.div`
          color: #959595;
          border-radius: 15px;
          padding: 7px 12px;
+         gap: 7px 7px;
       }
 
       .filter-city{
@@ -66,16 +66,40 @@ export const ContainerFilter = styled.div`
             }
          }
 
+         .select{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
 
-         .select-box{
-            border: none;
-            appearance: none;
-            background-color: #FFFFFF;
-            color: #959595;
-            border-radius: 8px;
-            width: 80px;
-            padding-left: 5px;
-            height: 30px;
+            .select-box{
+               border: none;
+               appearance: none;
+               background-color: #FFFFFF;
+               color: #959595;
+               border-radius: 8px;
+               width: 120px;
+               padding-left: 7px;
+               height: 30px;
+               border: 0px solid #ffa726;
+
+               option{
+                  background-color: #FFFFFF;
+               }
+            }
+
+            .arrow{
+               display: flex;
+               width: 13px;
+               height: 13px;
+               right: 7px;
+               position: absolute;
+
+               img{
+                  width: 100%;
+                  height: 100%;
+               }
+            }
          }
       }
 
@@ -103,6 +127,7 @@ export const ContainerFilter = styled.div`
             flex-direction: row;
             justify-content: center;
             justify-content: space-evenly;
+            flex-wrap: wrap;
             gap: 7px;
 
             .input-rates{
@@ -112,13 +137,24 @@ export const ContainerFilter = styled.div`
                width: 80px;
                border: none;
                padding-left: 5px;
+               border: 0px solid red;
             }
             .btn-rates{
+               background-color: #ffa72640;
                height: 30px;
                display: flex;
                justify-content: center;
                align-items: center;
+               cursor: default;
             }
+         }
+         .btn-rates-rest{
+            background-color: #ffa72640;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
          }
       }
    }

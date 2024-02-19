@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const SitterProfile = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const infoSitter = useSelector((state) => state.sitter);
   const completedProfile = useSelector((state) => state.sitter.completedProfile);
 

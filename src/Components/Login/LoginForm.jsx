@@ -17,6 +17,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
+  const userRole = useSelector((state)=> state.auth.userRole);
+  const userId = useSelector((state) => state.auth.userId)
 
   const handleGoogleSignIn = async () => {
     try{

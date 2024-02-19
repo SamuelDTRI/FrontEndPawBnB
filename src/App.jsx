@@ -30,7 +30,7 @@ function App() {
 
 
   const showNav = location.pathname !== "/";
-  //const showAlert = !infoSitter.completedProfille;
+  //const showAlert = !infoSitter.completedProfile;
 
   return (
     <div className="App">

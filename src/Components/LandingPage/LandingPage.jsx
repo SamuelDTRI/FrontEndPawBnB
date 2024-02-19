@@ -21,6 +21,7 @@ const LandingPage=()=>{
             <div className={style.contenedorPincipal}>
                
                <div className={"conteiner mt-5 custom-margin"}>
+                <div className="mx-5">
                 <div className="row">
                     <div className="col-12 col-md-6 p-2">
                         <div className={style.titulo}>
@@ -41,6 +42,7 @@ const LandingPage=()=>{
                         </div>
                     </div>            
                </div>          
+        </div>
         </div>
         <div className={style.sectionDivider}>
         <img src={SextionDividerPhoto} alt="sectionDivider" className={style.imagenDivisora}/>

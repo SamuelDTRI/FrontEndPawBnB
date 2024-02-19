@@ -4,7 +4,6 @@ import Card from "../Card/Card";
 import Order from "../Order/Order";
 import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
-import dogSad from '../../assets/img/dogSad.png';
 
 const RESULT_PAGE = 12;
 const imgDefautl = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
@@ -70,7 +69,7 @@ const Cards = () => {
         </div>
         :
         <div className="empty">
-          <div className="dogSad"><img src={dogSad} alt="Perro triste" /></div>
+          <div className="dogSad"><img src='https://www.shutterstock.com/image-vector/sad-sitting-puppy-dog-cartoon-600nw-2181296051.jpg' alt="Perro triste" /></div>
           <h3>Cuidadores no encontrados.</h3>
         </div>
       }

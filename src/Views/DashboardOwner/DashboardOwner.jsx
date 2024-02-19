@@ -11,8 +11,6 @@ import { useParams } from "react-router-dom";
 import FormAddDog from "../../Components/FormAddDog/FormAddDog";
 
 const DashboardOwner = () => {
-  const [file, setFile] = useState("");
-  const [imgProfile, setImgProfile] = useState("");
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -63,36 +61,13 @@ const DashboardOwner = () => {
   //   }
   // };
 
-  const lastPhoto =
-    ownerInfo.photoProfile && ownerInfo.photoProfile.length > 0
-      ? ownerInfo.photoProfile[ownerInfo.photoProfile.length - 1].url
-      : "";
-
   // console.log(linkActivo);
   return (
-    <div className="container my-5 row">
-      
-        <div className={`col-4 ${styles.sideBarContainer}`}>
-          <div className={`row ${styles.profilePicContainer}`}>
-            {linkActivo === "miGaleria" ? (
-              <div className={styles.imageContainer}>
-                <img
-                  src={imgProfile || lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
 
-              </div>
-            ) : (
-              <div className={styles.imageContainer}>
-                <img
-                  src={lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
-              </div>
-            )}
-          </div>
+    <div className="container my-5 ">
+      <div className="row">
+        <div className={`col-md-3 col-sm-12 ${styles.sideBarContainer}`}>
+          
           <div className="row">
             <h3>{ownerInfo.name}</h3>
           </div>

@@ -29,11 +29,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* {!completedProfile && <div className={`alert alert-warning ${style.alertText}`} role="alert">
-        <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
-        Completa tu perfil para poder recibir mas reservas. <a href={`/dashboardSitter/${id}`} className="alert-link">Completar perfil</a>. 
-      </div>} */}
-
       <div className={style.homeContainer}>
         <Filter/>
         <Cards/>

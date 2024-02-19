@@ -36,14 +36,14 @@ export const sitterSlice = createSlice({
       const {
         name,
         surName,
-        phone,
-        address,
-        dateOfBirth,
-        neighborhood,
-        city,
-        description,
-        rates,
         email,
+        phone,
+        dateOfBirth,
+        rates,
+        city,
+        neighborhood,
+        address,
+        description,
         photoProfile,
         photos,
       } = action.payload;
@@ -58,8 +58,8 @@ export const sitterSlice = createSlice({
       state.description = description;
       state.rates = rates;
       state.email = email;
-      state.photoProfile = photoProfile
-      state.photos = photos
+      state.photoProfile = photoProfile;
+      state.photos = photos;
     },
     updateSitter: async (state, action) => {
       try {

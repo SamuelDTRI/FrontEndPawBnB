@@ -16,11 +16,13 @@ const SitterProfile = () => {
   const infoSitter = useSelector((state) => state.sitter);
   const completedProfile = useSelector((state) => state.sitter.completedProfile);
   
+  const noPhotos = !infoSitter.photos || infoSitter.photos.length === 0;
+
   useEffect(() => {
     const fetchSitterData = async () => {
       try {
         const actionResult = await dispatch(fetchSitter(id));
-
+        
         if (fetchSitter.fulfilled.match(actionResult)) {
           const sitterData = actionResult.payload;
           dispatch(sitterInfo(sitterData));

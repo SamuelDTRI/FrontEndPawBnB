@@ -59,7 +59,7 @@ const Cards = () => {
             <Card
               key={allDogsister?.id}
               id={allDogsister?.id}
-              image={allDogsister?.photos? allDogsister?.photos[0]?.url : imgDefautl }
+              image={allDogsister?.photoProfile? allDogsister?.photosProfile : imgDefautl }
               name={allDogsister?.name}
               neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
               rating={"⭐⭐⭐"}

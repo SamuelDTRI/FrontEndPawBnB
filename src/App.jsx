@@ -17,6 +17,7 @@ import { useLocation, Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./Views/DashboardAdmin/DashboardAdmin";
+import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
 
 function App() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function App() {
         />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
       </Routes>

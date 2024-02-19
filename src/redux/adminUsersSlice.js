@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
 import axios from "axios";
+import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 
 export const fetchUsers = () => async (dispatch) => {
   try {
@@ -36,6 +37,11 @@ const adminUsersSlice = createSlice({
     status: "idle",
     error: null,
     filteredUsers: [],
+    isLoading: false,
+    isLoggedIn: false,
+    adminId: null,
+    adminRole: null,
+    adminDeleted: null,
   },
   reducers: {
     initialList: (state, action) => {
@@ -80,12 +86,53 @@ const adminUsersSlice = createSlice({
         state.filteredUsers = state.usersList;
       } else {
         state.filteredUsers = state.filteredUsers.filter(
-          (user) =>  user.neighborhood === barrio
+          (user) => user.neighborhood === barrio
         );
       }
     },
+    loginStart(state) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    loginSuccess(state, action) {
+      state.isLoading = false;
+      state.isLoggedIn = true;
+      state.adminId = action.payload.userId;
+      state.adminRole = action.payload.userRole;
+      state.adminDeleted = action.payload.userDeleted;
+    },
+    loginFailure(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+      state.userId = null;
+      state.userRole = null;
+    },
   },
 });
+
+export const loginAdmin = (formData) => async (dispatch) => {
+  dispatch(loginStart());
+  try {
+    const response = await axios.post(`http://localhost:3000/admin/login`, formData);
+    const { userId, userRole, userDeleted } = response.data;
+    dispatch(loginSuccess(response.data));
+    return {
+      userId,
+      userRole,
+      userDeleted
+    };
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      dispatch(loginFailure(errorMessage));
+    } else {
+      dispatch(loginFailure(error.message));
+    }
+  }
+};
 
 export const {
   sortUsersByName,

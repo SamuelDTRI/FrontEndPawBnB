@@ -1,4 +1,3 @@
-import SearchBar from "../SearchBar/SearchBar";
 import {Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../imagenes/logo/logo-pawbnb-horizontal.png";
@@ -11,6 +10,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userRole = useSelector((state) => state.auth.userRole);
+  const adminRole = useSelector((state) => state.adminUsers.adminRole )
 
   const logOutButtonText= " SALIR";
   const registerButtonText = "REGISTRATE";
@@ -45,7 +45,7 @@ const NavBar = () => {
         </div>
  
         <div className="col-12 col-md-3 m-1">
-          {googleUser || userRole ? (
+          {googleUser || userRole || adminRole ? (
             <button
               className="btn border-warning text-warning"
               onClick={handleSignOut}>

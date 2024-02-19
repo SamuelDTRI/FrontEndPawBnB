@@ -21,7 +21,7 @@ import DashboardAdmin from "./Views/DashboardAdmin/DashboardAdmin";
 function App() {
   const location = useLocation();
   const user = useSelector((state) => state.auth);
-  console.log(user.userId)
+
 
   const showNav = location.pathname !== "/";
 

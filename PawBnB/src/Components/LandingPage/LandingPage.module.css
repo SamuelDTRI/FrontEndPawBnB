@@ -1,0 +1,30 @@
+.contenedorPincipal{
+    margin-top: 8em;
+}
+
+.titulo{
+    font-family: 'Montserrat';
+    font-size: 48px;
+}
+
+.subtitulo{
+    font-family: 'Montserrat';
+    font-size: 32px;
+}
+
+.input{
+    font-size: 17px;
+    margin: 10px;
+    background-color:  rgba(204, 204, 204, 0.5);
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+ 
+.imagenBoxer {
+    width: 100%;
+    height: 30em;
+} 
+

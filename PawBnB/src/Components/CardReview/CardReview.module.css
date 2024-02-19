@@ -1,0 +1,31 @@
+.cardContainer {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+  }
+  
+    .reviewFirstRow {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      height: 100px;
+      width: 100px;
+    }
+  
+    .reviewTitle img {
+      width: 100px;
+      height: 100px;
+      margin-right: 20px;
+    }
+  
+    .reviewName {
+      display: block;
+      margin-left: 20px;
+      text-align: left;
+    }
+  
+    .reviewText {
+      text-align: left;
+      font-weight: 400;
+    }

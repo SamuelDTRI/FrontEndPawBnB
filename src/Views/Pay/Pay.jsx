@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -24,6 +24,23 @@ const Pay = () => {
       alert(result.error.message);
     }
   };
+
+  useEffect(() => {
+    const fetchReceiptUrl = async () => {
+      const { search } = window.location;
+      const sessionId = new URLSearchParams(search).get("session_id");
+      if (sessionId) {
+        const response = await axios.get(
+          `http://localhost:3000/payment/receipt/${sessionId}`
+        );
+        const { receiptUrl } = response.data;
+
+        window.location.href = receiptUrl;
+      }
+    };
+
+    fetchReceiptUrl();
+  }, []);
 
   return (
     <button role="link" onClick={handleClick}>

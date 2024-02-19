@@ -1,9 +1,7 @@
 import React from "react";
 import { ContainerOrder } from "./order.styled";
-import arrowIcon from '../../assets/img/arrowDown.svg';
 import { useDispatch } from "react-redux";
 import { setOrder } from "../../redux/dogsisterSlice";
-import order from "../../assets/img/order.svg";
 
 const Order = () => {
     const dispatch = useDispatch();
@@ -23,7 +21,7 @@ const Order = () => {
 
     return(
         <ContainerOrder>
-            <div className="text"><img src={order} alt="" /><p>Ordenar por:</p></div>
+            <div className="text"><i className="bi bi-sort-alpha-down"></i><p>Ordenar por:</p></div>
             <div className="select">
                 <select id="order" className='select-box' onChange={handlerOrder}>
                     <option value="default">Selecciona un orden</option>
@@ -33,7 +31,7 @@ const Order = () => {
                     <option value="orderRatesD">Precio: de mayor a menor</option>
                 </select>
                 <div className="arrow">
-                        <img src={arrowIcon} alt="arrow down" />
+                    <i className="bi bi-caret-down-fill"></i>
                 </div>
             </div>
         </ContainerOrder>

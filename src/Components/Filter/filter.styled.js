@@ -23,11 +23,6 @@ export const ContainerFilter = styled.div`
       span{
          margin-left: 5px;
       }
-
-      img{
-         height: 18px;
-         width: 18px;
-      }
    }
 
    .filters{
@@ -56,10 +51,13 @@ export const ContainerFilter = styled.div`
             justify-content: center;
             align-items: center;
 
-            img{
-               height: 18px;
-               width: 18px;
+            .bi-map{
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               color: #FFA726;
             }
+
             .city-ubi{
                margin: 0;
                margin-left: 5px;
@@ -94,10 +92,12 @@ export const ContainerFilter = styled.div`
                height: 13px;
                right: 7px;
                position: absolute;
-
-               img{
-                  width: 100%;
-                  height: 100%;
+               
+               .bi-caret-down-fill{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #FFA726;
                }
             }
          }
@@ -115,10 +115,11 @@ export const ContainerFilter = styled.div`
             justify-content: center;
             align-items: center;
 
-            img{
-               height: 18px;
-               width: 18px;
-               margin: 0;
+            .bi-currency-dollar{
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               color: #FFA726;
             }
          }
 

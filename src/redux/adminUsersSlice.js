@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "@reduxjs/toolkit";
 import axios from "axios";
 import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 
@@ -15,19 +14,13 @@ export const fetchUsers = () => async (dispatch) => {
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));
+    dispatch(setOwners(owners));
+    dispatch(setSitters(sitters));
   } catch (error) {
     console.log(error.message);
   }
 };
-//Definimos  la lista combinada de owner and sitters
-const selectSitters = (state) => state.adminUsers.sitters;
-const selectOwners = (state) => state.adminUsers.owners;
 
-export const selectUsersList = createSelector(
-  selectSitters,
-  selectOwners,
-  (sitters, owners) => [...sitters, ...owners]
-);
 const adminUsersSlice = createSlice({
   name: "adminUsers",
   initialState: {
@@ -47,6 +40,12 @@ const adminUsersSlice = createSlice({
     initialList: (state, action) => {
       state.filteredUsers = action.payload;
       state.usersList = action.payload;
+    },
+    setOwners: (state, action) => {
+      state.owners = action.payload;
+    },
+    setSitters: (state, action) => {
+      state.sitters = action.payload;
     },
     sortUsersByName: (state, action) => {
       const sortedUser = [...state.filteredUsers];
@@ -138,6 +137,8 @@ export const {
   sortUsersByName,
   sortUsersByLastName,
   initialList,
+  setOwners,
+  setSitters,
   filterUsersByRole,
   filterUsersByNeighborhood,
 } = adminUsersSlice.actions;

@@ -4,6 +4,7 @@ import dogsisterReducer from "./dogsisterSlice";
 import sitterSlice from "./sitterSlice";
 import ownerSlice from "./ownerSlice";
 import dashboardsitterSlice from "./linksActives";
+import adminUsersSlice from "./adminUsersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     dogsister: dogsisterReducer,
     sitter: sitterSlice,
     owner: ownerSlice,
-    dashboard: dashboardsitterSlice
+    dashboard: dashboardsitterSlice,
+    adminUsers : adminUsersSlice
   },
 });

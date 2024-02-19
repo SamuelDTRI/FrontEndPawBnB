@@ -17,6 +17,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
+  const userRole = useSelector((state)=> state.auth.userRole);
+  const userId = useSelector((state) => state.auth.userId)
 
   const handleGoogleSignIn = async () => {
     try{
@@ -26,8 +28,8 @@ const LoginForm = () => {
     }
   };
   useEffect(()=> {
-    if (googleUser) {
-      console.log(googleUser.reloadUserInfo.email)
+    if (googleUser && googleUser.reloadUserInfo) {
+      // console.log(googleUser.reloadUserInfo.email)
       const email = googleUser.reloadUserInfo.email;
       // console.log(googleUser.reloadUserInfo.email);
       const fetchUserData = async () => {
@@ -40,7 +42,7 @@ const LoginForm = () => {
             const { userRole } = await dispatch(
               signUpOwner({ email: email }, "Owner")
             );
-            console.log(userRole)
+            console.log(userRole);
             if (userRole) {
               navigate(`/Home`);
             }
@@ -81,6 +83,15 @@ const LoginForm = () => {
     }, 5000);
     return () => clearTimeout(timeoutId);
   }, [error, dispatch]);
+
+  useEffect(() => {
+    // Redireccionamos al usuario después de un inicio de sesión exitoso
+    if (userRole === "Owner") {
+      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
+    } else if (userRole === "DogSitter") {
+      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+    }
+  }, [userRole, userId, navigate]);
   
   return (
     <div>

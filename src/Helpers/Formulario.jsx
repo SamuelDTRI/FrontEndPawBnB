@@ -41,7 +41,7 @@ const Formulario = (text, role) => {
     }
   };
   useEffect(() => {
-    if (googleUser) {
+    if (googleUser && googleUser.providerData) {
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
@@ -50,21 +50,21 @@ const Formulario = (text, role) => {
           const { exist, checkId, checkRole } = await checkRegistration(email);
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
-            if (currentPath == "/SignUpSitters"){
+            if (currentPath == "/SignUpSitters") {
               const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
-              if(userRole){
+              if (userRole) {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
               const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "Owner")
-                );
-              if(userRole){
+              );
+              if (userRole) {
                 navigate(`/Home`);
               }
-            }   
+            }
           } else {
             // cambiamos el estado global para completar el logueo
             googleLoginSuccess({ userId: checkId, userRole: checkRole });

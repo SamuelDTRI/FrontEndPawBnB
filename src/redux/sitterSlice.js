@@ -12,6 +12,7 @@ const initialState = {
   rates: "",
   photoProfile: [],
   photos: [],
+  completedProfile: false,
 };
 
 export const fetchSitter = createAsyncThunk(
@@ -67,6 +68,7 @@ export const sitterSlice = createSlice({
           `http://localhost:3000/sitters/${action.payload.id}`,
           action.payload.updatedSitter
         );
+        state.completedProfile = true;
         return data;
       } catch (error) {
         console.error("Error al actualizar el cuidador:", error);

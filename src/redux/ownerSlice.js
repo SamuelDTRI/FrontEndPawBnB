@@ -13,7 +13,38 @@ const initialState = {
   photoProfile: null,
   role: "",
   surName: "",
+  Dogs: [],
+  
 };
+
+/*
+export const ownerDogs = createAsyncThunk("owner/fetchDogs", async (id) => {
+  const endpoint = `http://localhost:3000/owners/${id}`;
+  try {
+    const response = await axios.get(endpoint);
+    return response.data.Dogs;
+  } catch (error) {
+    console.error("Error fetching owner's dogs:", error);
+    throw error;
+  }
+});
+ export const ownerId = (id) => async (dispatch) => {
+
+  dispatch (infoOwner())
+  const endpoint =  `http://localhost:3000/owners/${id}`;
+  const response = await axios.get(endpoint);  
+  const Dogs = response.data.Dogs
+
+  try{
+    console.log(response.data.Dogs)
+    dispatch(ownerIdState(Dogs))
+    return {Dogs};
+
+  }catch(error){
+    console.log(error)
+  }
+}; 
+*/
 
 // export const fetchOwner = createAsyncThunk(
 //   "sitter/fetchSitter",
@@ -27,6 +58,19 @@ const initialState = {
 //     }
 //   }
 // );
+
+export const fetchDogsByOwnerId = createAsyncThunk(
+  "owner/fetchDogsByOwnerId",
+  async (ownerId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/owners/${ownerId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching owner's dogs:", error);
+      throw error;
+    }
+  }
+);
 
 export const ownerSlice = createSlice({
   name: "owner",
@@ -59,6 +103,10 @@ export const ownerSlice = createSlice({
       state.role = role;
       state.surName = surName;
     },
+    ownerIdState: (state, action) => {
+      state.Dogs= action.payload
+      console.log(action.payload, "sadafdasd")
+    },
     updateOwner: async (state, action) => {
       console.log(action.payload.updatedOwner)
       try {
@@ -73,7 +121,14 @@ export const ownerSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchDogsByOwnerId.fulfilled, (state, action) => {
+      state.Dogs = action.payload;
+    });
+  },
 });
+
+
 
 export const { infoOwner, updateOwner } = ownerSlice.actions;
 export default ownerSlice.reducer;

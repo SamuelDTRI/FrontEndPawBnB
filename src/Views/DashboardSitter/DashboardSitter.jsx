@@ -8,6 +8,8 @@ import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
 import { useParams } from "react-router-dom";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
+import SitterReservations from "../../Components/SitterReservations/SitterReservations";
+
 
 const DashboardSitter = () => {
   const [file, setFile] = useState("");
@@ -147,7 +149,8 @@ const DashboardSitter = () => {
         >
           {
             linkActivo === "miGaleria"?(<GallerySitters/>)
-           :(<FormInfoSitter/> 
+           : linkActivo === "misReservas"? (<SitterReservations/>) 
+            :(<FormInfoSitter/> 
             // <h2>MI INFORMACION</h2>   
            )
           }

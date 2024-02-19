@@ -26,8 +26,8 @@ const LoginForm = () => {
     }
   };
   useEffect(()=> {
-    if (googleUser) {
-      console.log(googleUser.reloadUserInfo.email)
+    if (googleUser && googleUser.reloadUserInfo) {
+      // console.log(googleUser.reloadUserInfo.email)
       const email = googleUser.reloadUserInfo.email;
       // console.log(googleUser.reloadUserInfo.email);
       const fetchUserData = async () => {
@@ -40,7 +40,7 @@ const LoginForm = () => {
             const { userRole } = await dispatch(
               signUpOwner({ email: email }, "Owner")
             );
-            console.log(userRole)
+            console.log(userRole);
             if (userRole) {
               navigate(`/Home`);
             }

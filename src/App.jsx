@@ -76,21 +76,13 @@ function App() {
         <Route
           path="/dashboardAdmin"
           element={
-            !adminDeleted && adminRole === "Admin" ? (
               <DashboardAdmin />
-            ) : (
-              <Navigate to="/" />
-            )
           }
         />
         <Route
           path="/dashboardAdmin/users"
           element={
-            !adminDeleted && adminRole === "Admin" ? (
               <DashboardAdmin />
-            ) : (
-              <Navigate to="/" />
-            )
           }
         />
       </Routes>

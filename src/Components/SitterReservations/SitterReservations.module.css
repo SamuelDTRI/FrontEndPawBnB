@@ -1,0 +1,40 @@
+.contenedorSolicitudes{
+    margin-top: 2em;
+    border: 2px solid #ffa726;
+    border-radius: 15px;
+    background-color: white;
+}
+.contProxReservas{
+    margin-top: 2em;
+    border: 2px solid #ffa726;
+    border-radius: 15px;
+    background-color:wheat;
+}
+.contReservasActivas{
+    margin-top: 2em;
+    border: 2px solid #ffa726;
+    border-radius: 15px;
+    background-color:#B3E571;
+}
+.reservasCompletadas{
+    margin-top: 2em;
+    border: 2px solid #ffa726;
+    border-radius: 15px;
+    background-color:#D1FFA4;
+}
+
+.contenedorFechas{
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+}
+
+.iFsFC{
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+	font-size: 18px;
+    padding: 10px;
+}

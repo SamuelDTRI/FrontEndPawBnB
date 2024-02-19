@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
 import { useParams } from "react-router-dom";
+import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 import SitterReservations from "../../Components/SitterReservations/SitterReservations";
 
 
@@ -18,7 +19,8 @@ const DashboardSitter = () => {
 
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
-
+  const [isSubmit, setIsSubmit] = useState(false);
+  
   const currentSitter = async () => {
     try {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
@@ -44,6 +46,10 @@ const DashboardSitter = () => {
   };
 
   const handleSubmit = async (event) => {
+    if(!imgProfile) {
+      alert("Debes Seleccionar Una Imagen.");
+      return;
+    }
     event.preventDefault();
     const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
       photoProfile: imgProfile
@@ -59,7 +65,7 @@ const DashboardSitter = () => {
     currentSitter();
   }, [dispatch]);
 
-  const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
+  //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
   console.log(linkActivo)
   return (
@@ -70,33 +76,65 @@ const DashboardSitter = () => {
             
             {
               linkActivo === "miGaleria"? (
-              <div className={styles.imageContainer}>
-                <img
-                  src={imgProfile || lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
+                
+              <div className={styles.imageProfileContainer}>
 
-                <div className={styles.iconImg}>
-                  <i className="bi bi-card-image"></i>
-                </div>
+                  {
+                    infoSitter.photoProfile ? (
+                      <div className={styles.imgGalleryContainer}>
+                        <img
+                          src={imgProfile || infoSitter.photoProfile}
+                          alt={infoSitter.name}
+                          className={styles.imageProfile}
+                        />
+                        <label htmlFor="fileInput" className={styles.iconImg}>
+                          <i className="bi bi-person-bounding-box"></i>
+                        </label>   
+                      </div>
+                    ) : (
+                      <div className={styles.imgProfileContainer}>
+                        <img
+                          src={imgProfile || NoPhotoProfile}
+                          alt={infoSitter.name}
+                          className={styles.imageProfile}
+                        />
+                        <label htmlFor="fileInput" className={styles.iconImg}>
+                          <i className="bi bi-person-bounding-box"></i>
+                        </label>    
+                      </div>
+                  )}
 
                 <div>
                   <form onSubmit={event => handleSubmit(event)}>
                     <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
-                    accept='image/png, image/jpeg, image/jpg, image/jfif' />    
+                    accept='image/png, image/jpeg, image/jpg, image/jfif'  style={{ display: "none" }}/>    
                     <div>
-                      <button className={styles.btn}>ACTUALIZAR FOTO DE PERFIL</button>
+                      <button 
+                      className={styles.btn}
+                      type="button"
+                      onClick={(event) => {
+                        setIsSubmit(true);
+                        handleSubmit(event)
+                      }}
+                      >ACTUALIZAR FOTO DE PERFIL</button>
                     </div>        
                   </form>            
                 </div>
+
               </div>) : (
-              <div className={styles.imageContainer}>
-                <img
-                  src={lastPhoto}
-                  alt="cuidador.name"
-                  className="img-fluid"
-                />
+              <div className={styles.noImgProfileContainer}>
+                { infoSitter.photoProfile ? (
+                  <img
+                    src={infoSitter.photoProfile}
+                    alt={infoSitter.name}
+                    className={styles.imageProfile}
+                  />) : (
+                    <div className={styles.noImgProfileContainer}>
+                      <img className={styles.imageProfile} src={NoPhotoProfile} alt="No hay foto de perfil" />
+                      <p className={styles.textDeNoImg}>Actualiza Tu Foto De Perfil En Mi Galeria</p>
+                    </div>
+                  )
+                }
               </div>)
             }
           </div>

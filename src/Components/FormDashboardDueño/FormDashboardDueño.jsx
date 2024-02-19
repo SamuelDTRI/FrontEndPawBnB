@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import styles from "./FormDashboardDueño.module.css"
 import { Barrios } from "../../Helpers/Barrios";
 import { Cities } from "../../Helpers/Cities";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { infoOwner, updateOwner } from "../../redux/OwnerSlice";
+import axios from "axios";
+import styles from "./FormDashboardDueño.module.css"
 
 
 const FormDashboardDueño=()=>{

@@ -325,7 +325,8 @@ const FormInfoSitter = () => {
                 )}
               />
             </div>
-            <button type="submit">GUARDAR CAMBIOS</button>
+            <button 
+            type="submit">GUARDAR CAMBIOS</button>
             {formSent && (
               <p className={styles.success}>Cambios guardados con exito!</p>
             )}

@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import styles from "./SitterPresentation.module.css";
+import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 
 const SitterPresentation = ({ infoSitter }) => {
+  const findPhoto = infoSitter.photoProfile || NoPhotoProfile;
+
   return (
     <div className="container">
       <div className="row">
         <div className="col">
           <div className={styles.imageContainer}>
             <img
-              src={infoSitter.photoProfile}
-              alt={infoSitter.name}
+              src={findPhoto}
+              alt="profile pic"
               className={styles.img}
             />
           </div>

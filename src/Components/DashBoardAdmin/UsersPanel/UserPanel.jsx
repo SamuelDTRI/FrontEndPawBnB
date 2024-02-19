@@ -12,6 +12,10 @@ const roleLabels = {
   Owner: "Cliente",
   DogSitter: "Cuidador",
 };
+const deletedUserStyle = {
+  backgroundColor: "lightgray",
+  // Otros estilos para resaltar usuarios eliminados
+};
 const UsersPanel = () => {
   //definición de dispatch y del estado combinedlist
   const dispatch = useDispatch();
@@ -34,36 +38,28 @@ const UsersPanel = () => {
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
-
   //Función para realizar el borrado lógico de un usuario
   const handleDelete = async (userId, role) => {
-   try {
+    try {
     // Determinar la URL de la solicitud DELETE según el rol del usuario
     let deleteUrl;
-    if (role === 'owner') {
+    if (role === 'Owner') {
       deleteUrl = `http://localhost:3000/owners/delete/${userId}`;
-    } else if (role === 'dogsitter') {
+    } else if (role === "DogSitter") {
       deleteUrl = `http://localhost:3000/sitters/delete/${userId}`;
     } else {
-      console.error('Rol de usuario no válido:', role);
+      console.error("Rol de usuario no válido:", role);
       return;
     }
-    // Enviar una solicitud DELETE al servidor para realizar el borrado lógico
-    await axios.put(deleteUrl);
 
-    // Actualizar el estado del cliente después de recibir una respuesta exitosa
-    const updatedUsers = currentUsers.map(user => {
-      if (user.id === userId) {
-        return { ...user, deleted: true }; // Marcar como eliminado
-      }
-      return user;
-    });
-    setCurrentUsers(updatedUsers);
+    // Enviar una solicitud DELETE al servidor para realizar el borrado lógico
+    await axios.put(deleteUrl, { deleted: true });
+    dispatch(fetchUsers());
+    
   } catch (error) {
     console.error('Error al procesar la solicitud de borrado lógico:', error);
   }
   };
-
   // Funciones para cambiar de pagina
   const nextHandler = () => {
     if (currentPage < totalPages) {
@@ -87,7 +83,7 @@ const UsersPanel = () => {
   const toggleOrderLastName = () => {
     const newOrder = sortOrderLastName === "asc" ? "desc" : "asc";
     setSortOrderLastName(newOrder);
-     dispatch(sortUsersByLastName(newOrder));
+      dispatch(sortUsersByLastName(newOrder));
   };
 
 // Funciones que manejas el filtrado
@@ -120,7 +116,7 @@ const handleOptionChange = (event) => {
 };
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* Listado de usuarios */}
       <table className="table">
         <thead>
@@ -163,16 +159,17 @@ const handleOptionChange = (event) => {
                 value={selectedRole}
                 onChange={handleOptionChange}>
                 <option value="all">Todos</option>
-                {rolesOptions.map((role, index) =>{ 
-                     const hasUsersInRole = filteredUsers.some((user) => {
-                       return user.role && user.role.includes(role);
-                     });
-                       const style = hasUsersInRole ? {}: { display: "none" };
+                {rolesOptions.map((role, index) => {
+                  const hasUsersInRole = filteredUsers.some((user) => {
+                    return user.role && user.role.includes(role);
+                  });
+                  const style = hasUsersInRole ? {} : { display: "none" };
 
-                    return (
-                  <option key={index} value={role} style={style}>
-                    {roleLabels[role]}
-                  </option>)
+                  return (
+                    <option key={index} value={role} style={style}>
+                      {roleLabels[role]}
+                    </option>
+                  );
                 })}
               </select>
             </th>
@@ -208,7 +205,7 @@ const handleOptionChange = (event) => {
         <tbody>
           {/* Mapea los usuarios y renderiza cada fila */}
           {currentUsers.map((user, index) => (
-            <tr key={user.id}>
+            <tr key={user.id} className={styles.deletedUser}>
               <td>{indexOfFirstUser + index + 1}</td>
               <td>{user.name}</td>
               <td>{user.surName}</td>
@@ -217,7 +214,12 @@ const handleOptionChange = (event) => {
               <td>{user.neighborhood ? user.neighborhood : "--"}</td>
               <td>
                 {/* Botón para el borrado lógico */}
-                <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+                <button
+                  onClick={() => handleDelete(user.id, user.role)}
+                  disabled={user.deleted}
+                  style={user.deleted ? deletedUserStyle : null}>
+                  Eliminar
+                </button>
               </td>
             </tr>
           ))}

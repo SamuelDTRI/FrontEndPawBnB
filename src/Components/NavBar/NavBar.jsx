@@ -47,7 +47,7 @@ const NavBar = () => {
         </div>
 
         <button onClick={()=>navigate("Home")}>HOME</button>
-        <button onClick={handleClickMiPerfil}>MI PERFIL</button>
+        {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
  
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (

@@ -3,11 +3,6 @@ import { useEffect, useState } from "react";
 import { setFilters } from "../../redux/dogsisterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ContainerFilter } from "./filter.styled";
-import filterIcon from '../../assets/img/filterIcon.svg';
-import mapIcon from '../../assets/img/mapIcon.svg';
-import dolarIcon from '../../assets/img/dollarIcon.svg';
-import arrowIcon from '../../assets/img/arrowDown.svg';
-import star from '../../assets/img/star.svg';
 
 const Filter = () => {
     const dispatch = useDispatch();
@@ -85,6 +80,7 @@ const Filter = () => {
                 document.getElementById('minRates').style.backgroundColor='#c1121f50';
                 document.getElementById('maxRates').style.border='2px solid red';
                 document.getElementById('maxRates').style.backgroundColor='#c1121f50';
+                setBtnDisable(true);
             }
         }
     }
@@ -112,11 +108,11 @@ const Filter = () => {
 
     return(
         <ContainerFilter>
-            <div className="filter-title"><img src={filterIcon} alt="filterIcon" /><span>FILTROS</span></div>
+            <div className="filter-title"><i className="bi bi-funnel"></i><span>FILTROS</span></div>
             <div className="filters">
                 <div className="filter filter-city">
                     <div className="city-title">
-                        <img src={mapIcon} alt="mapIcon" />
+                        <i className="bi bi-map"></i>
                         <p className="city-ubi">Ubicación</p>
                     </div>
                     <div className="select">
@@ -127,13 +123,13 @@ const Filter = () => {
                             ))}
                         </select>
                         <div className="arrow">
-                            <img src={arrowIcon} alt="arrow down" />
+                            <i className="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                 </div>
 
                 <div className="filter filter-rates">
-                    <div className="rates-title"><img src={dolarIcon} alt="dolarIcon" /><span>Precios</span></div>
+                    <div className="rates-title"><i className="bi bi-currency-dollar"></i><span>Precios</span></div>
                     <div className="rates-inputs">
                         <input className="input-rates" onChange={textFilter} type="text" name="minRates" id="minRates" placeholder="Mínimo" />
                         <input className="input-rates" onChange={textFilter} type="text" name="maxRates" id="maxRates" placeholder="Máximo" />
@@ -144,7 +140,7 @@ const Filter = () => {
 
                 {/* <div className="filter filter-city">
                     <div className="city-title">
-                        <img src={star} alt="mapIcon" />
+                        <i className="bi bi-star"></i>
                         <p className="city-ubi">Rating</p>
                     </div>
                     <div className="select">

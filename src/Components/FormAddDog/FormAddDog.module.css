@@ -39,10 +39,6 @@
 	width: auto;
 }
 
-.form input::placeholder {
-	color:#2E2D2D
-}
-
 .form select option {
 	background-color: #f4f4f4;
 	color: #2E2D2D;

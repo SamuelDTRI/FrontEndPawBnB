@@ -7,7 +7,7 @@ const SideBarPanel = () => {
             <ul>
                 <li>
                     <Link to="/dashboardAdmin">
-                        <i className="bi bi-menu-button-wide"></i> Panel
+                        <i className="bi bi-menu-button-wide"></i> Vista General
                     </Link>
                 </li>
                 <li>

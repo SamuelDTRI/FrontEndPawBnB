@@ -17,7 +17,7 @@ export const signUpOwner = (data, role, navigate) => async (dispatch) =>{
 
       const userId = response.data.id;
       const userRole = response.data.role;
-      console.log(userRole)
+      console.log({userRole})
       // if (response.data.id) {
 
       //   navigate("/Login");

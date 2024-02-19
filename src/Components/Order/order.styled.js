@@ -16,11 +16,13 @@ export const ContainerOrder = styled.div`
         padding: 0 7px;
         column-gap: 5px;
 
-        img{
-            height: 18px;
-            width: 18px;
-            border-radius: 0;
+        .bi-sort-alpha-down{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFA726;
         }
+        
         p{
             margin: 0;
         }
@@ -55,9 +57,11 @@ export const ContainerOrder = styled.div`
             right: 7px;
             position: absolute;
 
-            img{
-                width: 100%;
-                height: 100%;
+            .bi-caret-down-fill{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #FFA726;
             }
         }
     }

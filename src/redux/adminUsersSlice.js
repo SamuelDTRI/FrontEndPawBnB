@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "@reduxjs/toolkit";
 import axios from "axios";
+import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 
 export const fetchUsers = () => async (dispatch) => {
   try {
@@ -14,19 +14,13 @@ export const fetchUsers = () => async (dispatch) => {
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));
+    dispatch(setOwners(owners));
+    dispatch(setSitters(sitters));
   } catch (error) {
     console.log(error.message);
   }
 };
-//Definimos  la lista combinada de owner and sitters
-const selectSitters = (state) => state.adminUsers.sitters;
-const selectOwners = (state) => state.adminUsers.owners;
 
-export const selectUsersList = createSelector(
-  selectSitters,
-  selectOwners,
-  (sitters, owners) => [...sitters, ...owners]
-);
 const adminUsersSlice = createSlice({
   name: "adminUsers",
   initialState: {
@@ -36,11 +30,22 @@ const adminUsersSlice = createSlice({
     status: "idle",
     error: null,
     filteredUsers: [],
+    isLoading: false,
+    isLoggedIn: false,
+    adminId: null,
+    adminRole: null,
+    adminDeleted: null,
   },
   reducers: {
     initialList: (state, action) => {
       state.filteredUsers = action.payload;
       state.usersList = action.payload;
+    },
+    setOwners: (state, action) => {
+      state.owners = action.payload;
+    },
+    setSitters: (state, action) => {
+      state.sitters = action.payload;
     },
     sortUsersByName: (state, action) => {
       const sortedUser = [...state.filteredUsers];
@@ -80,17 +85,60 @@ const adminUsersSlice = createSlice({
         state.filteredUsers = state.usersList;
       } else {
         state.filteredUsers = state.filteredUsers.filter(
-          (user) =>  user.neighborhood === barrio
+          (user) => user.neighborhood === barrio
         );
       }
     },
+    loginStart(state) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    loginSuccess(state, action) {
+      state.isLoading = false;
+      state.isLoggedIn = true;
+      state.adminId = action.payload.userId;
+      state.adminRole = action.payload.userRole;
+      state.adminDeleted = action.payload.userDeleted;
+    },
+    loginFailure(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+      state.userId = null;
+      state.userRole = null;
+    },
   },
 });
+
+export const loginAdmin = (formData) => async (dispatch) => {
+  dispatch(loginStart());
+  try {
+    const response = await axios.post(`http://localhost:3000/admin/login`, formData);
+    const { userId, userRole, userDeleted } = response.data;
+    dispatch(loginSuccess(response.data));
+    return {
+      userId,
+      userRole,
+      userDeleted
+    };
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.error;
+      dispatch(loginFailure(errorMessage));
+    } else {
+      dispatch(loginFailure(error.message));
+    }
+  }
+};
 
 export const {
   sortUsersByName,
   sortUsersByLastName,
   initialList,
+  setOwners,
+  setSitters,
   filterUsersByRole,
   filterUsersByNeighborhood,
 } = adminUsersSlice.actions;

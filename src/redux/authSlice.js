@@ -8,6 +8,7 @@ const authSlice = createSlice({
         isLoggedIn: false,
         userId: null,
         userRole: null,
+        userDeleted: null,
         error: null,
     },
     reducers: {
@@ -37,15 +38,16 @@ export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.acti
 
 export const loginUser = (formData) => async (dispatch) => {
     dispatch(loginStart());
-    console.log(formData)
+    console.log({formData})
     try {
         const response = await axios.post(`http://localhost:3000/login`, formData); 
-        const { userId, userRole} = response.data
+        const { userId, userRole, userDeleted} = response.data
         dispatch(loginSuccess(response.data)); 
         console.log(response.data)
         return {
             userId,
-            userRole
+            userRole,
+            userDeleted
         }
     } catch (error) {
         if (error.response) {

@@ -70,9 +70,9 @@ const DashboardOwner = () => {
 
   // console.log(linkActivo);
   return (
-    <div className="container my-5 ">
-      <div className="row">
-        <div className={`col-md-3 col-sm-12 ${styles.sideBarContainer}`}>
+    <div className="container my-5 row">
+      
+        <div className={`col-4 ${styles.sideBarContainer}`}>
           <div className={`row ${styles.profilePicContainer}`}>
             {linkActivo === "miGaleria" ? (
               <div className={styles.imageContainer}>
@@ -82,27 +82,6 @@ const DashboardOwner = () => {
                   className="img-fluid"
                 />
 
-                <div className={styles.iconImg}>
-                  <i className="bi bi-card-image"></i>
-                </div>
-
-                <div>
-                  <form onSubmit={(event) => handleSubmit(event)}>
-                    <input
-                      onChange={(event) => handleChange(event)}
-                      name="image"
-                      type="file"
-                      id="fileInput"
-                      required
-                      accept="image/png, image/jpeg, image/jpg, image/jfif"
-                    />
-                    <div>
-                      <button className={styles.btn}>
-                        ACTUALIZAR FOTO DE PERFIL
-                      </button>
-                    </div>
-                  </form>
-                </div>
               </div>
             ) : (
               <div className={styles.imageContainer}>
@@ -118,15 +97,14 @@ const DashboardOwner = () => {
             <h3>{ownerInfo.name}</h3>
           </div>
           <hr />
-          <LinksDashboardOwner />
+          <LinksDashboardOwner/>
         </div>
-        <div className="container my-5 ">
-          <div className="row">
-            <div
-              className={`col-md-8 col-sm-12 ms-3 ms-sm-4 sm-my-3 ${styles.formContainer}`}
-            >
-              {linkActivo === "miGaleria" ? (
-                <GallerySitters />
+        <div className="container my-5 col-8 b-warning">
+          
+ 
+              {linkActivo === "miPerro" ? (
+                <><h2>INFORMACION DE MI PERRO</h2>
+                <FormAddDog/> </>
               ) : (
                 <>
                   {/* <div className="d-flex">
@@ -137,15 +115,14 @@ const DashboardOwner = () => {
                     ))}
                     <span className="badge bg-success mx-1">Agregar Nuevo</span>
                   </div> */}
-                  <h2>INFORMACION DE MI PERRO</h2>
-                  <FormAddDog />
+                  <FormDashboardDueño/>
                 </>
               )}
-            </div>
-          </div>
+          
+        
         </div>
       </div>
-    </div>
+    
   );
 };
 

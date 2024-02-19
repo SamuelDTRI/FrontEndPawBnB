@@ -1,20 +1,23 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const fetchUsers = () => async (dispatch) => {
+  try {
+    // Primera llamada a axios para obtener sitters
+    const sittersResponse = await axios.get("http://localhost:3000/sitters");
+    const sitters = sittersResponse.data;
 
-// Obtenemos la lista de sitters
-export const fetchSitters = createAsyncThunk("adminUsers/fetchSitters", async () => {
-  const response = await axios.get("http://localhost:3000/sitters");
-  return response.data;
-});
+    // Segunda llamada a axios para obtener owners
+    const ownersResponse = await axios.get("http://localhost:3000/owners");
+    const owners = ownersResponse.data;
 
-// Obtenemos la lista de owners
-export const fetchOwners = createAsyncThunk("adminUsers/fetchOwners", async () => {
-  const response = await axios.get("http://localhost:3000/owners");
-  return response.data;
-});
-
+    // Dispatch para inicializar tanto sitters como owners
+    dispatch(initialList([...sitters,...owners]));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 //Definimos  la lista combinada de owner and sitters
 const selectSitters = (state) => state.adminUsers.sitters;
 const selectOwners = (state) => state.adminUsers.owners;
@@ -35,9 +38,9 @@ const adminUsersSlice = createSlice({
     filteredUsers: [],
   },
   reducers: {
-    initialList : (state) => {
-      (state.filteredUsers = selectUsersList(state));
-        (state.usersList = selectUsersList(state));
+    initialList: (state, action) => {
+      state.filteredUsers = action.payload;
+      state.usersList = action.payload;
     },
     sortUsersByName: (state, action) => {
       const sortedUser = [...state.filteredUsers];
@@ -63,40 +66,33 @@ const adminUsersSlice = createSlice({
     },
     filterUsersByRole: (state, action) => {
       const role = action.payload;
-      console.log(state.usersList)
-      if (action.payload === 'all') {
+      if (role === "all") {
         state.filteredUsers = state.usersList;
       } else {
-        state.filteredUsers = state.filteredUsers.filter(user => user.role === role);
+        state.filteredUsers = state.filteredUsers.filter(
+          (user) => user.role === role
+        );
+      }
+    },
+    filterUsersByNeighborhood: (state, action) => {
+      const barrio = action.payload;
+      if (barrio === "all") {
+        state.filteredUsers = state.usersList;
+      } else {
+        state.filteredUsers = state.filteredUsers.filter(
+          (user) =>  user.neighborhood === barrio
+        );
       }
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSitters.fulfilled, (state, action) => {
-        state.sitters = action.payload;
-      })
-      .addCase(fetchOwners.fulfilled, (state, action) => {
-        state.owners = action.payload;
-      })
-      .addMatcher(
-        (action) =>
-          [fetchSitters.pending, fetchOwners.pending].includes(action.type),
-        (state) => {
-          state.status = "loading";
-        }
-      )
-      .addMatcher(
-        (action) =>
-          [fetchSitters.rejected, fetchOwners.rejected].includes(action.type),
-        (state, action) => {
-          state.status = "failed";
-          state.error = action.error.message;
-        }
-      );
-  },
 });
 
-export const { sortUsersByName, sortUsersByLastName, initialList, filterUsersByRole} = adminUsersSlice.actions;
+export const {
+  sortUsersByName,
+  sortUsersByLastName,
+  initialList,
+  filterUsersByRole,
+  filterUsersByNeighborhood,
+} = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

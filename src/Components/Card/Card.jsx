@@ -17,7 +17,7 @@ const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
       <div className="infoContainer">
         <div className="infoName">
           <p>{name}</p>
-          <p>${rates}</p>
+          <p>Tarifa ${rates}</p>
           <p>{neighborhood}, {city}</p>
         </div>
         <div className="infoReview">

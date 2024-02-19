@@ -1,28 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
-
-
-
+import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 
 const SitterPresentation = ({ infoSitter }) => {
   const navigate = useNavigate();
-  const reservation = () =>{
+  const reservation = () => {
     navigate(`/reservation/${infoSitter.id}`);
-   }
-   
-
+  };
 
   return (
     <div className="container">
       <div className="row">
         <div className="col">
           <div className={styles.imageContainer}>
-            <img
-              src={infoSitter.photoProfile}
-              alt={infoSitter.name}
-              className={styles.img}
-            />
+            <img src={findPhoto} alt="profile pic" className={styles.img} />
           </div>
         </div>
         <div className="col">
@@ -41,7 +33,9 @@ const SitterPresentation = ({ infoSitter }) => {
                 <h2>5.0/5.0 ⭐</h2>
                 <p>(9 reseñas)</p>
               </div>
-              <button onClick={reservation}>Reserva con {infoSitter.name}</button>
+              <button onClick={reservation}>
+                Reserva con {infoSitter.name}
+              </button>
               <h4>
                 La reserva no se le cobrara hasta que jorge confirme la reserva
                 puede cancelar hasta 48hs antes y obtener un reembolso del 100%

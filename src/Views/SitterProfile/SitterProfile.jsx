@@ -15,8 +15,6 @@ const SitterProfile = () => {
   const dispatch = useDispatch();
   const infoSitter = useSelector((state) => state.sitter);
   const completedProfile = useSelector((state) => state.sitter.completedProfile);
-
-  const noPhotos =  infoSitter.photos.length === 0 || !infoSitter.photos;
   
   useEffect(() => {
     const fetchSitterData = async () => {
@@ -58,6 +56,7 @@ const SitterProfile = () => {
         <CardReview infoSitter={infoSitter} />
         <button className="mt-4">Ver mas Reviews</button>
       </section>
+
       {noPhotos ? (
       <section className="container mt-4">
         <h2>Agrega fotos en <a href={`/dashboardSitter/${id}`} className={style.link}>Mi Galeria</a>.</h2>
@@ -66,6 +65,7 @@ const SitterProfile = () => {
         <h2>Galeria de {infoSitter.name}</h2>
         <Gallery infoSitter={infoSitter} id={id}/>
       </section>)}
+
       <section className="col-12">
         <SitterRates infoSitter={infoSitter} />
       </section>

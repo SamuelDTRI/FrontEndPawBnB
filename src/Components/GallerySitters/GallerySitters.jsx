@@ -47,11 +47,7 @@ const GallerySitters = () => {
       alert("Debes Seleccionar Una Imagen.");
       return;
     }
-
-    try {
-      const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
-        photos: imgGallery
-      })
+    
     try {
       const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
         photos: imgGallery,
@@ -63,7 +59,6 @@ const GallerySitters = () => {
       setTimeout(() => {
         setUploadSuccess(false)
       }, 5000);
-    } catch(error){
     } catch (error) {
       console.log(error);
     }

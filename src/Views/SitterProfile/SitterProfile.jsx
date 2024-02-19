@@ -49,6 +49,7 @@ const SitterProfile = () => {
       <section className="container mx-4">
         <SitterPresentation infoSitter={infoSitter} />
       </section>
+      {console.log("haciendo prueba de git")}
       <section className="container mt-4">
         <h2>Acerca de {infoSitter.name}</h2>
         <SitterDescription infoSitter={infoSitter} />
@@ -58,7 +59,6 @@ const SitterProfile = () => {
         <CardReview infoSitter={infoSitter} />
         <button className="mt-4">Ver mas Reviews</button>
       </section>
-
       {noPhotos ? (
       <section className="container mt-4">
         <h2>Agrega fotos en <a href={`/dashboardSitter/${id}`} className={style.link}>Mi Galeria</a>.</h2>

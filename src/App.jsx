@@ -36,35 +36,33 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
-        <Route
-          path="/dashboardSitter/:id"
-          element={
-            <DashboardSitter />
-            /* !userDeleted && userRole === "DogSitter" && userId ? (
+
+        <Route path="/dashboardSitter/:id" element={ <DashboardSitter /> }/>
+            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+             
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
-        <Route
-          path="/dashboardOwner/:id"
-          element={
-            <DashboardOwner />
-            /* !userDeleted && userRole === "Owner" && userId ? (
+            )
+          
+        */}
+
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner />}/>
+{/*          
+            !userDeleted && userRole === "Owner" && userId ? (
+              
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
+            )
+           */}       
         <Route
-          path="/sitterProfile/:id"
-          element={ <SitterProfile />
-            /* !userDeleted && userRole === "DogSitter" && userId ? (
+          path="/sitterProfile/:id"element={<SitterProfile/> }/>          
+            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+            
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
+            )
+          */}
+  
         <Route
           path="/reservation"
           element={userId ? <ReservationRequest /> : <SignUpOwners />}
@@ -73,8 +71,10 @@ function App() {
         <Route path="/Home" element={<Home />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
+
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
+
       </Routes>
       <Footer />
 </div>

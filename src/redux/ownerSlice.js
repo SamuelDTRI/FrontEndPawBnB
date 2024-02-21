@@ -63,7 +63,7 @@ export const fetchDogsByOwnerId = createAsyncThunk(
   "owner/fetchDogsByOwnerId",
   async (ownerId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/owners/${ownerId}`);
+      const response = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${ownerId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching owner's dogs:", error);
@@ -111,7 +111,7 @@ export const ownerSlice = createSlice({
       console.log(action.payload.updatedOwner)
       try {
         const { data } = await axios.put(
-          `http://localhost:3000/owners`,
+          `https://backendpawbnb-production.up.railway.app/owners`,
           action.payload.updatedOwner
         );
         

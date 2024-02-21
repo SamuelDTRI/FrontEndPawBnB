@@ -20,7 +20,7 @@ const DashboardOwner = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/owners/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${id}`);
       dispatch(infoOwner(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);

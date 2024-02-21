@@ -1,0 +1,18 @@
+.contenedorDatos{
+    margin-top: 2em;
+    border: 2px solid #ffa726;
+    border-radius: 15px;
+    background-color: white;
+   
+}
+
+.contenedorFechas{
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+}
+.textoDatos{
+    padding: 0.3em;
+}
+
+

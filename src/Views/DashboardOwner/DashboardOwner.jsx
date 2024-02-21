@@ -9,6 +9,7 @@ import axios from "axios";
 import { infoOwner } from "../../redux/ownerSlice";
 import { useParams } from "react-router-dom";
 import FormAddDog from "../../Components/FormAddDog/FormAddDog";
+import OwnerReservations from "../../Components/OwnerReservations/OwnerReservations";
 
 const DashboardOwner = () => {
   const dispatch = useDispatch();

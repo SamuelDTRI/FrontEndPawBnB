@@ -1,0 +1,24 @@
+.galleryContainer {
+    display: flex;
+    margin-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+};
+
+.link {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+.divAddImg {
+    padding-top: 8px;
+}

@@ -1,0 +1,10 @@
+.title {
+    text-align: center;
+}
+.flexContainer {
+    display: flex;
+    justify-content: space-around;
+}
+.neighborhoodList {
+    column-count: 2;
+}

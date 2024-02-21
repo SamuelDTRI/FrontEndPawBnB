@@ -1,0 +1,21 @@
+.imagen{
+    width: 8em;
+    height: 3em;
+    margin-left: 60px;
+}
+.imagen img{
+    width: 100%;
+    height: 100%;
+}
+.navbar{
+    margin-bottom: 1em;
+    margin-top: 0;
+}
+
+.BtMiPerfil{
+    margin-right: 1rem;
+}
+
+.BtnSalir{
+    margin-right: 1rem;
+}

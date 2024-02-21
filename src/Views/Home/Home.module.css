@@ -1,0 +1,18 @@
+  .homeContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .alertText {
+      text-align: left;
+      height: 60px;
+      margin-bottom: 40px;
+  }
+
+  .icon {
+      margin-right: 7px;
+  }
+

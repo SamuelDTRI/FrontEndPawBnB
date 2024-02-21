@@ -1,0 +1,158 @@
+.contenedorPincipal{
+    margin-top: 8em;
+}
+
+.titulo{
+    font-family: 'Montserrat';
+    font-size: 41px;
+    text-align: left;
+    font-weight: 700;
+
+}
+
+.subtitulo{
+    font-family: 'Montserrat';
+    font-size: 24px;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  
+}
+.contenedorInputs{
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+    margin-top: 40px;
+   
+    
+}
+ 
+.imagenBoxer {
+    object-fit:scale-down;
+    width: 500px;
+    height: 430px; 
+
+} 
+
+.sectionDivider{
+    height: 5em;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.imagenDivisora{
+    object-fit: scale-down;
+}
+
+
+.texto{
+    width: 54em;
+    padding: 1em;
+     margin: 0 auto;
+}
+
+.titulo2{
+    font-family: 'Montserrat';
+    font-size: 41px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.subtitulo2{
+    font-family: 'Montserrat';
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.contenedorNro{
+    /* background-color: red; */
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align:left;
+    color: aqua;
+}
+
+.numero{
+    font-size: 13em;
+    color:  rgba(128, 128, 128, 0.295);
+    font-weight: 600;
+}
+
+.photos{
+    position: absolute;
+    top: 12em;
+}
+
+.computerDogPhoto{
+border-top-left-radius: 40em;
+border-bottom-left-radius: 20em;
+border-top-right-radius: 7em;
+border-bottom-right-radius: 7em;
+width: 90%;
+
+}
+
+.conteinerObj{
+    /* background-color: blueviolet; */
+    /* box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295); */
+    border: 3px solid rgba(128, 128, 128, 0.295);
+    height: 21em;
+    border-radius: 15px;
+
+    
+}
+
+.conteinerText{
+    margin-top: 30%;
+    /* background-color: blue; */
+    text-align: center;
+    margin-right: 15%;
+    margin-left: 15%;
+    
+}
+
+.text{
+    color: black;
+    font-family:'Montserrat';
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.ContBtReservaCuidador{
+    margin-top: 4em;
+}
+
+
+.contenedorPpal{
+height: 100%;
+/* background-color: red; */
+}
+
+.contenedorImgn{
+    width: 100%;
+    height: 50%;
+    background-image: url("../imagenes/background-image/bgimage-1.png");   
+}
+
+.imagenIndividual{
+    border-top-left-radius: 75em;
+    border-bottom-left-radius: 120em;   
+    border-bottom-right-radius:75em ;
+    border-top-right-radius: 75em;
+    object-fit: scale-down;
+}
+
+.textoo2{
+    width: 100%;
+    height: 14em;
+    text-align: center;
+}
+
+.cardContainer{
+    margin: 0;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+    
+
+}

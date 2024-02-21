@@ -27,6 +27,7 @@ function App() {
   const adminRole = useSelector((state) => state.adminUsers.adminRole);
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
   console.log(1 + 2);
+  console.log(1 + 2);
   
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;

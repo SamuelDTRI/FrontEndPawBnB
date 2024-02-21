@@ -5,6 +5,7 @@ import { fetchUsers, sortUsersByName, sortUsersByLastName,filterUsersByRole, fil
 import styles from "./UserPanel.module.css";
 import { Barrios } from "../../../Helpers/Barrios.js";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const rolesOptions = ["Owner", "DogSitter"];
 
@@ -207,11 +208,14 @@ const handleOptionChange = (event) => {
           {currentUsers.map((user, index) => (
             <tr key={user.id} className={styles.deletedUser}>
               <td>{indexOfFirstUser + index + 1}</td>
-              <td>{user.name}</td>
+              <td>
+                <Link to={`/dashboardAdmin/users/profile/${user.id}`}>{user.name}</Link>
+              </td>
               <td>{user.surName}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>{user.neighborhood ? user.neighborhood : "--"}</td>
+
               <td>
                 {/* Botón para el borrado lógico */}
                 <button

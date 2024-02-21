@@ -6,7 +6,7 @@ export const createDog = createAsyncThunk(
   async (createdDog) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/dogs",
+        "https://backendpawbnb-production.up.railway.app/dogs",
         createdDog
       );
       return data;

@@ -80,12 +80,12 @@ const ReservationRequest = () => {
       //     errores.entryTime = "Por favor ingresa un horario de ingreso.";
       //   }
 
-        //   //Validacion Reservacion para
-        //   if (!valores.reservationFor) {
-        //     errores.reservationFor = "Por favor selecciona al menos una mascota.";
-        //   }
+      //   //Validacion Reservacion para
+      //   if (!valores.reservationFor) {
+      //     errores.reservationFor = "Por favor selecciona al menos una mascota.";
+      //   }
 
-        //Validacion notas
+      //Validacion notas
 
       //   if (!valores.note) {
       //     errores.note = "Por favor ingresa una observacion.";
@@ -117,11 +117,7 @@ const ReservationRequest = () => {
           <div className={styles.container}>
             <div className={`col-12 ${styles.inputContainer}`}>
               <label htmlFor="dateCheckIn">Fecha de ingreso*</label>
-              <Field
-                type="date"
-                id="dateCheckIn"
-                name="dateCheckIn"
-              />
+              <Field type="date" id="dateCheckIn" name="dateCheckIn" />
               <ErrorMessage
                 name="dateCheckIn"
                 component={() => (

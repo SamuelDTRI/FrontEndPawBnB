@@ -14,7 +14,11 @@ const SitterPresentation = ({ infoSitter }) => {
       <div className="row">
         <div className="col">
           <div className={styles.imageContainer}>
-            <img src={findPhoto} alt="profile pic" className={styles.img} />
+            <img
+              src={infoSitter.photoProfile}
+              alt="profile pic"
+              className={styles.img}
+            />
           </div>
         </div>
         <div className="col">

@@ -1,35 +1,76 @@
-import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useDispatch } from "react-redux";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { createDog } from "../../redux/dogsSlice";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import {
+  loadDogsByOwner,
+  createDog,
+  updateDog,
+  setCurrentDog,
+} from "../../redux/dogsSlice";
 
 import styles from "./FormAddDog.module.css";
 
-const FormAddDog = () => {
+const FormAddDog = ({ formType }) => {
+  const dogsList = useSelector((state) => state.dogs.dogsList);
+  const currentDog = useSelector((state) => state.dogs.currentDog);
   const [formSent, setFormSent] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    breed: "",
+    dateOfBirth: "",
+    gender: "",
+    description: "",
+    feedingInstructions: "",
+    allergies: "",
+    medication: "",
+    medicalCondition: "",
+    behavior: "",
+  });
 
   const dispatch = useDispatch();
   const { id } = useParams();
+  useEffect(() => {
+    if (formType === "edit" && currentDog) {
+      setInitialValues({
+        name: currentDog.name || "",
+        breed: currentDog.breed || "",
+        dateOfBirth: currentDog.dateOfBirth || "",
+        gender: currentDog.gender || "",
+        description: currentDog.description || "",
+        feedingInstructions: currentDog.feedingInstructions || "",
+        allergies: currentDog.allergies || "",
+        medication: currentDog.medication || "",
+        medicalCondition: currentDog.medicalCondition || "",
+        behavior: currentDog.behavior || "",
+      });
+    }
+  }, [formType, currentDog]);
+
+  const handleAddNewDogClick = () => {
+    dispatch(setCurrentDog(null));
+    setFormSent(false);
+  };
+
+  const handleDogClick = (dogId) => {
+    const selectedDog = dogsList.find((dog) => dog.id === dogId);
+    dispatch(setCurrentDog(selectedDog));
+    setFormSent(false);
+  };
 
   const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
-    console.log(values);
     try {
-      const {
-        name,
-        breed,
-        dateOfBirth,
-        gender,
-        description,
-        feedingInstructions,
-        allergies,
-        medication,
-        medicalCondition,
-        vaccination,
-        behavior,
-      } = values;
-      await dispatch(
-        createDog({
+      if (formType === "edit" && currentDog) {
+        await dispatch(
+          updateDog({
+            dogId: currentDog.id,
+            updatedDogData: values,
+          })
+        );
+      } else {
+        const {
           name,
           breed,
           dateOfBirth,
@@ -41,31 +82,39 @@ const FormAddDog = () => {
           medicalCondition,
           vaccination,
           behavior,
-          ownerId: id,
-        })
-      );
-      resetForm();
-      setFormSent(true);
+        } = values;
+        await dispatch(
+          createDog({
+            name,
+            breed,
+            dateOfBirth,
+            gender,
+            description,
+            feedingInstructions,
+            allergies,
+            medication,
+            medicalCondition,
+            vaccination,
+            behavior,
+            ownerId: id,
+          })
+        );
+        resetForm();
+        setFormSent(true);
+      }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   };
 
+  useEffect(() => {
+    dispatch(loadDogsByOwner(id));
+  }, [dispatch, id]);
+
   return (
     <>
       <Formik
-        initialValues={{
-          name: "",
-          breed: "",
-          dateOfBirth: "",
-          gender: "",
-          description: "",
-          feedingInstructions: "",
-          allergies: "",
-          medication: "",
-          medicalCondition: "",
-          behavior: "",
-        }}
+        initialValues={initialValues}
         validate={(values) => {
           let errors = {};
           if (!values.name) {
@@ -123,12 +172,35 @@ const FormAddDog = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          console.log("submitingForm");
           handleFormSubmit(values, dispatch, resetForm, setFormSent);
         }}
       >
         {({ errors }) => (
           <Form className={`container ${styles.form}`}>
+            <div className="d-flex">
+              {dogsList.map((dog) => (
+                <button
+                  key={dog.id}
+                  onClick={() => handleDogClick(dog.id)}
+                  className={`${styles.badge} ${
+                    currentDog && currentDog.id === dog.id
+                      ? styles.selectedBadge
+                      : ""
+                  }`}
+                  type="button"
+                >
+                  {dog.name}
+                </button>
+              ))}
+              <button
+                onClick={() => handleAddNewDogClick()}
+                className={styles.badge}
+                type="button"
+              >
+                Agregar Nuevo
+              </button>
+            </div>
+            <h2>INFORMACION DE MI PERRO</h2>
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="name">Nombre</label>
@@ -136,7 +208,9 @@ const FormAddDog = () => {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Nombre de tu perro"
+                  placeholder={
+                    currentDog?.name ? currentDog.name : "Nombre de tu perro..."
+                  }
                 />
                 <ErrorMessage
                   name="name"
@@ -151,7 +225,11 @@ const FormAddDog = () => {
                   type="text"
                   id="breed"
                   name="breed"
-                  placeholder="La raza de tu perro"
+                  placeholder={
+                    currentDog?.breed
+                      ? currentDog.breed
+                      : "ej: Mestizo, Border Collie, etc.."
+                  }
                 />
                 <ErrorMessage
                   name="breed"
@@ -169,7 +247,7 @@ const FormAddDog = () => {
                   type="date"
                   id="dateOfBirth"
                   name="dateOfBirth"
-                  placeholder="dd/mm/aaaa"
+                  placeholder={currentDog?.dateOfBirth}
                 />
                 <ErrorMessage
                   name="dateOfBirth"
@@ -181,7 +259,11 @@ const FormAddDog = () => {
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="gender">Género</label>
                 <Field name="gender" as="select" className="">
-                  <option value="">Selecciona el género</option>
+                  <option value="">
+                    {currentDog?.gender
+                      ? currentDog.gender
+                      : "Selecciona su genero"}
+                  </option>
                   <option value="male">Macho</option>
                   <option value="female">Hembra</option>
                 </Field>
@@ -201,8 +283,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="description"
                 name="description"
-                placeholder="ej: Mumi es la mejor compañera, le encanta jugar con su pelota y salir a
-                diario al parque..."
+                placeholder={
+                  currentDog?.description
+                    ? currentDog.description
+                    : "ej: Mumi es la mejor compañera, le encanta jugar con su pelota y salir a diario al parque..."
+                }
               />
               <ErrorMessage
                 name="description"
@@ -220,7 +305,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="feedingInstructions"
                 name="feedingInstructions"
-                placeholder="ej: 1 taza de alimento a la mañana, 1 taza a la tarde/noche"
+                placeholder={
+                  currentDog?.feedingInstruccions
+                    ? currentDog.feedingInstruccions
+                    : "ej: 1 taza de alimento a la mañana, 1 taza a la tarde/noche"
+                }
               />
               <ErrorMessage
                 name="feedingInstructions"
@@ -238,7 +327,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="allergies"
                 name="allergies"
-                placeholder="¿Tiene alergias o restricciones de algun tipo?"
+                placeholder={
+                  currentDog?.allergies
+                    ? currentDog.allergies
+                    : "¿Tiene alergias o restricciones de algun tipo?"
+                }
               />
               <ErrorMessage
                 name="allergies"
@@ -253,7 +346,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="medication"
                 name="medication"
-                placeholder="¿Toma alguna medicacion?"
+                placeholder={
+                  currentDog?.medication
+                    ? currentDog.medication
+                    : "¿Toma alguna medicacion?"
+                }
               />
               <ErrorMessage
                 name="medication"
@@ -270,7 +367,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="medicalCondition"
                 name="medicalCondition"
-                placeholder="¿Tiene o ha tenido alguna condición médica que el cuidador necesite conocer?"
+                placeholder={
+                  currentDog?.medicalCondition
+                    ? currentDog.medicalCondition
+                    : "¿Tiene o ha tenido alguna condición médica que el cuidador necesite conocer?"
+                }
               />
               <ErrorMessage
                 name="medicalCondition"
@@ -284,7 +385,11 @@ const FormAddDog = () => {
                 Calendario de vacunacion al dia
               </label>
               <Field name="vaccination" as="select" className="">
-                <option value="">Selecciona una opcion</option>
+                <option value="">
+                  {currentDog?.vaccination
+                    ? currentDog.vaccination
+                    : "Selecciona una opcion"}
+                </option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
               </Field>
@@ -301,7 +406,11 @@ const FormAddDog = () => {
                 component="textarea"
                 id="behavior"
                 name="behavior"
-                placeholder="Describe el comportamiento de tu mascota, incluyendo cualquier detalle relevante que el cuidador deba conocer. Ejemplos: reacciones ante otros animales, preferencias, comportamientos especiales, etc."
+                placeholder={
+                  currentDog?.behavior
+                    ? currentDog.behavior
+                    : "Describe el comportamiento de tu mascota, incluyendo cualquier detalle relevante que el cuidador deba conocer. Ejemplos: reacciones ante otros animales, preferencias, comportamientos especiales, etc."
+                }
               />
               <ErrorMessage
                 name="behavior"

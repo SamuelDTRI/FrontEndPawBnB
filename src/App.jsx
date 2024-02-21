@@ -25,9 +25,8 @@ function App() {
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
   const userDeleted = useSelector((state) => state.auth.userDeleted);
-  const adminRole = useSelector((state)=> state.adminUsers.adminRole);
+  const adminRole = useSelector((state) => state.adminUsers.adminRole);
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
-
 
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;
@@ -42,31 +41,31 @@ function App() {
         <Route
           path="/dashboardSitter/:id"
           element={
-            !userDeleted && userRole === "DogSitter" && userId ? (
-              <DashboardSitter />
+            <DashboardSitter />
+            /* !userDeleted && userRole === "DogSitter" && userId ? (
             ) : (
               <Navigate to="/" />
-            )
+            ) */
           }
         />
         <Route
           path="/dashboardOwner/:id"
           element={
-            !userDeleted && userRole === "Owner" && userId ? (
-              <DashboardOwner />
+            <DashboardOwner />
+            /* !userDeleted && userRole === "Owner" && userId ? (
             ) : (
               <Navigate to="/" />
-            )
+            ) */
           }
         />
         <Route
           path="/sitterProfile/:id"
           element={
-            !userDeleted && userRole === "DogSitter" && userId ? (
-              <SitterProfile />
+            <SitterProfile />
+            /* !userDeleted && userRole === "DogSitter" && userId ? (
             ) : (
               <Navigate to="/" />
-            )
+            ) */
           }
         />
         <Route
@@ -77,19 +76,8 @@ function App() {
         <Route path="/Home" element={<Home />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route
-          path="/dashboardAdmin"
-          element={
-              <DashboardAdmin />
-          }
-        />
-        <Route
-          path="/dashboardAdmin/users"
-          element={
-              <DashboardAdmin />
-          }
-        />
-
+        <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
+        <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
       </Routes>
       <Footer />
     </div>

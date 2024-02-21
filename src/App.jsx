@@ -21,7 +21,6 @@ import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
 
 function App() {
   const location = useLocation();
-
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
   const userDeleted = useSelector((state) => state.auth.userDeleted);
@@ -30,7 +29,6 @@ function App() {
 
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;
-
   return (
     <div className="App">
       {showNav && <NavBar />}
@@ -38,36 +36,32 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
-        <Route
-          path="/dashboardSitter/:id"
-          element={
-            <DashboardSitter />
-            /* !userDeleted && userRole === "DogSitter" && userId ? (
+
+        <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
+             
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
-        <Route
-          path="/dashboardOwner/:id"
-          element={
-            <DashboardOwner />
-            /* !userDeleted && userRole === "Owner" && userId ? (
+            )
+          
+        */}
+
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner />} />
+        {/*          
+            !userDeleted && userRole === "Owner" && userId ? (
+              
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
-        <Route
-          path="/sitterProfile/:id"
-          element={
-            <SitterProfile />
-            /* !userDeleted && userRole === "DogSitter" && userId ? (
+            )
+           */}
+        <Route path="/sitterProfile/:id" element={<SitterProfile />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
+            
             ) : (
               <Navigate to="/" />
-            ) */
-          }
-        />
+            )
+          */}
+
         <Route
           path="/reservation"
           element={userId ? <ReservationRequest /> : <SignUpOwners />}
@@ -76,6 +70,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
+
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
       </Routes>

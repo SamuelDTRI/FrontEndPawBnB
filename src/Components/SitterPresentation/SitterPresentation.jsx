@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 
+
 const SitterPresentation = ({ infoSitter }) => {
+  const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
+
   const navigate = useNavigate();
   const reservation = () => {
     navigate(`/reservation/${infoSitter.id}`);

@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 const Home = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const completedProfile = useSelector((state) => state.sitter.completedProfile)
+  //const completedProfile = useSelector((state) => state.sitter.completedProfile)
 
 
   useEffect(() => {
@@ -29,11 +29,6 @@ const Home = () => {
 
   return (
     <div>
-      {!completedProfile && <div className={`alert alert-warning ${style.alertText}`} role="alert">
-        <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
-        Completa tu perfil para poder recibir mas reservas. <a href={`/dashboardSitter/${id}`} className="alert-link">Completar perfil</a>. 
-      </div>}
-
       <div className={style.homeContainer}>
         <Filter/>
         <Cards/>

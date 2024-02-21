@@ -7,6 +7,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { fetchDogsByOwnerId } from "../../redux/ownerSlice";
 // import { addReservationStart } from "./../../redux/reservationSlice";
 import { ownerSlice } from "../../redux/ownerSlice";
+import {
+  aceptarReserva,
+  rechazarReserva,
+  marcarPendiente,
+} from "../../redux/reservationSlice";
+import { procesarReserva } from "../../Helpers/reservationThunks";
 
 const ReservationRequest = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -14,6 +20,7 @@ const ReservationRequest = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  // const status = useSelector((state) => state.reservation.status);
 
   //Asi se atrapa el estado del id del usuario
   const userId = useSelector((state) => state.auth.userId);
@@ -30,25 +37,15 @@ const ReservationRequest = () => {
     console.log({ userId, owner, auth, dogs });
   }, [userId]);
 
-  // const owner = useSelector((state) => state.owner);
-  // const OwnerDogsComponent = ({ ownerId }) => {
-  //   const dispatch = useDispatch();
-  //   const dogs = useSelector(state => state.owner.dogs);
-
-  //   useEffect(() => {
-  //     // Despacha la acción para obtener los perros del propietario al montar el componente
-  //     dispatch(fetchDogsByOwnerId(ownerId));
-  //   }, [dispatch, ownerId]);
-  // }
-
-  // console.log("antes", owner);
   // useEffect(() => {
-  // dispatch(user.userId);
-  // }, [dispatch]);
-  // console.log("despues", owner);
+  //   if (status === "Pendiente") {
+  //     // Inicia el temporizador de 24 horas
+  //     const tiempoLimite = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+  //     dispatch(procesarReserva(tiempoLimite));
+  //   }
+  // }, [status, dispatch]);
 
-  const fechaActual = new Date();
-  const fechaIngresada = new Date();
+
   return (
     <Formik
       initialValues={{
@@ -60,32 +57,39 @@ const ReservationRequest = () => {
       }}
       // validate={(valores) => {
       //   let errores = {};
+
       //   //Validacion fecha ingreso
+      //   const currentDate = new Date();
+      //   const checkInDate = new Date(values.dateCheckIn);
       //   if (!valores.dateCheckIn) {
       //     errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
-      //   } else if (fechaIngresada <= fechaActual) {
+      //   } else if (checkInDate <= currentDate) {
       //     errores.dateCheckIn =
       //       "La fecha de ingreso debe ser posterior a la fecha actual.";
       //   }
+
       //   //Validacion fecha salida
+      //   const checkOutDate = new Date(values.dateCheckOut);
       //   if (!valores.dateCheckOut) {
       //     errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
-      //   } else if (fechaIngresada <= fechaActual) {
+      //   } else if (checkOutDate <= checkInDate) {
       //     errores.dateCheckOut =
-      //       "La fecha de salida debe ser posterior a la fecha actual.";
+      //       "La fecha de salida debe ser posterior a la fecha de ingreso.";
       //   }
 
       //   //Validacion Horario ingreso
       //   if (!valores.entryTime) {
       //     errores.entryTime = "Por favor ingresa un horario de ingreso.";
+      //   }else if (!/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(values.entryTime)) {
+      //     errores.entryTime = "Por favor ingresa un horario en formato 24 horas.";
       //   }
 
-        //   //Validacion Reservacion para
-        //   if (!valores.reservationFor) {
-        //     errores.reservationFor = "Por favor selecciona al menos una mascota.";
-        //   }
+      //     //Validacion Reservacion para
+      //     if (!valores.reservationFor) {
+      //       errores.reservationFor = "Por favor selecciona al menos una mascota.";
+      //     }
 
-        //Validacion notas
+      //   //Validacion notas
 
       //   if (!valores.note) {
       //     errores.note = "Por favor ingresa una observacion.";
@@ -107,7 +111,13 @@ const ReservationRequest = () => {
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
         setTimeout(() => cambiarFormularioEnviado(false), 5000);
+        if (status === "Pendiente") {
+          // Aquí se podría activar la pasarela de pagos si la reserva está aceptada dentro de las 24 horas
+          dispatch(aceptarReserva());
+        }
       }}
+      
+
     >
       {({ errors }) => (
         //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (

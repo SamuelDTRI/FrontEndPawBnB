@@ -64,6 +64,7 @@ export const logOutUser = () => async (dispatch) => {
 };
 
 export const googleLoginSuccess = (loginData)=> async (dispatch) => {
+    console.log(loginData)
     dispatch(loginSuccess(loginData));
 };
 export default authSlice.reducer;

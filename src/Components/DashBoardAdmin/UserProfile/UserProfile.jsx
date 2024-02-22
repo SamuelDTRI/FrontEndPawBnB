@@ -1,5 +1,9 @@
+import { useParams } from "react-router-dom";
 
 const UserProfile = () => {
+    const { id, role } = useParams();
+    console.log( id)
+    console.log(role)
     
     return (
         <div>

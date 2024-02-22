@@ -7,7 +7,9 @@ import UserProfile from "../../Components/DashBoardAdmin/UserProfile/UserProfile
 
 const DashboardAdmin = () => {
   const location = useLocation();
-
+  const isUserProfileRoute =/^\/dashboardAdmin\/users\/profile\/\w+\/[\w-]+$/.test(location.pathname);
+  console.log(location.pathname)
+    console.log(isUserProfileRoute)
   return (
     <div className="container my-1 ">
       <div className="column">
@@ -22,7 +24,7 @@ const DashboardAdmin = () => {
           className={`col-md-12 col-sm-12 ms-3 ms-sm-4 sm-my-3 ${styles.panelContainer}`}>
           {location.pathname === "/dashboardAdmin" && <Panel />}
           {location.pathname === "/dashboardAdmin/users" && <UsersPanel />}
-          {location.pathname === "/dashboardAdmin/users/profile/:id" && <UserProfile />}
+          {isUserProfileRoute && <UserProfile />}
         </div>
       </div>
     </div>

@@ -209,7 +209,10 @@ const handleOptionChange = (event) => {
             <tr key={user.id} className={styles.deletedUser}>
               <td>{indexOfFirstUser + index + 1}</td>
               <td>
-                <Link to={`/dashboardAdmin/users/profile/${user.id}`}>{user.name}</Link>
+                <Link
+                  to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>
+                  {user.name}
+                </Link>
               </td>
               <td>{user.surName}</td>
               <td>{user.email}</td>

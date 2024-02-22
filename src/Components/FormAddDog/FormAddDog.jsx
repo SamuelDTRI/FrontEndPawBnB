@@ -99,7 +99,7 @@ const FormAddDog = ({ formType }) => {
             ownerId: id,
           })
         );
-        resetForm();
+        await resetForm();
         setFormSent(true);
       }
     } catch (error) {
@@ -117,9 +117,9 @@ const FormAddDog = ({ formType }) => {
         initialValues={initialValues}
         validate={(values) => {
           let errors = {};
-          if (!values.name) {
+          /* if (!values.name) {
             errors.name = "Por favor ingresa el nombre de tu perro.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+          } else  if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
           if (!values.breed) {
@@ -168,7 +168,7 @@ const FormAddDog = ({ formType }) => {
             errors.behavior =
               "Por favor ingresa una descripcion del comportamiento de tu perro.";
           }
-
+ */
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
@@ -177,7 +177,7 @@ const FormAddDog = ({ formType }) => {
       >
         {({ errors }) => (
           <Form className={`container ${styles.form}`}>
-            <div className="d-flex">
+            <div className="d-flex col-12">
               {dogsList.map((dog) => (
                 <button
                   key={dog.id}
@@ -211,6 +211,7 @@ const FormAddDog = ({ formType }) => {
                   placeholder={
                     currentDog?.name ? currentDog.name : "Nombre de tu perro..."
                   }
+                  defaultValue={initialValues.name}
                 />
                 <ErrorMessage
                   name="name"

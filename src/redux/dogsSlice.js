@@ -65,15 +65,16 @@ const dogsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loadDogsByOwner.fulfilled, (state, action) => {
-      // Cargar solo los perros del dueño
-      state.dogsList = action.payload;
+      const ownerId = action.meta.arg;
+      const dogsByOwner = action.payload.filter(
+        (dog) => dog.ownerId === ownerId
+      );
+      state.dogsList = dogsByOwner;
     });
     builder.addCase(createDog.fulfilled, (state, action) => {
-      // Agregar el perro recién creado a la lista
       state.dogsList = [...state.dogsList, action.payload];
     });
     builder.addCase(updateDog.fulfilled, (state, action) => {
-      // Actualizar el perro en la lista con los nuevos datos
       const updatedDog = action.payload;
       const index = state.dogsList.findIndex((dog) => dog.id === updatedDog.id);
       if (index !== -1) {

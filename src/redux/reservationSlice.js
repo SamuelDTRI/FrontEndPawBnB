@@ -1,109 +1,84 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const reservationSlice = createSlice({
+export const sendReservation = createAsyncThunk(
+  "reservations/sendReservation",
+  async (valores) => {
+    try {
+      console.log({ valores });
+
+      /*
+      {
+          status: "pendiente",
+          reviews: "asdasd",
+          rating: "5",
+          ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
+          dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
+          dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
+          dateCheckIn: "25/02/2024",
+          dateCheckOut: "27/02/2024",
+          entryTime: "10:30",
+          note: "asdasf"
+      }
+      */
+      const peticion = {
+        startDate: "Hoy",
+        status: "pendiente",
+        reviews: "asdasdasd",
+        rating: "4",
+        ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
+        dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
+        dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
+        deleted: false,
+      };
+      console.log({ peticion });
+
+      // const peticion = {
+      //   startDate: "Hoy",
+      //   status: "pendiente",
+      //   reviews: "asdasdasd",
+      //   rating: "4",
+      //   ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
+      //   dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
+      //   dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
+      //   deleted: false,
+      // };
+
+      let { data } = await axios.post(
+        "https://backendpawbnb-production.up.railway.app/bookings",
+        peticion
+      );
+      return data;
+    } catch (error) {
+      console.error({ mesagge: "Error al enviar la reserva: ", error });
+      throw error;
+    }
+  }
+);
+
+//Almacen para los estados
+export const reservationSlice = createSlice({
   name: "reservation",
   initialState: {
-    status: "Pendiente",
+    reservations: [],
+    currentReservation: {},
   },
-  reducers: {
-    aceptarReserva(state) {
-      state.status = "Aceptada";
+  reducer: {
+    //Setea el estado state segun la action realizada
+    setReservations: (state, action) => {
+      state.reservations = action.payload;
     },
-    rechazarReserva(state) {
-      state.status = "Rechazada";
+    setCurrentReservation: (state, action) => {
+      state.currentReservation = action.payload;
     },
-    marcarPendiente(state) {
-      state.status = "Pendiente";
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(sendReservation.fulfilled, (state, action) => {
+      state.reservations = [...state.reservations, action.payload];
+    });
   },
 });
 
-export const { aceptarReserva, rechazarReserva, marcarPendiente } =
+export const { setReservations, setCurrentReservation } =
   reservationSlice.actions;
-
 export default reservationSlice.reducer;
-
-
-
-
-
-
-
-
-
-
-// import {createSlice} from "@reduxjs/toolkit";
-// import axios from "axios"
-
-// const reservationSlice = createSlice ({
-//     name: "reservation",
-//     initialState:{
-//         reservations:[], //Una matriz que almacenará las reservaciones.
-//         currentReservation:"",  //Variable que guarda la reservación actual, es decir, la que se está mostrando en el detalle de una reservación.
-//         currentReservation:"",  //Variable que guarda la reservación actualmente seleccionada en el listado de reservas.
-//         success: false, //Un booleano que indica si la última operación fue exitosa.
-//         error: null, //Almacena cualquier mensaje de error.
-//         loading: true, // Un indicador booleano para mostrar si la aplicación está cargando datos.
-//     },
-//     reducers: {
-//         getReservationsStart:(state)=> { //Cambia el estado loading a true cuando se inicia la obtención de las reservaciones.
-//             state.loading=true;
-//         },
-//         getReservationsSuccess:(state, action) =>{ //Actualiza el estado con las reservaciones obtenidas y cambia loading a false y success a true.
-//             return{
-//                 ...state,
-//                 reservations:action.payload,
-//                 loading:false,
-//                 success:true
-//             }
-//         },
-//         addReservationStart:(state)=>{//Reinicia cualquier error existente cuando se inicia el proceso de agregar una nueva reserva.
-//             state.error=null;
-//         },
-//         addReservationFail:(state, action)=>{//Actualiza el estado con el error y cambia loading a false
-//             return{
-//                 ...state,
-//                 error: action.payload,
-//                 loading:false
-//             };
-//         },
-//         addReservationSuccess:(state, action)=>{ //Agrega una nueva reserva al estado y cambia loading a false y success a true.
-//             const newReservation = action.payload;
-//             state.reservations = [newReservation,...state.reservations]
-//             state.loading=false;
-//             state.success=true;
-//         },
-//         deleteReservation:(state, action)=>{//Elimina una reserva del estado según el ID proporcionado en la acción
-//             let updatedList = state.reservations.filter(r=> r.id !== action.payload);
-//             state.reservations = updatedList;
-//         }
-//     },
-//     actions: {
-//         //get all the reservations from server
-//         getReservations: (dispatch) => {
-//             dispatch(actions.getReservationsStart());
-//             axios.get('/api/reservations')
-//                 .then(response => {  
-//                     console.log('Got Reservations', response.data); 
-//                     dispatch(actions.getReservationsSuccess(response.data));
-//                 })
-//                 .catch((err) => {
-//                     console.log("Error getting reservations", err.message);
-//                     dispatch(actions.getReservationsFail(err.message))
-//                 });
-//         },
-//         //add a new reservation to the list of reservations on the server and then
-//     }
-        
-// });
-
-// export const ReservationContext = createContext();
-// export default reservationSlice.reducer;
-
-// //Este contexto se utilizará para proporcionar el estado del slice a los componentes secundarios.
-// /*function ReservationProvider({children}) {
-//     const store = useReducer(reducer, initialState)};
-    
-//     //crear un store con un reducer y un estado inicial. Este componente envuelve la aplicación y proporciona el contexto ReservationContext con el valor del store creado
-//     return <ReservationContext.Provider value={store}>{children}</ReservationContext.Provider>*/
-    

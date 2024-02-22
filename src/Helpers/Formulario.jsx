@@ -51,7 +51,7 @@ const Formulario = (text, role) => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
-              const { userId, userRole } = await dispatch(
+              const { userId, userRole } = dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
@@ -67,7 +67,7 @@ const Formulario = (text, role) => {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
-              const { userId, userRole } = await dispatch(
+              const { userId, userRole } = dispatch(
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
@@ -165,7 +165,7 @@ const Formulario = (text, role) => {
         validationSchema={SignupSchema}
         
         onSubmit= {async (valores, { resetForm }) => {
-          const {userRole}= await dispatch(
+          const {userRole}= dispatch(
             signUpOwner(valores, text.role, navigate("/Login"))
           );
             if(userRole) navigate("/Login");

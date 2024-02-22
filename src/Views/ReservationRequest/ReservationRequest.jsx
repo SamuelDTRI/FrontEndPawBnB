@@ -4,15 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./ReservationRequest.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchDogsByOwnerId } from "../../redux/ownerSlice";
-// import { addReservationStart } from "./../../redux/reservationSlice";
+import { loadDogsByOwner } from "../../redux/dogsSlice";
+import { sendReservation } from "../../redux/reservationSlice";
 import { ownerSlice } from "../../redux/ownerSlice";
-import {
-  aceptarReserva,
-  rechazarReserva,
-  marcarPendiente,
-} from "../../redux/reservationSlice";
-import { procesarReserva } from "../../Helpers/reservationThunks";
 
 const ReservationRequest = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -26,10 +20,12 @@ const ReservationRequest = () => {
   const userId = useSelector((state) => state.auth.userId);
   const owner = useSelector((state) => state.owner);
   const auth = useSelector((state) => state.auth);
-  const dogs = useSelector((state) => state.owner.Dogs.Dogs);
+  const dogs = useSelector((state) => state.dogs.dogsList);
+  // const reservations = useSelector((state) => state.reservation.reservations);
 
   const getDogs = () => {
-    dispatch(fetchDogsByOwnerId(userId));
+    // dispatch(fetchDogsByOwnerId(userId));
+    dispatch(loadDogsByOwner(userId));
   };
 
   useEffect(() => {
@@ -44,7 +40,6 @@ const ReservationRequest = () => {
   //     dispatch(procesarReserva(tiempoLimite));
   //   }
   // }, [status, dispatch]);
-
 
   return (
     <Formik
@@ -110,10 +105,15 @@ const ReservationRequest = () => {
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
         valores.reservationFor ? "" : (valores.reservationFor = dogs[0].id);
+
         console.log({
-          valores: valores,
+          //muestra valores del perro
+          ...valores,
+          //Agrego el perro en el objeto
+          dog: dogs.find((x) => x.id == valores.reservationFor),
         });
         // dispatch(addReservationStart(valores));
+        // dispatch(sendReservation({...valores}));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
@@ -123,8 +123,6 @@ const ReservationRequest = () => {
           dispatch(aceptarReserva());
         }
       }}
-      
-
     >
       {({ errors }) => (
         //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (

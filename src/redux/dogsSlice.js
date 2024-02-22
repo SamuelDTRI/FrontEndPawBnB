@@ -6,7 +6,7 @@ export const loadDogsByOwner = createAsyncThunk(
   async (ownerId) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/dogs?ownerId=${ownerId}`
+        `http://backendpawbnb-production.up.railway.app/dogs?ownerId=${ownerId}`
       );
       return data;
     } catch (error) {
@@ -69,6 +69,7 @@ const dogsSlice = createSlice({
       const dogsByOwner = action.payload.filter(
         (dog) => dog.ownerId === ownerId
       );
+      console.log({dogsByOwner})
       state.dogsList = dogsByOwner;
     });
     builder.addCase(createDog.fulfilled, (state, action) => {

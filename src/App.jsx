@@ -26,8 +26,7 @@ function App() {
   const userDeleted = useSelector((state) => state.auth.userDeleted);
   const adminRole = useSelector((state) => state.adminUsers.adminRole);
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
-  console.log(1 + 2);
-  
+
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;
   return (
@@ -38,8 +37,8 @@ function App() {
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
 
-        <Route path="/dashboardSitter/:id" element={ <DashboardSitter /> }/>
-            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+        <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
              
             ) : (
               <Navigate to="/" />
@@ -47,23 +46,22 @@ function App() {
           
         */}
 
-        <Route path="/dashboardOwner/:id" element={<DashboardOwner />}/>
-{/*          
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner />} />
+        {/*          
             !userDeleted && userRole === "Owner" && userId ? (
               
             ) : (
               <Navigate to="/" />
             )
-           */}       
-        <Route
-          path="/sitterProfile/:id"element={<SitterProfile/> }/>          
-            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+           */}
+        <Route path="/sitterProfile/:id" element={<SitterProfile />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
             
             ) : (
               <Navigate to="/" />
             )
           */}
-  
+
         <Route
           path="/reservation"
           element={userId ? <ReservationRequest /> : <SignUpOwners />}
@@ -75,10 +73,10 @@ function App() {
 
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
-
       </Routes>
-      <Footer />
-</div>
-  )}
+      <Footer />
+    </div>
+  );
+}
 
 export default App;

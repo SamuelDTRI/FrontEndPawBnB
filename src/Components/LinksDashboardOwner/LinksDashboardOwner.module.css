@@ -1,11 +1,21 @@
-.sideBarLinks {
+/* .sideBarLinks {
+} */
+
+.buttonList {
     text-align: left;
 }
 
 .sideBarLinks li {
     list-style: none;
+    margin-top: 10px;
 }
 
 .sideBarLinks i {
     color: #ffa726;
+}
+
+.sideBarLinks button {
+    background-color: white;
+    color: #2d2d2d;
+    
 }

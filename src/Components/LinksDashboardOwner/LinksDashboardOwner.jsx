@@ -1,51 +1,33 @@
-import styles from "./LinksDashboardOwner.module.css"
-import { useState } from "react";
-import {useDispatch } from "react-redux";
-import { infoLinkOwner } from "../../redux/linksActives";
+/* eslint-disable react/prop-types */
+import styles from "./LinksDashboardOwner.module.css";
 
-
-const LinksDashboardOwner = ()=>{
-  const dispatch = useDispatch()
-
-  const handleClick=(informacion)=>{
-  dispatch(infoLinkOwner(informacion))
-  };
-
-
+const LinksDashboardOwner = ({ onClick }) => {
   return (
-    <div>
     <div className={styles.sideBarLinks}>
-      <ul>
+      <ul className={styles.buttonList}>
         <li>
-          <a href="#" onClick={()=> handleClick("miInfo")}>
-           Mi informacion
-          </a>
+          <button onClick={() => onClick("miInfo")}>
+            <i className="bi bi-person-circle"></i> Mi informacion
+          </button>
         </li>
         <li>
-          <a href="#" onClick={()=>handleClick("miPerro")}>
-           Mi perro
-          </a>
+          <button onClick={() => onClick("miPerro")}>
+            <i className="bi bi-suit-heart"></i> Mi perro
+          </button>
         </li>
         <li>
-          <a href="#" onClick={()=>handleClick("misReservas")}>
-           Mis reservas
-          </a>
+          <button onClick={() => onClick("misReservas")}>
+            <i className="bi bi-calendar-week"></i> Mis reservas
+          </button>
         </li>
         <li>
-          <a href="#" onClick={()=>handleClick("Favoritos")}>
-          Favoritos
-          </a>
-        </li>
-        <li>
-          <a href="#" onClick={()=>handleClick("MetodosPago")}>
-          Metodos de Pago
-          </a>
+          <button onClick={() => onClick("Favoritos")}>
+            <i className="bi bi-bookmark-heart"></i> Favoritos
+          </button>
         </li>
       </ul>
     </div>
-    </div>
   );
-
-}
+};
 
 export default LinksDashboardOwner;

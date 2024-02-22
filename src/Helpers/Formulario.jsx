@@ -51,7 +51,7 @@ const Formulario = (text, role) => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
-              const { userId, userRole } = await dispatch(
+              const { userId, userRole } = dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
@@ -67,7 +67,7 @@ const Formulario = (text, role) => {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
-              const { userId, userRole } = await dispatch(
+              const { userId, userRole } = dispatch(
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
@@ -133,11 +133,7 @@ const Formulario = (text, role) => {
           //Validacion Mail
           if (!valores.email) {
             errores.email = "Por favor ingresa un mail.";
-          } else if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-              valores.email
-            )
-          ) {
+          } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
             errores.email =
               "El email solo puede contener letras, numeros, puntos, guiones, y guion bajo";
           }
@@ -149,16 +145,16 @@ const Formulario = (text, role) => {
             errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
           }
           // Validación password (Expresion regular)
-          /*if (!valores.password) {
-            errores.password = "Por favor ingresa una contraseña.";
-          } else if (
-            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
-              valores.password
-            )
-          ) {
-            errores.password =
-              "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
-          }*/
+          // if (!valores.password) {
+          //   errores.password = "Por favor ingresa una contraseña.";
+          // } else if (
+          //   !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
+          //     valores.password
+          //   )
+          // ) {
+          //   errores.password =
+          //     "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
+          // }
           //Validacion de ambas contraseñas
           
 
@@ -169,7 +165,7 @@ const Formulario = (text, role) => {
         validationSchema={SignupSchema}
         
         onSubmit= {async (valores, { resetForm }) => {
-          const {userRole}= await dispatch(
+          const {userRole}= dispatch(
             signUpOwner(valores, text.role, navigate("/Login"))
           );
             if(userRole) navigate("/Login");

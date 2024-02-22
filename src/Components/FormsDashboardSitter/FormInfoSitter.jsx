@@ -20,7 +20,7 @@ const FormInfoSitter = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error(error.message);

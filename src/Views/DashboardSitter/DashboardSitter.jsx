@@ -23,7 +23,7 @@ const DashboardSitter = () => {
   
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
@@ -51,7 +51,7 @@ const DashboardSitter = () => {
       return;
     }
     event.preventDefault();
-    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
+    const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
       photoProfile: imgProfile
     })
     try {

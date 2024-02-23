@@ -5,6 +5,7 @@ import { fetchUsers, sortUsersByName, sortUsersByLastName,filterUsersByRole, fil
 import styles from "./UserPanel.module.css";
 import { Barrios } from "../../../Helpers/Barrios.js";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const rolesOptions = ["Owner", "DogSitter"];
 
@@ -44,9 +45,9 @@ const UsersPanel = () => {
     // Determinar la URL de la solicitud DELETE según el rol del usuario
     let deleteUrl;
     if (role === 'Owner') {
-      deleteUrl = `http://localhost:3000/owners/delete/${userId}`;
+      deleteUrl = `https://backendpawbnb-production.up.railway.app/owners/delete/${userId}`;
     } else if (role === "DogSitter") {
-      deleteUrl = `http://localhost:3000/sitters/delete/${userId}`;
+      deleteUrl = `https://backendpawbnb-production.up.railway.app/sitters/delete/${userId}`;
     } else {
       console.error("Rol de usuario no válido:", role);
       return;
@@ -207,11 +208,17 @@ const handleOptionChange = (event) => {
           {currentUsers.map((user, index) => (
             <tr key={user.id} className={styles.deletedUser}>
               <td>{indexOfFirstUser + index + 1}</td>
-              <td>{user.name}</td>
+              <td>
+                <Link
+                  to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>
+                  {user.name}
+                </Link>
+              </td>
               <td>{user.surName}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>{user.neighborhood ? user.neighborhood : "--"}</td>
+
               <td>
                 {/* Botón para el borrado lógico */}
                 <button

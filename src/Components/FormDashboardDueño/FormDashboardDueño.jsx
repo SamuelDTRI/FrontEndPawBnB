@@ -4,12 +4,12 @@ import { Barrios } from "../../Helpers/Barrios";
 import { Cities } from "../../Helpers/Cities";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { infoOwner, updateOwner } from "../../redux/OwnerSlice";
+import { infoOwner, updateOwner } from "../../redux/ownerSlice";
 import axios from "axios";
-import styles from "./FormDashboardDueño.module.css"
+import styles from "./FormDashboardDueño.module.css";
 
 
-const FormDashboardDueño=()=>{
+const FormDashboardDueño = () => {
     const [formSent, setFormSent] = useState(false);
     const [forceUpdate, setForceUpdate] = useState(false);
   
@@ -86,7 +86,7 @@ const FormDashboardDueño=()=>{
           validate={(values) => {
             let errors = {};
 
-            return errors;
+          return errors;
         }}
         onSubmit={(values, { resetForm }) => {
           handleFormSubmit(values, dispatch, resetForm, setFormSent);
@@ -146,7 +146,7 @@ const FormDashboardDueño=()=>{
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="password">Contraseña</label>
                 <Field
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
                   placeholder={ownerInfo.password}
@@ -159,23 +159,23 @@ const FormDashboardDueño=()=>{
                 />
               </div>
             </div>
-             <div className="row">
-            <div className="col-lg-6 col-md-12">
-              <label htmlFor="phone">Telefono</label>
-              <Field
-                type="number"
-                id="phone"
-                name="phone"
-                placeholder={ownerInfo.phone}
-              />
-              <ErrorMessage
-                name="phone"
-                component={() => (
-                  <div className={styles.error}>{errors.phone}</div>
-                )}
-              />
-            </div>
-             <div className="col-lg-6 col-md-12">
+            <div className="row">
+              <div className="col-lg-6 col-md-12">
+                <label htmlFor="phone">Telefono</label>
+                <Field
+                  type="number"
+                  id="phone"
+                  name="phone"
+                  placeholder={ownerInfo.phone}
+                />
+                <ErrorMessage
+                  name="phone"
+                  component={() => (
+                    <div className={styles.error}>{errors.phone}</div>
+                  )}
+                />
+              </div>
+              <div className="col-lg-6 col-md-12">
                 <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
                 <Field
                   type="date"
@@ -191,7 +191,7 @@ const FormDashboardDueño=()=>{
                 />
               </div>
             </div>
-            
+
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="city">Ciudad</label>
@@ -250,7 +250,7 @@ const FormDashboardDueño=()=>{
                 )}
               />
             </div>
-           
+
             <button type="submit">GUARDAR CAMBIOS</button>
             {formSent && (
               <p className={styles.success}>Cambios guardados con exito!</p>
@@ -260,8 +260,6 @@ const FormDashboardDueño=()=>{
       </Formik>
     </>
   );
-    
-}
-
+};
 
 export default FormDashboardDueño;

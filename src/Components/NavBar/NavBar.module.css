@@ -10,9 +10,12 @@
 .navbar{
     margin-bottom: 1em;
     margin-top: 0;
-    
 }
 
-.botones{
-    margin-left: 1em;
+.BtMiPerfil{
+    margin-right: 1rem;
+}
+
+.BtnSalir{
+    margin-right: 1rem;
 }

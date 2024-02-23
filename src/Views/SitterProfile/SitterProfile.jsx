@@ -13,9 +13,10 @@ import { useParams } from "react-router-dom";
 const SitterProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  
   const infoSitter = useSelector((state) => state.sitter);
   const completedProfile = useSelector((state) => state.sitter.completedProfile);
-  
+  console.log(completedProfile)
   const noPhotos = !infoSitter.photos || infoSitter.photos.length === 0;
 
   useEffect(() => {
@@ -42,10 +43,12 @@ const SitterProfile = () => {
 
   return (
     <div className="container col-10 my-5">
-      {!completedProfile && <div className={`alert alert-warning ${style.alertYellow}`} role="alert">
+      {/* {!completedProfile && <div className={`alert alert-warning ${style.alertYellow}`} role="alert">
         <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
         Completa tu perfil para poder recibir mas reservas. <a href={`/dashboardSitter/${id}`} className="alert-link">Completar perfil</a>. 
       </div>}
+        {console.log(completedProfile)} */}
+
       <section className="container mx-4">
         <SitterPresentation infoSitter={infoSitter} />
       </section>

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
+    "@stripe/react-stripe-js": "^2.5.0",
+    "@stripe/stripe-js": "^3.0.5",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",

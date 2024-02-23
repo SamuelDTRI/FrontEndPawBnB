@@ -5,11 +5,11 @@ import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 export const fetchUsers = () => async (dispatch) => {
   try {
     // Primera llamada a axios para obtener sitters
-    const sittersResponse = await axios.get("http://localhost:3000/sitters");
+    const sittersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
     const sitters = sittersResponse.data;
 
     // Segunda llamada a axios para obtener owners
-    const ownersResponse = await axios.get("http://localhost:3000/owners");
+    const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
     const owners = ownersResponse.data;
 
     // Dispatch para inicializar tanto sitters como owners
@@ -115,7 +115,7 @@ const adminUsersSlice = createSlice({
 export const loginAdmin = (formData) => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const response = await axios.post(`http://localhost:3000/admin/login`, formData);
+    const response = await axios.post(`https://backendpawbnb-production.up.railway.app/admin/login`, formData);
     const { userId, userRole, userDeleted } = response.data;
     dispatch(loginSuccess(response.data));
     return {

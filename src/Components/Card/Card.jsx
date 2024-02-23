@@ -1,14 +1,10 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { ContainerCard } from "./card.styled";
-import { useNavigate } from "react-router-dom";
+
 
 const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
-  const navigate = useNavigate();
-  const reservation = () =>{
-    navigate(`/reservation/${id}`);
-   }
-
+  
   return (
     <ContainerCard>
       <div className="imgContainer">
@@ -24,7 +20,9 @@ const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
           <p>{rating}</p>
         </div>
         <div className="infoBtn">
-          <button className="btnBooking" onClick={reservation}>Reservar ahora</button>
+          <Link to={`/reservation/${id}`}>
+          <button className="btnBooking">Reservar ahora</button>
+          </Link>
           <Link to={`/sitterProfile/${id}`}>
             <button className="btnProfile">Ver perfil</button>
           </Link>

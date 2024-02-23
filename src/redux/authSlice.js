@@ -40,7 +40,7 @@ export const loginUser = (formData) => async (dispatch) => {
     dispatch(loginStart());
     console.log({formData})
     try {
-        const response = await axios.post(`http://localhost:3000/login`, formData); 
+        const response = await axios.post(`https://backendpawbnb-production.up.railway.app/login`, formData); 
         const { userId, userRole, userDeleted} = response.data
         dispatch(loginSuccess(response.data)); 
         console.log(response.data)
@@ -64,6 +64,7 @@ export const logOutUser = () => async (dispatch) => {
 };
 
 export const googleLoginSuccess = (loginData)=> async (dispatch) => {
+    console.log(loginData)
     dispatch(loginSuccess(loginData));
 };
 export default authSlice.reducer;

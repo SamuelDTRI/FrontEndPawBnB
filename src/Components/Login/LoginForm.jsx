@@ -92,14 +92,14 @@ const LoginForm = () => {
     return () => clearTimeout(timeoutId);
   }, [error, dispatch]);
 
-  useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
-    }
-  }, [userRole, userId, navigate]);
+  // useEffect(() => {
+  //   // Redireccionamos al usuario después de un inicio de sesión exitoso
+  //   if (userRole === "Owner") {
+  //     navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
+  //   } else if (userRole === "DogSitter") {
+  //     navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+  //   }
+  // }, [userRole, userId, navigate]);
   
   return (
     <div>

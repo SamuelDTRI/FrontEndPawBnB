@@ -21,7 +21,7 @@ const GallerySitters = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
@@ -49,7 +49,7 @@ const GallerySitters = () => {
     }
     
     try {
-      const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
+      const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
         photos: imgGallery,
       });
       console.log(result.data);
@@ -66,7 +66,7 @@ const GallerySitters = () => {
 
   const handleDeletePhoto = async (index) => {
     try {
-      await axios.delete(`https://backendpawbnb-production.up.railway.app/sitters/${id}/photos/${index}`);
+      await axios.delete(`http://localhost:3000/sitters/${id}/photos/${index}`);
       currentSitter(); //actualizamos la galeria despues de la eliminacion
     } catch (error) {
       console.log(error);

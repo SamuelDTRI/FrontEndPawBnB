@@ -45,9 +45,9 @@ const UsersPanel = () => {
     // Determinar la URL de la solicitud DELETE según el rol del usuario
     let deleteUrl;
     if (role === 'Owner') {
-      deleteUrl = `https://backendpawbnb-production.up.railway.app/owners/delete/${userId}`;
+      deleteUrl = `http://localhost:3000/owners/delete/${userId}`;
     } else if (role === "DogSitter") {
-      deleteUrl = `https://backendpawbnb-production.up.railway.app/sitters/delete/${userId}`;
+      deleteUrl = `http://localhost:3000/sitters/delete/${userId}`;
     } else {
       console.error("Rol de usuario no válido:", role);
       return;
@@ -207,7 +207,10 @@ const handleOptionChange = (event) => {
           {/* Mapea los usuarios y renderiza cada fila */}
           {currentUsers.map((user, index) => (
             <tr key={user.id} className={styles.deletedUser}>
-              <td>{indexOfFirstUser + index + 1}</td>
+              <Link
+                  to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>
+                <td>{indexOfFirstUser + index + 1}</td>
+              </Link>
               <td>
                 <Link
                   to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>

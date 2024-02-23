@@ -45,7 +45,7 @@ export const sendReservation = createAsyncThunk(
       // };
 
       let { data } = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/bookings",
+        "http://localhost:3000/bookings",
         peticion
       );
       return data;

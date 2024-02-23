@@ -5,18 +5,21 @@ import SitterPresentation from "../../Components/SitterPresentation/SitterPresen
 import SitterRates from "../../Components/SitterRates/SitterRates";
 import { sitterInfo, fetchSitter } from "../../redux/sitterSlice";
 import Gallery from "../../Components/Gallery/Gallery";
+import axios from 'axios';
 import style from "./SitterProfile.module.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const SitterProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [review, setReview] = useState([]);
+  const imgDefault = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
   
   const infoSitter = useSelector((state) => state.sitter);
   const completedProfile = useSelector((state) => state.sitter.completedProfile);
-  console.log(completedProfile)
+  /* console.log(completedProfile) */
   const noPhotos = !infoSitter.photos || infoSitter.photos.length === 0;
 
   useEffect(() => {
@@ -38,6 +41,17 @@ const SitterProfile = () => {
       }
     };
 
+    const reviewAsync = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:3000/review/${id}`);
+        setReview(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    reviewAsync();
+
     fetchSitterData();
   }, [dispatch, id]);
 
@@ -50,17 +64,32 @@ const SitterProfile = () => {
         {console.log(completedProfile)} */}
 
       <section className="container mx-4">
-        <SitterPresentation infoSitter={infoSitter} />
+        <SitterPresentation infoSitter={infoSitter} id={id} review={review}/>
       </section>
-      {console.log("haciendo prueba de git")}
+      {/* {console.log("haciendo prueba de git")} */}
       <section className="container mt-4">
         <h2>Acerca de {infoSitter.name}</h2>
         <SitterDescription infoSitter={infoSitter} />
       </section>
       <section className="container mt-4">
         <h2>Reseñas de {infoSitter.name}</h2>
-        <CardReview infoSitter={infoSitter} />
-        <button className="mt-4">Ver mas Reviews</button>
+        {review.length>0?
+          <>
+            {review.map((allReview) => (
+              <CardReview
+                key={allReview?.id}
+                comment={allReview?.comment}
+                rating={allReview?.rating}
+                name={allReview?.Owner?.name}
+                photo={allReview?.Owner?.photo? allReview?.Owner.photo : imgDefault}
+              />
+            ))}
+            {/* <button className="mt-4">Ver mas Reviews</button> */}
+          </>
+          :
+          <p>No hay reseñas actualmente</p>
+        }
+        
       </section>
       {noPhotos ? (
       <section className="container mt-4">

@@ -3,14 +3,31 @@ import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 
-
-const SitterPresentation = ({ infoSitter }) => {
+const SitterPresentation = ({ infoSitter, review }) => {
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
   const navigate = useNavigate();
   const reservation = () => {
     navigate(`/reservation/${infoSitter.id}`);
   };
+
+  const ratingCount = () => {
+    let ratingSum = 0;
+    const numDefault = '0.0';
+    
+    if(review.length > 0){
+      
+      const ratingArray = review.map((allReview) => {
+        return ratingSum += +allReview?.rating;
+      });
+  
+      const ratingAverage = ratingSum / ratingArray.length;
+
+      return ratingAverage.toFixed(1);
+    }
+    
+    return numDefault;
+  }
 
   return (
     <div className="container">
@@ -37,8 +54,9 @@ const SitterPresentation = ({ infoSitter }) => {
             </div>
             <div className={styles.reservationContainer}>
               <div className={styles.ratingContainer}>
-                <h2>5.0/5.0 ⭐</h2>
-                <p>(9 reseñas)</p>
+                <h2>{ratingCount()}/5.0</h2>
+                <h2 className={styles.star}><i className="bi bi-star-fill"></i></h2>
+                <p>({review.length} reseñas)</p>
               </div>
               <button onClick={reservation}>
                 Reserva con {infoSitter.name}

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./ReservationRequest.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchDogsByOwnerId } from "../../redux/ownerSlice";
-// import { addReservationStart } from "./../../redux/reservationSlice";
+import { loadDogsByOwner } from "../../redux/dogsSlice";
+import { sendReservation } from "../../redux/reservationSlice";
 import { ownerSlice } from "../../redux/ownerSlice";
 
 const ReservationRequest = () => {
@@ -14,15 +14,18 @@ const ReservationRequest = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  // const status = useSelector((state) => state.reservation.status);
 
   //Asi se atrapa el estado del id del usuario
   const userId = useSelector((state) => state.auth.userId);
   const owner = useSelector((state) => state.owner);
   const auth = useSelector((state) => state.auth);
-  const dogs = useSelector((state) => state.owner.Dogs.Dogs);
+  const dogs = useSelector((state) => state.dogs.dogsList);
+  // const reservations = useSelector((state) => state.reservation.reservations);
 
   const getDogs = () => {
-    dispatch(fetchDogsByOwnerId(userId));
+    // dispatch(fetchDogsByOwnerId(userId));
+    dispatch(loadDogsByOwner(userId));
   };
 
   useEffect(() => {
@@ -30,25 +33,14 @@ const ReservationRequest = () => {
     console.log({ userId, owner, auth, dogs });
   }, [userId]);
 
-  // const owner = useSelector((state) => state.owner);
-  // const OwnerDogsComponent = ({ ownerId }) => {
-  //   const dispatch = useDispatch();
-  //   const dogs = useSelector(state => state.owner.dogs);
-
-  //   useEffect(() => {
-  //     // Despacha la acción para obtener los perros del propietario al montar el componente
-  //     dispatch(fetchDogsByOwnerId(ownerId));
-  //   }, [dispatch, ownerId]);
-  // }
-
-  // console.log("antes", owner);
   // useEffect(() => {
-  // dispatch(user.userId);
-  // }, [dispatch]);
-  // console.log("despues", owner);
+  //   if (status === "Pendiente") {
+  //     // Inicia el temporizador de 24 horas
+  //     const tiempoLimite = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+  //     dispatch(procesarReserva(tiempoLimite));
+  //   }
+  // }, [status, dispatch]);
 
-  const fechaActual = new Date();
-  const fechaIngresada = new Date();
   return (
     <Formik
       initialValues={{
@@ -60,24 +52,37 @@ const ReservationRequest = () => {
       }}
       // validate={(valores) => {
       //   let errores = {};
+
       //   //Validacion fecha ingreso
+      //   const currentDate = new Date();
+      //   const checkInDate = new Date(values.dateCheckIn);
       //   if (!valores.dateCheckIn) {
       //     errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
-      //   } else if (fechaIngresada <= fechaActual) {
+      //   } else if (checkInDate <= currentDate) {
       //     errores.dateCheckIn =
       //       "La fecha de ingreso debe ser posterior a la fecha actual.";
       //   }
+
       //   //Validacion fecha salida
+      //   const checkOutDate = new Date(values.dateCheckOut);
       //   if (!valores.dateCheckOut) {
       //     errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
-      //   } else if (fechaIngresada <= fechaActual) {
+      //   } else if (checkOutDate <= checkInDate) {
       //     errores.dateCheckOut =
-      //       "La fecha de salida debe ser posterior a la fecha actual.";
+      //       "La fecha de salida debe ser posterior a la fecha de ingreso.";
       //   }
 
       //   //Validacion Horario ingreso
       //   if (!valores.entryTime) {
       //     errores.entryTime = "Por favor ingresa un horario de ingreso.";
+      //   }else if (!/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(values.entryTime)) {
+      //     errores.entryTime = "Por favor ingresa un horario en formato 24 horas.";
+      //   }
+
+      //     //Validacion Reservacion para
+      //     if (!valores.reservationFor) {
+      //       errores.reservationFor = "Por favor selecciona al menos una mascota.";
+      //     }
       //   }
 
       //   //Validacion Reservacion para
@@ -86,6 +91,7 @@ const ReservationRequest = () => {
       //   }
 
       //Validacion notas
+      //   //Validacion notas
 
       //   if (!valores.note) {
       //     errores.note = "Por favor ingresa una observacion.";
@@ -99,14 +105,23 @@ const ReservationRequest = () => {
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
         valores.reservationFor ? "" : (valores.reservationFor = dogs[0].id);
+
         console.log({
-          valores: valores,
+          //muestra valores del perro
+          ...valores,
+          //Agrego el perro en el objeto
+          dog: dogs.find((x) => x.id == valores.reservationFor),
         });
         // dispatch(addReservationStart(valores));
+        // dispatch(sendReservation({...valores}));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
         setTimeout(() => cambiarFormularioEnviado(false), 5000);
+        if (status === "Pendiente") {
+          // Aquí se podría activar la pasarela de pagos si la reserva está aceptada dentro de las 24 horas
+          dispatch(aceptarReserva());
+        }
       }}
     >
       {({ errors }) => (

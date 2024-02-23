@@ -18,9 +18,11 @@ const FormDashboardDueño = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`
+      );
       dispatch(infoOwner(data));
-    } catch (error) {     
+    } catch (error) {
       console.error(error.message);
     }
   };
@@ -145,7 +147,7 @@ const FormDashboardDueño = () => {
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="password">Contraseña</label>
                 <Field
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
                   placeholder={ownerInfo.password}

@@ -18,6 +18,9 @@ import Footer from "./Components/Footer/Footer";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./Views/DashboardAdmin/DashboardAdmin";
 import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
+import PaymentSucces from "./Views/Payments/PaymentSucces";
+import PaymentCancel from "./Views/Payments/PaymentCancel";
+import PaymentCheckout from "./Views/Payments/PaymentCheckout";
 
 function App() {
   const location = useLocation();
@@ -28,7 +31,7 @@ function App() {
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
   console.log(1 + 2);
   console.log(1 + 2);
-  
+
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;
   return (
@@ -39,8 +42,8 @@ function App() {
         <Route path="/SignUp" element={<SignUpOwners />} />
         <Route path="/SignUpSitters" element={<SignUpSitters />} />
 
-        <Route path="/dashboardSitter/:id" element={ <DashboardSitter /> }/>
-            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+        <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
              
             ) : (
               <Navigate to="/" />
@@ -48,38 +51,40 @@ function App() {
           
         */}
 
-        <Route path="/dashboardOwner/:id" element={<DashboardOwner />}/>
-{/*          
+        <Route path="/dashboardOwner/:id" element={<DashboardOwner />} />
+        {/*          
             !userDeleted && userRole === "Owner" && userId ? (
               
             ) : (
               <Navigate to="/" />
             )
-           */}       
-        <Route
-          path="/sitterProfile/:id"element={<SitterProfile/> }/>          
-            {/* !userDeleted && userRole === "DogSitter" && userId ? (
+           */}
+        <Route path="/sitterProfile/:id" element={<SitterProfile />} />
+        {/* !userDeleted && userRole === "DogSitter" && userId ? (
             
             ) : (
               <Navigate to="/" />
             )
           */}
-  
+
         <Route
-          path="/reservation"
+          path="/reservation/:id"
           element={userId ? <ReservationRequest /> : <SignUpOwners />}
         />
         <Route path="/Login" element={<Login />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Pay" element={<PaymentCheckout />} />
+        <Route path="/PaySuccess" element={<PaymentSucces />} />
+        <Route path="/PayCancel" element={<PaymentCancel />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
-
       </Routes>
-      <Footer />
-</div>
-  )}
+      <Footer />
+    </div>
+  );
+}
 
 export default App;

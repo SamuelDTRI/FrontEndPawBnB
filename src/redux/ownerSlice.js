@@ -59,19 +59,6 @@ export const ownerDogs = createAsyncThunk("owner/fetchDogs", async (id) => {
 //   }
 // );
 
-export const fetchDogsByOwnerId = createAsyncThunk(
-  "owner/fetchDogsByOwnerId",
-  async (ownerId) => {
-    try {
-      const response = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${ownerId}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching owner's dogs:", error);
-      throw error;
-    }
-  }
-);
-
 export const ownerSlice = createSlice({
   name: "owner",
   initialState,
@@ -120,12 +107,7 @@ export const ownerSlice = createSlice({
         throw error;
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchDogsByOwnerId.fulfilled, (state, action) => {
-      state.Dogs = action.payload;
-    });
-  },
+  }
 });
 
 

@@ -68,7 +68,7 @@ function App() {
           */}
 
         <Route
-          path="/reservation"
+          path="/reservation/:id"
           element={userId ? <ReservationRequest /> : <SignUpOwners />}
         />
         <Route path="/Login" element={<Login />} />

@@ -4,6 +4,13 @@ import {useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
 import { fetchUsers } from "../../../redux/adminUsersSlice";
 import { Barrios } from "../../../Helpers/Barrios";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title, CategoryScale, LinearScale, BarElement, defaults } from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+
+ChartJS.register( ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
 
 const Panel = ()=>{
     const dispatch = useDispatch();
@@ -51,42 +58,90 @@ const Panel = ()=>{
     });
     //Por ultimo convertimos al set en un arreglo
     const neighborhoodsWithoutSitters = Array.from(allNeighborhoodsSet);
-    console.log(neighborhoodsWithoutSitters)
+    
+    //Configuración de los datos para el gráfico de torta que representa el total de usuarios registrados
+    const usersPieChart = {
+      labels: ["Clientes", "Cuidadores"],
+      datasets: [
+        {
+          label: " # ",
+          data: [ownersList.length, sittersList.length],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    };
+    const optionsPieChart ={};
+    //Configuración de los datos para el gráfico de barras que representa los 5 barrios con mas cuidadores
+    const topFiveNeighborhoodsChart = {
+      labels: topFiveNeighborhoods.map((neighborhood) => neighborhood[0]),
+      datasets: [
+        {
+          label: "Cuidadores",
+          data: topFiveNeighborhoods.map((neighborhood) => neighborhood[1]),
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+      ],
+    };
+    const optionsBarChart = {responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Barrios com más cuidadores registrados.',
+    },
+  },};
     return (
       <div>
         <h3 className={styles.title}>Usuarios :</h3>
         <hr />
         <div className={styles.flexContainer}>
           <div>
-            <p>
-              Total de usuarios registrado: <span>{usersList.length}</span>
-            </p>
-            <p>
-              Cuidadores: <span>{sittersList.length}</span>
-            </p>
-            <p>
-              Clientes: <span>{ownersList.length}</span>
-            </p>
+            <div>
+              <p>
+                Total de usuarios registrado: <span>{usersList.length}</span>
+              </p>
+              <p>
+                Cuidadores: <span>{sittersList.length}</span>
+              </p>
+              <p>
+                Clientes: <span>{ownersList.length}</span>
+              </p>
+            </div>
+            <div>
+                <Pie data={usersPieChart} options={optionsPieChart}></Pie>
+            </div>
           </div>
           <div>
-            <p>Barrios con mas Cuidadores:</p>
-            <ol>
-              {topFiveNeighborhoods.map((neighborhood, index) => {
-                return (
-                  <li
+            <div>
+              <p>Barrios con mas Cuidadores:</p>
+              <ol>
+                {topFiveNeighborhoods.map((neighborhood, index) => {
+                  return (
+                    <li
                     key={
                       index
                     }>{`${neighborhood[0]}: ${neighborhood[1]} cuidadores.`}</li>
-                );
-              })}
-            </ol>
+                    );
+                  })}
+              </ol>
+              <div>
+                <Bar data={topFiveNeighborhoodsChart} options={optionsBarChart}></Bar>
+              </div>
+            </div>
           </div>
           <div>
             <p>Barrios sin Cuidadores:</p>
             <ul className={styles.neighborhoodList}>
-                {neighborhoodsWithoutSitters.map((neighborhood, index) => (
-                    <li key={index}>{neighborhood}</li>
-                ))}
+              {neighborhoodsWithoutSitters.map((neighborhood, index) => (
+                <li key={index}>{neighborhood}</li>
+              ))}
             </ul>
           </div>
         </div>

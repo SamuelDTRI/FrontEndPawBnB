@@ -262,7 +262,7 @@ const FormAddDog = ({ formType }) => {
                 <Field name="gender" as="select" className="">
                   <option value="">
                     {currentDog?.gender
-                      ? currentDog.gender
+                      ? currentDog?.gender
                       : "Selecciona su genero"}
                   </option>
                   <option value="male">Macho</option>

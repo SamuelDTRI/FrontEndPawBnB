@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginUser, googleLoginSuccess } from "../../redux/authSlice.js";
 import { useNavigate } from "react-router-dom";
@@ -10,24 +10,23 @@ import GoogleButton from "react-google-button";
 import checkRegistration from "../../utils/checkRegistration.js";
 import { signUpOwner } from "../../redux/signUpSlice.js";
 
-
 const LoginForm = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { googleSignIn, googleUser} = UserAuth();
+  const { googleSignIn, googleUser } = UserAuth();
   const error = useSelector((state) => state.auth.error);
-  const userRole = useSelector((state)=> state.auth.userRole);
-  const userId = useSelector((state) => state.auth.userId)
+  const userRole = useSelector((state) => state.auth.userRole);
+  const userId = useSelector((state) => state.auth.userId);
 
   const handleGoogleSignIn = async () => {
-    try{
+    try {
       await googleSignIn();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
-  useEffect(()=> {
+  useEffect(() => {
     if (googleUser && googleUser.reloadUserInfo) {
       // console.log(googleUser.reloadUserInfo.email)
       const email = googleUser.reloadUserInfo.email;
@@ -66,10 +65,10 @@ const LoginForm = () => {
       };
       fetchUserData();
     }
-  }, [googleUser, navigate,dispatch]);
+  }, [googleUser, navigate, dispatch]);
 
   const handleSubmit = async (formData) => {
-    const {userId, userRole}= await dispatch(loginUser(formData));
+    const { userId, userRole } = await dispatch(loginUser(formData));
     if (userRole === "Owner") {
       navigate(`/Home`);
     } else if (userRole === "DogSitter") {
@@ -85,14 +84,15 @@ const LoginForm = () => {
   }, [error, dispatch]);
 
   useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+    if (localStorage.getItem("miAppToken")) {
+      if (userRole === "Owner") {
+        navigate(`/Home`);
+      } else if (userRole === "DogSitter") {
+        navigate(`/dashboardSitter/${userId}`);
+      }
     }
   }, [userRole, userId, navigate]);
-  
+
   return (
     <div>
       <Formik
@@ -117,7 +117,8 @@ const LoginForm = () => {
           resetForm();
           cambiarFormularioEnviado(true);
           setTimeout(() => cambiarFormularioEnviado(false), 5000);
-        }}>
+        }}
+      >
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>

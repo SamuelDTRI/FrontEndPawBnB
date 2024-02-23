@@ -1,26 +1,25 @@
 import FormInfoSitter from "../../Components/FormsDashboardSitter/FormInfoSitter";
 import LinksDashboardSitter from "../../Components/LinksDashboardSitter/LinksDashboardSitter";
 import styles from "./DashboardSitter.module.css";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
 import { useParams } from "react-router-dom";
-import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
+import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 import SitterReservations from "../../Components/SitterReservations/SitterReservations";
-
 
 const DashboardSitter = () => {
   const [file, setFile] = useState("");
   const [imgProfile, setImgProfile] = useState("");
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const { id } = useParams();
 
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
   const [isSubmit, setIsSubmit] = useState(false);
-  
+
   const currentSitter = async () => {
     try {
       const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
@@ -31,7 +30,7 @@ const DashboardSitter = () => {
   };
 
   const previewFiles = (file) => {
-    const reader = new FileReader(); 
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImgProfile(reader.result);
@@ -46,17 +45,17 @@ const DashboardSitter = () => {
   };
 
   const handleSubmit = async (event) => {
-    if(!imgProfile) {
+    if (!imgProfile) {
       alert("Debes Seleccionar Una Imagen.");
       return;
     }
     event.preventDefault();
     const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
-      photoProfile: imgProfile
-    })
+      photoProfile: imgProfile,
+    });
     try {
       console.log(result.data);
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
@@ -67,76 +66,85 @@ const DashboardSitter = () => {
 
   //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
-  console.log(linkActivo)
   return (
     <div className="container my-5 ">
       <div className="row">
         <div className={`col-md-3 col-sm-12 ${styles.sideBarContainer}`}>
           <div className={`row ${styles.profilePicContainer}`}>
-            
-            {
-              linkActivo === "miGaleria"? (
-                
+            {linkActivo === "miGaleria" ? (
               <div className={styles.imageProfileContainer}>
-
-                  {
-                    infoSitter.photoProfile ? (
-                      <div className={styles.imgGalleryContainer}>
-                        <img
-                          src={imgProfile || infoSitter.photoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>   
-                      </div>
-                    ) : (
-                      <div className={styles.imgProfileContainer}>
-                        <img
-                          src={imgProfile || NoPhotoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>    
-                      </div>
-                  )}
+                {infoSitter.photoProfile ? (
+                  <div className={styles.imgGalleryContainer}>
+                    <img
+                      src={imgProfile || infoSitter.photoProfile}
+                      alt={infoSitter.name}
+                      className={styles.imageProfile}
+                    />
+                    <label htmlFor="fileInput" className={styles.iconImg}>
+                      <i className="bi bi-person-bounding-box"></i>
+                    </label>
+                  </div>
+                ) : (
+                  <div className={styles.imgProfileContainer}>
+                    <img
+                      src={imgProfile || NoPhotoProfile}
+                      alt={infoSitter.name}
+                      className={styles.imageProfile}
+                    />
+                    <label htmlFor="fileInput" className={styles.iconImg}>
+                      <i className="bi bi-person-bounding-box"></i>
+                    </label>
+                  </div>
+                )}
 
                 <div>
-                  <form onSubmit={event => handleSubmit(event)}>
-                    <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
-                    accept='image/png, image/jpeg, image/jpg, image/jfif'  style={{ display: "none" }}/>    
+                  <form onSubmit={(event) => handleSubmit(event)}>
+                    <input
+                      onChange={(event) => handleChange(event)}
+                      name="image"
+                      type="file"
+                      id="fileInput"
+                      required
+                      accept="image/png, image/jpeg, image/jpg, image/jfif"
+                      style={{ display: "none" }}
+                    />
                     <div>
-                      <button 
-                      className={styles.btn}
-                      type="button"
-                      onClick={(event) => {
-                        setIsSubmit(true);
-                        handleSubmit(event)
-                      }}
-                      >ACTUALIZAR FOTO DE PERFIL</button>
-                    </div>        
-                  </form>            
+                      <button
+                        className={styles.btn}
+                        type="button"
+                        onClick={(event) => {
+                          setIsSubmit(true);
+                          handleSubmit(event);
+                        }}
+                      >
+                        ACTUALIZAR FOTO DE PERFIL
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-              </div>) : (
+              </div>
+            ) : (
               <div className={styles.noImgProfileContainer}>
-                { infoSitter.photoProfile ? (
+                {infoSitter.photoProfile ? (
                   <img
                     src={infoSitter.photoProfile}
                     alt={infoSitter.name}
                     className={styles.imageProfile}
-                  />) : (
-                    <div className={styles.noImgProfileContainer}>
-                      <img className={styles.imageProfile} src={NoPhotoProfile} alt="No hay foto de perfil" />
-                      <p className={styles.textDeNoImg}>Actualiza Tu Foto De Perfil En Mi Galeria</p>
-                    </div>
-                  )
-                }
-              </div>)
-            }
+                  />
+                ) : (
+                  <div className={styles.noImgProfileContainer}>
+                    <img
+                      className={styles.imageProfile}
+                      src={NoPhotoProfile}
+                      alt="No hay foto de perfil"
+                    />
+                    <p className={styles.textDeNoImg}>
+                      Actualiza Tu Foto De Perfil En Mi Galeria
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="row">
             <h3>{infoSitter.name}</h3>
@@ -147,14 +155,14 @@ const DashboardSitter = () => {
         <div
           className={`col-md-8 col-sm-12 ms-3 ms-sm-4 sm-my-3 ${styles.formContainer}`}
         >
-          {
-            linkActivo === "miGaleria"?(<GallerySitters/>)
-           : linkActivo === "misReservas"? (<SitterReservations/>) 
-            :(<FormInfoSitter/> 
-            // <h2>MI INFORMACION</h2>   
-           )
-          }
-
+          {linkActivo === "miGaleria" ? (
+            <GallerySitters />
+          ) : linkActivo === "misReservas" ? (
+            <SitterReservations />
+          ) : (
+            <FormInfoSitter />
+            // <h2>MI INFORMACION</h2>
+          )}
         </div>
       </div>
     </div>

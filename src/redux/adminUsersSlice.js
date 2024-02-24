@@ -13,8 +13,6 @@ export const fetchUsers = () => async (dispatch) => {
     // const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
     const ownersResponse = await axios.get("http://localhost:3000/owners");
     const owners = ownersResponse.data ?ownersResponse.data : [];
-    console.log(sitters);
-    console.log(owners);
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));

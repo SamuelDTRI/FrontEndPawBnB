@@ -9,7 +9,6 @@ import PropTypes from "prop-types";
 
 function OwnerInfo({userInfo, editDisable, handleFormSubmit}) {
   const [formSent, setFormSent] = useState(false);
-  const [forceUpdate, setForceUpdate] = useState(false);
   const dispatch = useDispatch();
 
   return (
@@ -25,6 +24,7 @@ function OwnerInfo({userInfo, editDisable, handleFormSubmit}) {
         neighborhood: userInfo?.neighborhood || "",
         city: userInfo?.city || "",
       }}
+      // eslint-disable-next-line no-unused-vars
       validate={(values) => {
         let errors = {};
 
@@ -199,7 +199,14 @@ function OwnerInfo({userInfo, editDisable, handleFormSubmit}) {
             />
           </div>
 
-          <button type="submit" disabled={editDisable}>
+          <button
+            type="submit"
+            disabled={editDisable}
+            style={
+              editDisable
+                ? { backgroundColor: " #7582a1" }
+                : { backgroundColor: " #ffa319" }
+            }>
             GUARDAR CAMBIOS
           </button>
           {formSent && (

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../redux/adminUsersSlice";
 import OwnerInfo from "../OwnerInfo/OwnerInfo.jsx";
 import axios from "axios";
+import SitterInfo from "../SitterInfo/SitterInfo.jsx";
+import styles from "./UserProfile.module.css"
 
 const UserProfile = () => {
   const { id, role } = useParams();
@@ -13,6 +15,7 @@ const UserProfile = () => {
 //Obtenemos la información del usuario
   useEffect(()=>{
       dispatch(getUserInfo(id,role))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 //Función de habilita o deshabilita la edición de la información del usuario
   const handleEdit= ()=> {
@@ -63,24 +66,59 @@ const UserProfile = () => {
   return (
     <div>
       {userInfo.deleted ? (
-        <div>
-          <p>Cuenta Suspendida.-</p>{" "}
-          <button onClick={() => handleDelete()}>Activar</button>
+        <div className={styles.accountStatus}>
+          <h4>Cuenta Suspendida.-</h4>{" "}
+          <button
+            onClick={() => handleDelete()}
+            className={`${styles.actionButton} ${styles.suspendedAccount}`}>
+            Activar
+          </button>
         </div>
       ) : (
-        <div>
-          <p>Cuenta Activa.-</p>
-          <button onClick={() => handleDelete()}>Suspender</button>
+        <div className={styles.accountStatus}>
+          <h4>Cuenta Activa.-</h4>
+          <button
+            onClick={() => handleDelete()}
+            className={styles.actionButton}>
+            Suspender
+          </button>
         </div>
       )}
       {role === "Owner" ? (
         <div>
-          <button onClick={() => handleEdit()}>Editar</button>
-          <OwnerInfo userInfo={userInfo} editDisable={editDisable} handleFormSubmit={handleFormSubmit}/>
+          <button
+            onClick={() => handleEdit()}
+            className={styles.editInfoButton}
+            style={
+              editDisable
+                ? { backgroundColor: " #ffa319" }
+                : { backgroundColor: " #7582a1" }
+            }>
+            Editar Info
+          </button>
+          <OwnerInfo
+            userInfo={userInfo}
+            editDisable={editDisable}
+            handleFormSubmit={handleFormSubmit}
+          />
         </div>
       ) : (
         <div>
-          <h1>Sitter profile</h1>
+          <button
+            onClick={() => handleEdit()}
+            className={styles.editInfoButton}
+            style={
+              editDisable
+                ? { backgroundColor: " #ffa319" }
+                : { backgroundColor: " #7582a1" }
+            }>
+            Editar Info
+          </button>
+          <SitterInfo
+            userInfo={userInfo}
+            editDisable={editDisable}
+            handleFormSubmit={handleFormSubmit}
+          />
         </div>
       )}
     </div>

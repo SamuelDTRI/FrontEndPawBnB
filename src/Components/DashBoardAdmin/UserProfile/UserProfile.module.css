@@ -1,94 +1,46 @@
-.form {
-	margin-top: 20px;
-	border-radius: 15px;
-	padding: 20px;
-	height: 100%;
-}
-
-.form > div {
-	margin-bottom: 20px;
-}
-
-.form label {
-	display: block;
-	font-weight: 600;
+.accountStatus {
+	display: flex;
+	flex-direction: row;
+	margin-left: 25px;
+	margin-top: 25px;
 	font-size: 18px;
-	margin-bottom: 5px;
+	font-weight: 500;
+	gap: 25px;
 }
 
-.form input,
-.form textarea {
-	width: 100%;
-    background-color: #f4f4f4;
-	border-radius: 15px;
-    border: none;
-	font-size: 18px;
-	padding: 5px 0px 5px 10px;
-	margin-bottom: 5px;
-	color: #2E2D2D;
+.accountStatus h4{
+	align-self: center;
+	min-width: 250px;
+}
+.actionButton {
+	padding: 5px;
+	font-size: 14;
+	min-width: 120px;
 }
 
-.form input:focus {
-	outline: none;
-	border: 2px solid #ffa726;
+.suspendedAccount {
+	background-color: lightgray;
+	color: #e08d10;
 }
-
-.error {
-	color: #e92b2d;
-	font-weight: 600;
-	font-size: 12px;
-}
-
-.form button[type="submit"] {
+.editInfoButton {
 	display: block;
 	background: #ffa726;
-	font-weight: 600;
+	font-weight: 450;
 	font-family: 'Open Sans', sans-serif;
 	border: none;
 	cursor: pointer;
-	width: 100%;
-	padding: 10px;
+	width: 80px;
+	margin-right: 20px;
+	margin-left: auto;
+	padding: 5px;
 	border-radius: 15px;
 	color: #fff;
-	font-size: 16px;
+	font-size: 12px;
 	transition: .3s ease all;
 }
 
-.form button[type="submit"]:hover {
+.editInfoButton:hover {
 	background-color: #ffa319;
     border-color: #ffffff;
     box-shadow: 2px 2px 10px rgba(128, 128, 128, 0.420);
-}
-
-.success {
-	text-align: center;
-	font-size: 14px;
-	padding-top: 20px;
-	color: #02a802;
-}
-
-.form input[type="radio"] {
-	width: auto;
-}
-
-.form select {
-    width: 100%;
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    border: none;
-    font-size: 18px;
-    padding: 5px 0px 5px 10px;
-    margin-bottom: 5px;
-    color: #2E2D2D;
-}
-
-.form select:focus {
-    outline: none;
-    border: 2px solid #ffa726;
-}
-
-.form select option {
-    background-color: #f4f4f4;
-    color: #2E2D2D;
-    scrollbar-color: #ffa726;
 }

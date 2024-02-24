@@ -122,11 +122,11 @@ function OwnerInfo({userInfo, editDisable, handleFormSubmit}) {
               />
             </div>
             <div className="col-lg-6 col-md-12">
-              <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
+              <label htmlFor="userDateOfBirth">Fecha de nacimiento</label>
               <Field
                 type="date"
-                id="dateOfBirth"
-                name="dateOfBirth"
+                id="userDateOfBirth"
+                name="userDateOfBirth"
                 disabled={editDisable}
                 value={userInfo.dateOfBirth}
               />

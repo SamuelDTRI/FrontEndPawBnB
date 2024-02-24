@@ -6,12 +6,15 @@ import OwnerInfo from "../OwnerInfo/OwnerInfo.jsx";
 import axios from "axios";
 import SitterInfo from "../SitterInfo/SitterInfo.jsx";
 import styles from "./UserProfile.module.css"
+import DogsInfo from "../DogsInfo/DogsInfo.jsx";
 
 const UserProfile = () => {
   const { id, role } = useParams();
   const userInfo = useSelector((state) => state.adminUsers.userInfo);
   const [editDisable, setEditDisable]= useState(true)
   const dispatch = useDispatch();
+  //Constante que guarda la información de los perros del usuario.
+  const dogsList = userInfo.Dogs ? userInfo.Dogs : [];
 //Obtenemos la información del usuario
   useEffect(()=>{
       dispatch(getUserInfo(id,role))
@@ -73,6 +76,7 @@ const UserProfile = () => {
             className={`${styles.actionButton} ${styles.suspendedAccount}`}>
             Activar
           </button>
+          <h4>{`${userInfo.role}`}</h4>
         </div>
       ) : (
         <div className={styles.accountStatus}>
@@ -82,6 +86,7 @@ const UserProfile = () => {
             className={styles.actionButton}>
             Suspender
           </button>
+          <h4>{`${userInfo.role}`}</h4>
         </div>
       )}
       {role === "Owner" ? (
@@ -101,6 +106,7 @@ const UserProfile = () => {
             editDisable={editDisable}
             handleFormSubmit={handleFormSubmit}
           />
+          {dogsList.length>0? <DogsInfo dogsList={dogsList}/> : <h3 className={styles.dogsTittle}>El usuario no tiene perros registrados.</h3>}
         </div>
       ) : (
         <div>

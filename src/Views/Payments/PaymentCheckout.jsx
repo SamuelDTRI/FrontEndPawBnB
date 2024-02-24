@@ -5,7 +5,7 @@ const PaymentCheckout = () => {
   const handlePayment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/payment/create-checkout-session"
+        "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
       );
       const url = response.data.url;
       window.location.href = url;

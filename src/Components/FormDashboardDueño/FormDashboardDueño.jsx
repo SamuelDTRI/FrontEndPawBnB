@@ -8,27 +8,43 @@ import { infoOwner, updateOwner } from "../../redux/ownerSlice";
 import axios from "axios";
 import styles from "./FormDashboardDueño.module.css";
 
-
 const FormDashboardDueño = () => {
-    const [formSent, setFormSent] = useState(false);
-    const [forceUpdate, setForceUpdate] = useState(false);
-  
-    const dispatch = useDispatch();
-    const { id } = useParams();
-    const ownerInfo = useSelector((state) => state.owner);
-  
-     const currentSitter = async () => {
-       try {
-         const { data } = await axios.get(`http://localhost:3000/owners/${id}`);
-         dispatch(infoOwner(data));
-       } catch (error) {
-         console.error(error.message);
-       }
-    };
-  
-     const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
-         try {
-           const {
+  const [formSent, setFormSent] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
+
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const ownerInfo = useSelector((state) => state.owner);
+
+  const currentSitter = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`
+      );
+      dispatch(infoOwner(data));
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
+    try {
+      const {
+        name,
+        surName,
+        phone,
+        email,
+        password,
+        address,
+        neighborhood,
+        city,
+        rates,
+      } = values;
+      //  Llamo a la acción updateOwner del slice para enviar los datos actualizados.
+      dispatch(
+        updateOwner({
+          updatedOwner: {
+            id: id,
             name,
             surName,
             phone,
@@ -38,53 +54,38 @@ const FormDashboardDueño = () => {
             neighborhood,
             city,
             rates,
-           } = values;
-        //  Llamo a la acción updateOwner del slice para enviar los datos actualizados.
-         dispatch(
-            updateOwner({         
-              updatedOwner: {
-                id: id,
-                name,
-                surName,
-                phone,             
-                email,
-                password,
-                address,
-                neighborhood,
-                city,
-                rates,
-              },
-            })
-          );
-          await currentSitter();
-          resetForm();
-          setFormSent(true);
-          setForceUpdate((prev) => !prev);
-        } catch (error) {
-          console.error("Error al enviar el formulario:", error);
-        }
-     };
-  
-     useEffect(() => {
-       currentSitter();
-     }, [dispatch, forceUpdate]);
-  
-    return (
-      <>
-        <Formik
-          initialValues={{
-            name: ownerInfo?.name || "",
-            surName: ownerInfo?.surname || "",
-            email: ownerInfo?.email || "",
-            password: ownerInfo?.password || "",
-            phone: ownerInfo?.phone || "",
-            rate: ownerInfo?.rates || "",
-            address: ownerInfo?.address || "",
-            neighborhood: ownerInfo?.neighborhood || "",
-            city: ownerInfo?.city || "", 
-          }}
-          validate={(values) => {
-            let errors = {};
+          },
+        })
+      );
+      await currentSitter();
+      resetForm();
+      setFormSent(true);
+      setForceUpdate((prev) => !prev);
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+    }
+  };
+
+  useEffect(() => {
+    currentSitter();
+  }, [dispatch, forceUpdate]);
+
+  return (
+    <>
+      <Formik
+        initialValues={{
+          name: ownerInfo?.name || "",
+          surName: ownerInfo?.surname || "",
+          email: ownerInfo?.email || "",
+          password: ownerInfo?.password || "",
+          phone: ownerInfo?.phone || "",
+          rate: ownerInfo?.rates || "",
+          address: ownerInfo?.address || "",
+          neighborhood: ownerInfo?.neighborhood || "",
+          city: ownerInfo?.city || "",
+        }}
+        validate={(values) => {
+          let errors = {};
 
           return errors;
         }}

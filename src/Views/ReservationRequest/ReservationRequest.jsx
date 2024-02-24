@@ -10,6 +10,7 @@ import { ownerSlice } from "../../redux/ownerSlice";
 
 const ReservationRequest = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [sitterId, setSitterId] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,25 +22,29 @@ const ReservationRequest = () => {
   const owner = useSelector((state) => state.owner);
   const auth = useSelector((state) => state.auth);
   const dogs = useSelector((state) => state.dogs.dogsList);
+  const sitters = useSelector((state) => state.dogsister.dogsisters);
   // const reservations = useSelector((state) => state.reservation.reservations);
+  const URL = window.location.href.split("/");
 
   const getDogs = () => {
-    // dispatch(fetchDogsByOwnerId(userId));
     dispatch(loadDogsByOwner(userId));
   };
 
   useEffect(() => {
-    getDogs();
-    console.log({ userId, owner, auth, dogs });
-  }, [userId]);
+    let sitterId = sitters.filter((sitter) => {
+      // mapea los sitters
 
-  // useEffect(() => {
-  //   if (status === "Pendiente") {
-  //     // Inicia el temporizador de 24 horas
-  //     const tiempoLimite = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
-  //     dispatch(procesarReserva(tiempoLimite));
-  //   }
-  // }, [status, dispatch]);
+      return sitter.id == URL[URL.length - 1];
+    });
+
+    setSitterId(sitterId[0].id);
+  }, []);
+
+  useEffect(() => {
+    getDogs();
+    console.log({ URL });
+    console.log({ sitters, userId, owner, auth, dogs, sitterId });
+  }, [userId]);
 
   return (
     <Formik
@@ -47,8 +52,13 @@ const ReservationRequest = () => {
         dateCheckIn: "",
         dateCheckOut: "",
         entryTime: "",
-        reservationFor: "",
+        dogId: "",
         note: "",
+        status: "pendiente",
+        reviews: "",
+        ownerId: userId,
+        dogSitterId: sitterId,
+        rating: "4",
       }}
       // validate={(valores) => {
       //   let errores = {};
@@ -80,14 +90,14 @@ const ReservationRequest = () => {
       //   }
 
       //     //Validacion Reservacion para
-      //     if (!valores.reservationFor) {
-      //       errores.reservationFor = "Por favor selecciona al menos una mascota.";
+      //     if (!valores.dogId) {
+      //       errores.dogId = "Por favor selecciona al menos una mascota.";
       //     }
       //   }
 
       //   //Validacion Reservacion para
-      //   if (!valores.reservationFor) {
-      //     errores.reservationFor = "Por favor selecciona al menos una mascota.";
+      //   if (!valores.dogId) {
+      //     errores.dogId = "Por favor selecciona al menos una mascota.";
       //   }
 
       //Validacion notas
@@ -104,16 +114,17 @@ const ReservationRequest = () => {
       // }}
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
-        valores.reservationFor ? "" : (valores.reservationFor = dogs[0].id);
+        valores.dogId ? "" : (valores.dogId = dogs[0].id);
 
         console.log({
           //muestra valores del perro
           ...valores,
           //Agrego el perro en el objeto
-          dog: dogs.find((x) => x.id == valores.reservationFor),
+          //dog: dogs.find((x) => x.id == valores.dogId),
         });
-        // dispatch(addReservationStart(valores));
-        // dispatch(sendReservation({...valores}));
+        valores.dogSitterId = sitterId;
+
+        dispatch(sendReservation(valores));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
@@ -172,10 +183,10 @@ const ReservationRequest = () => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="reservationFor">Reservacion para</label>
+              <label htmlFor="dogId">Reservacion para</label>
               <Field
-                id="reservationFor"
-                name="reservationFor"
+                id="dogId"
+                name="dogId"
                 as="select"
                 className={styles.options}
                 key={`${Math.random()}`}
@@ -188,9 +199,9 @@ const ReservationRequest = () => {
                   : ""}
               </Field>
               <ErrorMessage
-                name="reservationFor"
+                name="dogId"
                 component={() => (
-                  <div className={styles.error}>{errors.reservationFor}</div>
+                  <div className={styles.error}>{errors.dogId}</div>
                 )}
               />
 

@@ -18,11 +18,18 @@ import Footer from "./Components/Footer/Footer";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./Views/DashboardAdmin/DashboardAdmin";
 import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
+
+import ComoFunciona from "./Components/ComoFunciona/ComoFunciona";
+import EligePawbnb from "./Components/EligePawbnb/EligePawbnb";
+import PawbnbReviews from "./Components/PawbnbReviews/PawbnbReviews";
+import AyudaFaq from "./Components/AyudaFaq/AyudaFaq";
+
 import UsersPanel from "./Components/DashBoardAdmin/UsersPanel/UserPanel";
 import UserProfile from "./Components/DashBoardAdmin/UserProfile/UserProfile";
 import PaymentSucces from "./Views/Payments/PaymentSucces";
 import PaymentCancel from "./Views/Payments/PaymentCancel";
 import PaymentCheckout from "./Views/Payments/PaymentCheckout";
+
 
 function App() {
   const location = useLocation();
@@ -79,6 +86,13 @@ function App() {
         <Route path="/PaySuccess" element={<PaymentSucces />} />
         <Route path="/PayCancel" element={<PaymentCancel />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Rutas para las secciones del footer */}
+        <Route path="/como-funciona" element={<ComoFunciona />} />
+        <Route path="/por-que-elegir" element={<EligePawbnb />} />
+        <Route path="/reviewsPawbnb" element={<PawbnbReviews />} />
+        <Route path="/ayuda-faq" element={<AyudaFaq />} />
+
         <Route path="/dashboardAdmin" element={<DashboardAdmin />}>
           <Route path="users" element={<UsersPanel />} />
           <Route path="users/profile/:role/:id" element={<UserProfile />} />

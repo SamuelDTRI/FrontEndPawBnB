@@ -60,6 +60,7 @@ const FormInfoSitter = () => {
           },
         })
       );
+
       await currentSitter();
       resetForm();
       setFormSent(true);
@@ -72,6 +73,8 @@ const FormInfoSitter = () => {
   useEffect(() => {
     currentSitter();
   }, [dispatch, forceUpdate]);
+
+  
 
   return (
     <>
@@ -338,3 +341,7 @@ const FormInfoSitter = () => {
 };
 
 export default FormInfoSitter;
+
+
+
+

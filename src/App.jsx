@@ -18,6 +18,10 @@ import Footer from "./Components/Footer/Footer";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./Views/DashboardAdmin/DashboardAdmin";
 import AdminLogin from "./Components/DashBoardAdmin/Login/AdminLogin";
+import ComoFunciona from "./Components/ComoFunciona/ComoFunciona";
+import EligePawbnb from "./Components/EligePawbnb/EligePawbnb";
+import PawbnbReviews from "./Components/PawbnbReviews/PawbnbReviews";
+import AyudaFaq from "./Components/AyudaFaq/AyudaFaq";
 
 function App() {
   const location = useLocation();
@@ -75,6 +79,12 @@ function App() {
 
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardAdmin/users" element={<DashboardAdmin />} />
+
+        {/* Rutas para las secciones del footer */}
+        <Route path="/como-funciona" element={<ComoFunciona />} />
+        <Route path="/por-que-elegir" element={<EligePawbnb />} />
+        <Route path="/reviewsPawbnb" element={<PawbnbReviews />} />
+        <Route path="/ayuda-faq" element={<AyudaFaq />} />
 
       </Routes>
       <Footer />

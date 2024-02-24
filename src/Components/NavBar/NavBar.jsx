@@ -4,6 +4,7 @@ import logo from "../imagenes/logo/logo-pawbnb-horizontal.png";
 import style from "./NavBar.module.css";
 import { UserAuth } from "../../context/AuthContext";
 import { logOutUser } from "../../redux/authSlice.js";
+import Alerts from "../Alerts/Alerts.jsx";
 
 const NavBar = () => {
   const {googleUser, googleLogOut} = UserAuth();
@@ -92,6 +93,7 @@ const handleClickMiPerfil=(userRole)=>{
         </div>
        
       </nav>
+      <Alerts />
     </div>
   );
 };

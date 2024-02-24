@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
   const navigate = useNavigate();
-  const reservation = () =>{
+
+  const reservation = () => {
     navigate(`/reservation/${id}`);
    }
 

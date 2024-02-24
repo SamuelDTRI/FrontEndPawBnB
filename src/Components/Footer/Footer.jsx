@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import style from "./Footer.module.css";
 
 const Footer = () => {
   const navigate = useNavigate();
+
   const handleSingUpRedir = () => {
     navigate("/SignUpSitters");
   };
+
+  const handleNavigation = (path) => {
+      navigate(path);
+  }
+
   return (
     <div className="card-group w-100 mt-5">
       <div className=" card text-center mb-3 bg-warning">
@@ -21,17 +28,24 @@ const Footer = () => {
           <p className="card-subtitle mb-2 text-body-secondary">Caballito</p>
         </div>
       </div>
+
       <div className="card text-center mb-3 bg-warning">
         <div className="card-body">
+
           <h3 className="card-title mb-3">Aprende mas</h3>
-          <p className="card-link">Como funciona PawBnb</p>
-          <p className="card-link">Tarifas de cuidadores locales</p>
-          <p className="card-link">Por que elegir PawBnb</p>
-          <p className="card-link">Pawbnb reviews</p>
+
+          <p className={style.cardLink} onClick={() => { handleNavigation("/como-funciona"); }}>Como funciona PawBnb</p>
+          {/* <p className={style.cardLink} onClick={() => { handleNavigation("/tarifas"); }}>Tarifas de cuidadores locales</p> */}
+          <p className={style.cardLink} onClick={() => { handleNavigation("/por-que-elegir"); }}>Por qué elegir PawBnb</p>
+          <p className={style.cardLink} onClick={() => { handleNavigation("/reviewsPawbnb"); }}>Pawbnb reviews</p>
+
           <h3 className="card-title mb-3">Podemos ayudarte</h3>
-          <p className="card-link">Ayuda y FAQ</p>
+
+          <p className={style.cardLink} onClick={() => { handleNavigation("/ayuda-faq"); }}>Ayuda y FAQ</p>
+       
         </div>
-      </div>
+     </div>
+
       <div className="card text-center mb-3 bg-warning">
         <div className="card-body">
           <h3 className="card-title mb-3">Conviértete en cuidador</h3>
@@ -40,13 +54,16 @@ const Footer = () => {
             asombrosos cerca tuyo
           </p>
           <button
-            className="btn btn-light text-black mb-3 border-black"
+            className={style.btn}
             onClick={handleSingUpRedir}>
             Hazte cuidador
           </button>
           <h3 className="card-title mb-3">Contactanos</h3>
           <p>Buenos Aires, Argentina</p>
-          <button className="btn btn-light text-black border-black">
+          
+          <button 
+          className={style.lastbtn}
+          onClick={() => { window.location.href = 'mailto:pawbnb45@gmail.com'; }}>
             Hablemos
           </button>
         </div>

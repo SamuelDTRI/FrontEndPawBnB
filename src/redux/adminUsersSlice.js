@@ -13,6 +13,8 @@ export const fetchUsers = () => async (dispatch) => {
     // const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
     const ownersResponse = await axios.get("http://localhost:3000/owners");
     const owners = ownersResponse.data ?ownersResponse.data : [];
+    console.log(sitters);
+    console.log(owners);
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));
@@ -150,6 +152,7 @@ export const getUserInfo = ( id, role) => async (dispatch)=> {
       dispatch(setUserInfo(response.data));
     }else {
       const response = await axios.get(`http://localhost:3000/sitters/${id}`);
+      dispatch(setUserInfo(response.data));
     }
   } catch (error) {
     const errorMessage = error.response.data.error;

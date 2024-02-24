@@ -54,7 +54,7 @@ const UsersPanel = () => {
     }
 
     // Enviar una solicitud DELETE al servidor para realizar el borrado lógico
-    await axios.put(deleteUrl, { deleted: true });
+    await axios.put(deleteUrl, { "deleted": true });
     dispatch(fetchUsers());
     
   } catch (error) {
@@ -207,17 +207,14 @@ const handleOptionChange = (event) => {
           {/* Mapea los usuarios y renderiza cada fila */}
           {currentUsers.map((user, index) => (
             <tr key={user.id} className={styles.deletedUser}>
-              <Link
-                  to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>
-                <td>{indexOfFirstUser + index + 1}</td>
-              </Link>
+              <td>{indexOfFirstUser + index + 1}</td>
               <td>
                 <Link
                   to={`/dashboardAdmin/users/profile/${user.role}/${user.id}`}>
-                  {user.name}
+                  {user.name? user.name : "--"}
                 </Link>
               </td>
-              <td>{user.surName}</td>
+              <td>{user.surName ? user.surName : "--"}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>{user.neighborhood ? user.neighborhood : "--"}</td>
@@ -228,7 +225,7 @@ const handleOptionChange = (event) => {
                   onClick={() => handleDelete(user.id, user.role)}
                   disabled={user.deleted}
                   style={user.deleted ? deletedUserStyle : null}>
-                  Eliminar
+                  Suspender
                 </button>
               </td>
             </tr>

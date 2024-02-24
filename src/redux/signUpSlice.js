@@ -10,6 +10,7 @@ const signUpSlice = createSlice({
 
 export const signUpOwner = (data, role, navigate) => async (dispatch) =>{
   try {
+    console.log(data)
     if (role === "Owner") {
       console.log("llegue");
       const endpoint = "http://localhost:3000/owners";

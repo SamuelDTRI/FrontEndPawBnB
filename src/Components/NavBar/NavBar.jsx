@@ -41,9 +41,9 @@ const handleClickMiPerfil=(userRole)=>{
   if(userRole==="Owner"){
     navigate(`dashboardOwner/${idUsuarioActual}`)
   }
- if(userRole==="DogSitter"){
+  if(userRole==="DogSitter"){
   navigate(`dashboardSitter/${idUsuarioActual}`)
- }
+  }
 }
 
   return (

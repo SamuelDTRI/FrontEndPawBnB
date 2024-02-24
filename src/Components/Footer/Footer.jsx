@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import style from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
-
-  const handleSingUpRedir = () => {
-    navigate("/SignUpSitters");
-  };
 
   const handleNavigation = (path) => {
       navigate(path);
@@ -53,11 +50,13 @@ const Footer = () => {
             Se tu propio jefe. Ajusta tus tarifas y horarios. Conocerás perros
             asombrosos cerca tuyo
           </p>
-          <button
-            className={style.btn}
-            onClick={handleSingUpRedir}>
-            Hazte cuidador
-          </button>
+
+          <Link to={"/SignUpSitters"}>
+            <button className="btn btn-light text-black mb-3 border-black">
+              Hazte cuidador
+            </button>
+          </Link>
+
           <h3 className="card-title mb-3">Contactanos</h3>
           <p>Buenos Aires, Argentina</p>
           

@@ -52,8 +52,8 @@ const DashboardSitter = () => {
     }
     event.preventDefault();
     const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
-      photoProfile: imgProfile
-    })
+      photoProfile: imgProfile,
+    });
     try {
       console.log(result.data);
     } catch(error){

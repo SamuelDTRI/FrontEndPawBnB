@@ -5,12 +5,14 @@ import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 export const fetchUsers = () => async (dispatch) => {
   try {
     // Primera llamada a axios para obtener sitters
+    // const sittersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
     const sittersResponse = await axios.get("http://localhost:3000/sitters");
-    const sitters = sittersResponse.data;
+    const sitters = sittersResponse.data? sittersResponse.data : [];
 
     // Segunda llamada a axios para obtener owners
+    // const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
     const ownersResponse = await axios.get("http://localhost:3000/owners");
-    const owners = ownersResponse.data;
+    const owners = ownersResponse.data ?ownersResponse.data : [];
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));
@@ -35,6 +37,7 @@ const adminUsersSlice = createSlice({
     adminId: null,
     adminRole: null,
     adminDeleted: null,
+    userInfo: {},
   },
   reducers: {
     initialList: (state, action) => {
@@ -109,13 +112,19 @@ const adminUsersSlice = createSlice({
       state.userId = null;
       state.userRole = null;
     },
+    setUserInfo(state, action){
+      state.userInfo= action.payload;
+    }
   },
 });
 
 export const loginAdmin = (formData) => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const response = await axios.post(`http://localhost:3000/admin/login`, formData);
+    const response = await axios.post(
+      `http://localhost:3000/admin/login`,
+      formData
+    );
     const { userId, userRole, userDeleted } = response.data;
     dispatch(loginSuccess(response.data));
     return {
@@ -133,6 +142,21 @@ export const loginAdmin = (formData) => async (dispatch) => {
   }
 };
 
+export const getUserInfo = ( id, role) => async (dispatch)=> {
+  try {
+    if( role === "Owner") {
+      const response = await axios.get(`http://localhost:3000/owners/${id}`);
+      console.log(response.data)
+      dispatch(setUserInfo(response.data));
+    }else {
+      const response = await axios.get(`http://localhost:3000/sitters/${id}`);
+    }
+  } catch (error) {
+    const errorMessage = error.response.data.error;
+    dispatch(loginFailure(errorMessage));
+  }
+};
+
 export const {
   sortUsersByName,
   sortUsersByLastName,
@@ -141,6 +165,7 @@ export const {
   setSitters,
   filterUsersByRole,
   filterUsersByNeighborhood,
+  setUserInfo,
 } = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

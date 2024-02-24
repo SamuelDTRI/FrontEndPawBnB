@@ -18,7 +18,7 @@ const LoginForm = () => {
   const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
   const userRole = useSelector((state)=> state.auth.userRole);
-  const userId = useSelector((state) => state.auth.userId)
+  const userId = useSelector((state) => state.auth.userId);
 
   const handleGoogleSignIn = async () => {
     try{
@@ -36,7 +36,7 @@ const LoginForm = () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
           // Verificar si el usuario ya está registrado
-          const { exist, checkId, checkRole } = await checkRegistration(email);
+          const { exist, checkId, checkRole, checkDeleted } = await checkRegistration(email);
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             const { userRole } = await dispatch(
@@ -44,12 +44,20 @@ const LoginForm = () => {
             );
             console.log(userRole);
             if (userRole) {
+              const { checkId, checkRole, checkDeleted } = await checkRegistration(email);
+            dispatch(
+              googleLoginSuccess({
+                userId: checkId,
+                userRole: checkRole,
+                userDeleted: checkDeleted,
+              })
+            );
               navigate(`/Home`);
             }
           } else {
             // cambiamos el estado global para completar el logueo
             dispatch(
-              googleLoginSuccess({ userId: checkId, userRole: checkRole })
+              googleLoginSuccess({ userId: checkId, userRole: checkRole, userDeleted: checkDeleted })
             );
             if (checkRole === "Owner") {
               navigate(`/Home`);
@@ -84,14 +92,14 @@ const LoginForm = () => {
     return () => clearTimeout(timeoutId);
   }, [error, dispatch]);
 
-  useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
-    }
-  }, [userRole, userId, navigate]);
+  // useEffect(() => {
+  //   // Redireccionamos al usuario después de un inicio de sesión exitoso
+  //   if (userRole === "Owner") {
+  //     navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
+  //   } else if (userRole === "DogSitter") {
+  //     navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+  //   }
+  // }, [userRole, userId, navigate]);
   
   return (
     <div>

@@ -37,7 +37,7 @@ const Footer = () => {
             Se tu propio jefe. Ajusta tus tarifas y horarios. Conocerás perros
             asombrosos cerca tuyo
           </p>
-          <Link to={"/SignUp"}>
+          <Link to={"/SignUpSitters"}>
             <button className="btn btn-light text-black mb-3 border-black">
               Hazte cuidador
             </button>

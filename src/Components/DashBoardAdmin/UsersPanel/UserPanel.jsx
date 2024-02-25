@@ -188,10 +188,8 @@ const handleOptionChange = (event) => {
                       user.neighborhood && user.neighborhood.includes(barrio)
                     );
                   });
-
                   // Si no hay usuarios en este barrio, oculta la opción
                   const style = hasUsersInBarrio ? {} : { display: "none" };
-
                   return (
                     <option key={index} value={barrio} style={style}>
                       {barrio}
@@ -218,7 +216,6 @@ const handleOptionChange = (event) => {
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>{user.neighborhood ? user.neighborhood : "--"}</td>
-
               <td>
                 {/* Botón para el borrado lógico */}
                 <button

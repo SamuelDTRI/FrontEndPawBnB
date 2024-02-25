@@ -37,6 +37,7 @@ const adminUsersSlice = createSlice({
     adminId: null,
     adminRole: null,
     adminDeleted: null,
+    adminInfo:{},
     userInfo: {},
   },
   reducers: {
@@ -113,7 +114,10 @@ const adminUsersSlice = createSlice({
       state.userRole = null;
     },
     setUserInfo(state, action){
-      state.userInfo= action.payload;
+      state.userInfo = action.payload;
+    },
+    setAdminInfo(state, action){
+      state.adminInfo = action.payload;
     }
   },
 });
@@ -126,7 +130,13 @@ export const loginAdmin = (formData) => async (dispatch) => {
       formData
     );
     const { userId, userRole, userDeleted } = response.data;
-    dispatch(loginSuccess(response.data));
+    if(userId){
+        dispatch(loginSuccess(response.data));
+        const requestedInfo = await axios.get(`http://localhost:3000/admin/${userId}`);
+        if(requestedInfo) {
+          dispatch(setAdminInfo(requestedInfo.data));
+        }
+    }
     return {
       userId,
       userRole,
@@ -167,6 +177,7 @@ export const {
   filterUsersByRole,
   filterUsersByNeighborhood,
   setUserInfo,
+  setAdminInfo,
 } = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

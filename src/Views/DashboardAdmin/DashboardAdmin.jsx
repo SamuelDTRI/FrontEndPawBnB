@@ -13,10 +13,6 @@ const DashboardAdmin = () => {
     <div className="container my-1">
       <div className="column">
         <div className={`col-md-12 col-sm-12 ${styles.sideBarContainer}`}>
-          <div className="column">
-            <h3>Admin Name</h3>
-          </div>
-          <hr />
           <SideBarPanel />
         </div>
         <div className={`col-md-12 col-sm-12 my-4 ${styles.panelContainer}`}>

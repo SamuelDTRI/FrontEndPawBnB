@@ -39,15 +39,13 @@ const LoginForm = () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
           // Verificar si el usuario ya está registrado
-          const { exist, checkId, checkRole, checkDeleted } = await checkRegistration(email);
+          const { exist, checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
-            const { userRole } = await dispatch(
-              signUpOwner({ email: email }, "Owner")
-            );
-            console.log(userRole);
+            const { userRole } = (await dispatch(signUpOwner({ email: email }, "Owner"))) || {};
+            
             if (userRole) {
-              const { checkId, checkRole, checkDeleted } = await checkRegistration(email);
+              const { checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
             dispatch(
               googleLoginSuccess({
                 userId: checkId,
@@ -80,7 +78,7 @@ const LoginForm = () => {
   }, [googleUser, navigate,dispatch]);
 
   const handleSubmit = async (formData) => {
-    const {userId, userRole}= await dispatch(loginUser(formData));
+    const { userId, userRole } = (await dispatch(loginUser(formData))) || {};
     if (userRole === "Owner") {
       navigate(`/Home`);
     } else if (userRole === "DogSitter") {

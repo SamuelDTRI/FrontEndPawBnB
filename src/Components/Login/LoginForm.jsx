@@ -12,12 +12,15 @@ import { signUpOwner } from "../../redux/signUpSlice.js";
 
 
 const LoginForm = () => {
+  // eslint-disable-next-line no-unused-vars
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
+  // eslint-disable-next-line no-unused-vars
   const userRole = useSelector((state)=> state.auth.userRole);
+  // eslint-disable-next-line no-unused-vars
   const userId = useSelector((state) => state.auth.userId);
 
   const handleGoogleSignIn = async () => {
@@ -88,7 +91,7 @@ const LoginForm = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch({ type: "auth/loginFailure", payload: null });
-    }, 5000);
+    }, 8000);
     return () => clearTimeout(timeoutId);
   }, [error, dispatch]);
 
@@ -129,8 +132,8 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
+            <h2>LOG IN</h2>
             <div className={styles.container}>
-              <h2>LOG IN</h2>
               <div>
                 <label htmlFor="correo">Email</label>
                 <Field
@@ -162,11 +165,12 @@ const LoginForm = () => {
                 />
               </div>
               <button type="submit">Iniciar Sesión</button>
-              {formularioEnviado && (
+              {/* {formularioEnviado && (
                 <p className={styles.exito}>Formulario enviado con éxito!</p>
-              )}
-              {error && <p>{error}</p>}
-              <br />
+              )} */}
+              <div className={styles.errorContainer}>
+                {error && <p className={styles.error}>{error}</p>}
+              </div>
               <div className={styles.googleButton}>
                 <GoogleButton
                   className="googleButton"

@@ -104,7 +104,7 @@ const adminUsersSlice = createSlice({
       state.adminRole = action.payload.userRole;
       state.adminDeleted = action.payload.userDeleted;
     },
-    loginFailure(state, action) {
+    adminLoginFailure(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -129,25 +129,25 @@ export const loginAdmin = (formData) => async (dispatch) => {
       `http://localhost:3000/admin/login`,
       formData
     );
-    const { userId, userRole, userDeleted } = response.data;
-    if(userId){
-        dispatch(loginSuccess(response.data));
-        const requestedInfo = await axios.get(`http://localhost:3000/admin/${userId}`);
-        if(requestedInfo) {
-          dispatch(setAdminInfo(requestedInfo.data));
-        }
+    if(response.data){
+      const { userId, userRole, userDeleted } = response.data;
+      dispatch(loginSuccess(response.data));
+      const requestedInfo = await axios.get(`http://localhost:3000/admin/${userId}`);
+      if(requestedInfo) {
+        dispatch(setAdminInfo(requestedInfo.data));
+      }
+      return {
+        userId,
+        userRole,
+        userDeleted
+      };
     }
-    return {
-      userId,
-      userRole,
-      userDeleted
-    };
   } catch (error) {
     if (error.response) {
       const errorMessage = error.response.data.error;
-      dispatch(loginFailure(errorMessage));
+      dispatch(adminLoginFailure(errorMessage));
     } else {
-      dispatch(loginFailure(error.message));
+      dispatch(adminLoginFailure(error.message));
     }
   }
 };
@@ -178,6 +178,7 @@ export const {
   filterUsersByNeighborhood,
   setUserInfo,
   setAdminInfo,
+  adminLoginFailure,
 } = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

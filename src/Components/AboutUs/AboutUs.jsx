@@ -79,7 +79,7 @@ const AboutUs = () => {
           <button className={style.button}>Ver Localidades</button>
         </Link>
       </div>
-      <img src={perro} alt="" />
+      {/* <img src={perro} alt="" /> */}
     </>
   )
 };

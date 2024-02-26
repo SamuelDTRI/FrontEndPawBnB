@@ -6,7 +6,7 @@ import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 import SitterReservations from "../../Components/SitterReservations/SitterReservations";
 

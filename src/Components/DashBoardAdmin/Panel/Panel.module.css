@@ -1,11 +1,84 @@
-.title {
-    text-align: center;
+.container {
+    padding: 5px;
 }
-.flexContainer {
+.dataContainer {
+    margin: 40px 55px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    gap: 25px;
+}
+.chartCard {
+    min-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ffa726;
+    padding: 20px 35px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+.pieChartData {
+    display: flex;
+    min-height: 250px;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+.pieChartTotal {
+    min-width: 30%;
+}
+.pieChartGraph {
+    min-height: 180px;
+    padding: 3px;
+}
+.usersTotalTitle {
+    font-weight: 600;
+    font-size: 22px;
+}
+.usersNumber {
+    font-weight: 600;
+    font-size: 54px;
+}
+.pieChartLabel {
+    min-width: 200px;
+    display: flex;
+    justify-content: space-between ;
+    gap: 20px;
+}
+.labelColor {
+    height: 20px;
+    width: 65px;
+    background-color: #FFA726;
+    display: inline-block;
+    border-radius: 3px;
+    border: 2px solid #ed9615;
+}
+.labelColorTwo{
+    background-color: #7B61FF;
+    border: 2px solid #6447f7;
+}
+.labelText {
+    font-weight: 600;
+    font-size: 24px;
+    min-width: 80px;
+}
+.labelNumber {
+    font-size: 24px;
+    font-weight: 400;
+}
+.topNeighborhoods {
+    min-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ffa726;
+    padding: 20px 35px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
+}
+.barChartGraph {
+    min-height: 250px;
+    margin: 0 auto;
 }
 .neighborhoodList {
-    column-count: 2;
+    width: 85%;
+    margin: 25px auto 10px;
+    columns: 4;
+    column-fill: balance;
+    column-rule: dotted 1px #333;
 }
+

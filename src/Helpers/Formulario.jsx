@@ -47,7 +47,7 @@ const Formulario = (text, role) => {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
           const email = googleUser.providerData[0].email;
           // Verificar si el usuario ya está registrado
-          const { exist, checkId, checkRole, checkDeleted } = await checkRegistration(email);
+          const { exist, checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
@@ -55,8 +55,7 @@ const Formulario = (text, role) => {
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
-                const { checkId, checkRole, checkDeleted } =
-                  await checkRegistration(email);
+                const { checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
                 dispatch(
                   googleLoginSuccess({
                     userId: checkId,
@@ -71,8 +70,7 @@ const Formulario = (text, role) => {
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
-                const { checkId, checkRole, checkDeleted } =
-                  await checkRegistration(email);
+                const { checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
                 dispatch(
                   googleLoginSuccess({
                     userId: checkId,

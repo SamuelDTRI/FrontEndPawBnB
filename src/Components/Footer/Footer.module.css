@@ -9,3 +9,34 @@
     border: 2px solid blue;
     width: 33.33%;
 }
+
+.cardLink:hover {
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+.btn {
+    border-radius: 15px;
+    background-color: #ff9800;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    margin-bottom: 10px
+}
+
+.btn:hover {
+    background-color: #ffc400;
+    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.295);
+}
+
+.lastbtn{
+    border-radius: 15px;
+    background-color: #ff9800;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.4s;
+}
+
+.lastbtn:hover {
+    background-color: #ffc400;
+    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.295);
+}

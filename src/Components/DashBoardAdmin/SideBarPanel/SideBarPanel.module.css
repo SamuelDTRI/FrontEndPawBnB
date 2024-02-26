@@ -1,11 +1,26 @@
+.sideBarContainer {
+    min-height: 145px;
+    display: grid;
+    grid-template-columns: 30% auto;
+    justify-content: start;
+    align-items: center;
+}
 .sideBarLinks {
     text-align: left;
+    align-self: center;
+    
 }
-
 .sideBarLinks li {
     list-style: none;
+    text-align: left;
 }
-
 .sideBarLinks i {
     color: #ffa726;
 }
+.adminInfoContainer{
+    padding: auto;
+}
+.adminName {
+    align-self: center;
+}
+

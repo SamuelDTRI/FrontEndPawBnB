@@ -1,18 +1,75 @@
-.contenedorDatos{
-    margin-top: 2em;
-    border: 2px solid #ffa726;
+
+.contReservasActivas {
+  margin-top: 2em;
+  /* border-radius: 15px; */
+  border-bottom: 4px solid #ffa726;
+  height: min-content;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x:auto;
+  padding: 2rem;
+
+}
+
+.contReservasActivas::-webkit-scrollbar{
+    /* width: 8px; */
+    width:  8px;
+    background-color: #e8e8e8;
     border-radius: 15px;
-    background-color: white;
-   
 }
 
-.contenedorFechas{
-    align-items: center;
-    text-align: center;
-    font-size: 15px;
-}
-.textoDatos{
-    padding: 0.3em;
+.contReservasActivas::-webkit-scrollbar-thumb{
+    border-radius: 15px;
+    background-color: #ffc677;
 }
 
+.reservasCompletadas {
+  margin-top: 2em;
+  border: 2px solid #ffa726;
+  border-radius: 15px;
+  background-color: #d1ffa4;
+}
 
+.contenedorFechas {
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+  margin: 1rem;
+  border-radius: 15px;
+  
+  /* background-color: #ffcb7e ; */
+}
+
+.iFsFC {
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 10px;
+}
+
+/* Color de los Status */
+.pendiente {
+  background-color: #ffbd5b;
+}
+
+.activo{
+    background-color: #487cdc;
+    color: white
+}
+
+.cancelado{
+    background-color: rgb(223, 77, 77);
+    color: white
+}
+
+.aprobado{
+    background-color: #9ef744
+}
+
+.completado{
+    background-color: #bf77eb;
+    color: white
+}

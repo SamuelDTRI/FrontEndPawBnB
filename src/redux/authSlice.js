@@ -21,6 +21,8 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.userId = action.payload.userId;
         state.userRole = action.payload.userRole;
+
+        localStorage.setItem('userData', JSON.stringify(action.payload));
         },
         loginFailure(state, action) {
         state.isLoading = false;
@@ -30,6 +32,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.userId = null;
         state.userRole = null;
+
+        localStorage.removeItem('userData');
         },
     },
 });
@@ -41,7 +45,7 @@ export const loginUser = (formData) => async (dispatch) => {
     console.log({formData})
     try {
         const response = await axios.post(
-            `http://localhost:3000/login`,
+            `https://backendpawbnb-production.up.railway.app/login`,
             formData
         ); 
         const { userId, userRole, userDeleted} = response.data

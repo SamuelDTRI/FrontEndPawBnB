@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { loadDogsByOwner } from "../../redux/dogsSlice";
 import { sendReservation } from "../../redux/reservationSlice";
 import { ownerSlice } from "../../redux/ownerSlice";
+import axios from "axios";
 
 const ReservationRequest = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
@@ -114,25 +115,28 @@ const ReservationRequest = () => {
       // }}
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
-        valores.dogId ? "" : (valores.dogId = dogs[0].id);
-
-        console.log({
-          //muestra valores del perro
-          ...valores,
-          //Agrego el perro en el objeto
-          //dog: dogs.find((x) => x.id == valores.dogId),
-        });
-        valores.dogSitterId = sitterId;
-
+        // Después de enviar la reserva
         dispatch(sendReservation(valores));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
         setTimeout(() => cambiarFormularioEnviado(false), 5000);
-        if (status === "Pendiente") {
-          // Aquí se podría activar la pasarela de pagos si la reserva está aceptada dentro de las 24 horas
-          dispatch(aceptarReserva());
-        }
+
+        // Aquí agregamos la lógica de pago
+        const handlePayment = async () => {
+          try {
+            const response = await axios.post(
+              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
+            );
+            const url = response.data.url;
+            window.location.href = url;
+          } catch (error) {
+            console.error("Error al realizar el pago: ", error);
+          }
+        };
+
+        // Llamamos a la función de pago
+        handlePayment();
       }}
     >
       {({ errors }) => (

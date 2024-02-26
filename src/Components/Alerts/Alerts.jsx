@@ -57,7 +57,7 @@ const Alerts = () => {
         <div className={`alert alert-warning ${style.alertText}`} role="alert">
           <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
           Completa tu perfil para poder realizar alguna reserva.
-          <Link to={`/dashboardSitter/${idUsuarioActual}`} className="alert-link"> Completar perfil</Link>.
+          <Link to={`/dashboardOwner/${idUsuarioActual}`} className="alert-link"> Completar perfil</Link>.
         </div>
       }
 

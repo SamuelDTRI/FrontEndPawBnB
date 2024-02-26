@@ -37,7 +37,7 @@ export const updateDog = createAsyncThunk(
   async ({ dogId, updatedDogData }) => {
     try {
       const { data } = await axios.put(
-        `https://backendpawbnb-production.up.railway.app/dogs/${dogId}`,
+        `http://localhost:3000/dogs/${dogId}`,
         updatedDogData
       );
       return data;

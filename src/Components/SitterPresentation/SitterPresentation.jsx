@@ -43,10 +43,6 @@ const SitterPresentation = ({ infoSitter }) => {
               <button onClick={reservation}>
                 Reserva con {infoSitter.name}
               </button>
-              <h4>
-                La reserva no se le cobrara hasta que jorge confirme la reserva
-                puede cancelar hasta 48hs antes y obtener un reembolso del 100%
-              </h4>
             </div>
           </div>
         </div>

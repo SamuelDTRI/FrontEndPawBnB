@@ -1,0 +1,13 @@
+/* PaymentCancel.module.css */
+.paymentCancelContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ajusta según sea necesario */
+  background-color: #f0f0f0; /* Color de fondo claro para contraste */
+}
+
+.paymentCancelText {
+  font-size: 24px; /* Tamaño de fuente más grande para visibilidad */
+  color: #333; /* Color de texto oscuro para contraste */
+}

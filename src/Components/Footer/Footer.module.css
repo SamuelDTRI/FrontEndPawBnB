@@ -1,42 +1,126 @@
-
-.principal{
-    background-color: red;
-    width: 100%;
-    display: flex;
+.divContainer{
+    margin-top: 100px;
 }
 
+
+.hrstyle{
+    border: none;
+    border-top: 1.6px solid rgba(0, 0, 0, 0.485);
+    width: 30%;
+    margin-left: 35%;
+}
 .seccion{
     border: 2px solid blue;
     width: 33.33%;
 }
-
+.cardLink{
+    margin-bottom: 5px;
+    padding-bottom: 2px;
+}
 .cardLink:hover {
     font-weight: bold;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
+
 .btn {
     border-radius: 15px;
-    background-color: #ff9800;
-    color: white;
+    background-color: white;
+    color: #ffa726;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: box-shadow 0.4s, transform 0.4s;
     margin-bottom: 10px
+}
+.principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.localidadesContainer {
+    display: flex;
+    flex-direction: column;
+    margin-right: 150px;
+    margin-top: 15px;
+}
+
+.localidades {
+    margin-bottom: 5px;
+    text-align: left;
+    margin-top: 0;
+}
+.verticalLine {
+    border-left: 1.6px solid rgba(0, 0, 0, 0.106);
+    height: 200px;
+    margin-top: 5px;
+    width: 0;
+}
+.verticalLineDos{
+    border-right: 1.6px solid rgba(0, 0, 0, 0.106);
+    height: 200px;
+    margin-top: 5px;
+    width: 0;
 }
 
 .btn:hover {
-    background-color: #ffc400;
-    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.295);
+    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.663);
+    transform: scale(1.1);
 }
 
 .lastbtn{
     border-radius: 15px;
-    background-color: #ff9800;
-    color: white;
+    background-color: white;
+    color: #ffa726;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: box-shadow 0.4s, transform 0.4s;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .lastbtn:hover {
-    background-color: #ffc400;
-    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.295);
+    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.663);
+    transform: scale(1.1);
+}
+
+.footerContainer{
+    background-color: #ffa726;
+    padding: 30px;
+    padding-right: 60px;
+}
+
+.footerDiv{
+    background-color: #ffa726;
+}
+
+
+.titulos{
+    /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); */
+    color: #2d2d2d;
+}
+
+.icons{
+    text-align: center;
+}
+.icons:hover{
+    color: #2d2d2d;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.lastTextContainer{
+    border-top: 1.6px solid rgba(0, 0, 0, 0.106);
+}
+
+.lastText{
+    text-align: left;
+    margin-left: 70px;
+}
+
+
+.localidadLink{
+    color: #2d2d2d9a;
+}
+.localidadLink:hover{
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }

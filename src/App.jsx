@@ -29,6 +29,8 @@ import UserProfile from "./Components/DashBoardAdmin/UserProfile/UserProfile";
 import PaymentSucces from "./Views/Payments/PaymentSucces";
 import PaymentCancel from "./Views/Payments/PaymentCancel";
 import PaymentCheckout from "./Views/Payments/PaymentCheckout";
+import AboutUs from "./Components/AboutUs/AboutUs";
+import Localidades from "./Components/Localidades/Localidades";
 
 
 function App() {
@@ -92,6 +94,8 @@ function App() {
         <Route path="/por-que-elegir" element={<EligePawbnb />} />
         <Route path="/reviewsPawbnb" element={<PawbnbReviews />} />
         <Route path="/ayuda-faq" element={<AyudaFaq />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
+        <Route path="/localidades" element={<Localidades />} />
 
         <Route path="/dashboardAdmin" element={<DashboardAdmin />}>
           <Route path="users" element={<UsersPanel />} />

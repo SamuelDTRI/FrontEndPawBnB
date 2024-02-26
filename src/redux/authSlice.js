@@ -41,7 +41,7 @@ export const loginUser = (formData) => async (dispatch) => {
     console.log({formData})
     try {
         const response = await axios.post(
-            `http://localhost:3000/login`,
+            `https://backendpawbnb-production.up.railway.app/login`,
             formData
         ); 
         const { userId, userRole, userDeleted} = response.data

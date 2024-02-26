@@ -29,9 +29,9 @@ const UserProfile = () => {
     try {
       let deleteUrl;
       if (role === "Owner") {
-        deleteUrl = `http://localhost:3000/owners/delete/${userInfo.id}`;
+        deleteUrl = `https://backendpawbnb-production.up.railway.app/owners/delete/${userInfo.id}`;
       } else if (role === "DogSitter") {
-        deleteUrl = `http://localhost:3000/sitters/delete/${userInfo.id}`;
+        deleteUrl = `https://backendpawbnb-production.up.railway.app/sitters/delete/${userInfo.id}`;
       } else {
         console.error("Rol de usuario no válido:", role);
         return;
@@ -51,9 +51,9 @@ const UserProfile = () => {
     try {
       let updateUrl;
       if (role === "Owner") {
-        updateUrl = `http://localhost:3000/owners/${userInfo.id}`;
+        updateUrl = `https://backendpawbnb-production.up.railway.app/owners/${userInfo.id}`;
       } else if (role === "DogSitter") {
-        updateUrl = `http://localhost:3000/sitters/${userInfo.id}`;
+        updateUrl = `https://backendpawbnb-production.up.railway.app/sitters/${userInfo.id}`;
       } else {
         console.error("Rol de usuario no válido:", role);
         return;

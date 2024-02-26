@@ -28,7 +28,7 @@ const DetalleSolicitud = ({ id }) => {
       }
     };
     buscarReserva();
-  }, [reserva]);
+  }, []);
 
   if (!reserva) {
     return <div>Cargando...</div>;
@@ -44,7 +44,7 @@ const DetalleSolicitud = ({ id }) => {
            if(reservaModificada.status===200){
             setReserva(reservaModificada.data)
             alert("Solicitud aceptada");
-             navigate(-1);
+            //  navigate(-1);
            }
       } catch (error) {
         console.log(error);

@@ -63,7 +63,7 @@ const DashboardSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch,linkActivo]);
+  }, [dispatch]);
 
   //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 

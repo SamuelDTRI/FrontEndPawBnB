@@ -64,7 +64,11 @@ export const reservationSlice = createSlice({
       state.currentReservation = action.payload;
     },
   },
+  
   extraReducers: (builder) => {
+    builder.addCase(getReservation.fulfilled, (state, action) => {
+      state.reservations = [action.payload];
+    });
     builder.addCase(sendReservation.fulfilled, (state, action) => {
       state.reservations = [...state.reservations, action.payload];
     });
@@ -79,6 +83,23 @@ export const reservationSlice = createSlice({
     })
   },
 });
+
+export const getReservation = createAsyncThunk (
+  "reservation/getReservation",
+  async ( id ) => {
+    try {
+
+      const { data } = await axios.get(`http://localhost:3000/bookings/owner/${id}`);
+      console.log(data)
+      
+      return data;
+    }catch(error){
+      console.error({ mesagge: "Error al encontrar la reserva", error });
+      throw error;
+    }
+  })
+
+  //http://localhost:3000/bookings/owner/c928b4e0-d78f-4cb7-ab79-51e3ec508e1e
 
 export const { setReservations, setCurrentReservation } =
   reservationSlice.actions;

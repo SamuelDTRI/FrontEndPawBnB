@@ -32,16 +32,22 @@ import PaymentCheckout from "./Views/Payments/PaymentCheckout";
 import AboutUs from "./Components/AboutUs/AboutUs";
 import Localidades from "./Components/Localidades/Localidades";
 
+import { useEffect } from "react";
+
+
 
 function App() {
   const location = useLocation();
+  const { pathname} = useLocation();
   const userRole = useSelector((state) => state.auth.userRole);
   const userId = useSelector((state) => state.auth.userId);
   const userDeleted = useSelector((state) => state.auth.userDeleted);
   const adminRole = useSelector((state) => state.adminUsers.adminRole);
   const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
-  console.log(1 + 2);
-  console.log(1 + 2);
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  }, [pathname])
 
   const showNav = location.pathname !== "/";
   //const showAlert = !infoSitter.completedProfile;

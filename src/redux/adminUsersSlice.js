@@ -37,6 +37,7 @@ const adminUsersSlice = createSlice({
     adminId: null,
     adminRole: null,
     adminDeleted: null,
+    adminInfo:{},
     userInfo: {},
   },
   reducers: {
@@ -103,7 +104,7 @@ const adminUsersSlice = createSlice({
       state.adminRole = action.payload.userRole;
       state.adminDeleted = action.payload.userDeleted;
     },
-    loginFailure(state, action) {
+    adminLoginFailure(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -113,7 +114,10 @@ const adminUsersSlice = createSlice({
       state.userRole = null;
     },
     setUserInfo(state, action){
-      state.userInfo= action.payload;
+      state.userInfo = action.payload;
+    },
+    setAdminInfo(state, action){
+      state.adminInfo = action.payload;
     }
   },
 });
@@ -125,19 +129,25 @@ export const loginAdmin = (formData) => async (dispatch) => {
       `http://localhost:3000/admin/login`,
       formData
     );
-    const { userId, userRole, userDeleted } = response.data;
-    dispatch(loginSuccess(response.data));
-    return {
-      userId,
-      userRole,
-      userDeleted
-    };
+    if(response.data){
+      const { userId, userRole, userDeleted } = response.data;
+      dispatch(loginSuccess(response.data));
+      const requestedInfo = await axios.get(`http://localhost:3000/admin/${userId}`);
+      if(requestedInfo) {
+        dispatch(setAdminInfo(requestedInfo.data));
+      }
+      return {
+        userId,
+        userRole,
+        userDeleted
+      };
+    }
   } catch (error) {
     if (error.response) {
       const errorMessage = error.response.data.error;
-      dispatch(loginFailure(errorMessage));
+      dispatch(adminLoginFailure(errorMessage));
     } else {
-      dispatch(loginFailure(error.message));
+      dispatch(adminLoginFailure(error.message));
     }
   }
 };
@@ -150,6 +160,7 @@ export const getUserInfo = ( id, role) => async (dispatch)=> {
       dispatch(setUserInfo(response.data));
     }else {
       const response = await axios.get(`http://localhost:3000/sitters/${id}`);
+      dispatch(setUserInfo(response.data));
     }
   } catch (error) {
     const errorMessage = error.response.data.error;
@@ -166,6 +177,8 @@ export const {
   filterUsersByRole,
   filterUsersByNeighborhood,
   setUserInfo,
+  setAdminInfo,
+  adminLoginFailure,
 } = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

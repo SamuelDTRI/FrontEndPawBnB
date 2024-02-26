@@ -122,7 +122,7 @@ const FormDashboardDueño = () => {
                 <ErrorMessage
                   name="surName"
                   component={() => (
-                    <div className={styles.error}>{errors.surname}</div>
+                    <div className={styles.error}>{errors.surName}</div>
                   )}
                 />
               </div>

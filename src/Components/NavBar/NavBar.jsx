@@ -55,43 +55,38 @@ const handleClickMiPerfil=(userRole)=>{
           </Link>
         </div>
 
-        <button onClick={()=>navigate("Home")}>HOME</button>
+        <button onClick={() => navigate("Home")}>HOME</button>
         {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
- 
         <div className="col-12 col-md-3 m-1">
-          {googleUser || userRole || adminRole ?      
-          (
+          {googleUser || userRole ? (
             <div className="d-flex col-12">
-             <button className={`col-7 ${style.BtMiPerfil}`}
-              onClick={()=>handleClickMiPerfil(userRole)}
-             >
-              Mi perfil
-            </button>
-            <button
-              className={`btn border-warning text-warning col-4 ${style.BtSalir}`}
-              onClick={handleSignOut}>
-              <span className="iconButton">
-                <i className="bi bi-box-arrow-right"></i>
-              </span>
-              {`${logOutButtonText}`}
-            </button> 
-            </div>
-          )
-          : (
-            <>
               <button
-                onClick={handleSingUpRedir}>
+                className={`col-4 ${style.BtMiPerfil}`}
+                onClick={() => handleClickMiPerfil(userRole)}>
+                Mi perfil
+              </button>
+              <button
+                className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
+                onClick={handleSignOut}>
+                <span className="iconButton ">
+                  <i className="bi bi-box-arrow-right"></i>
+                </span>
+                {`${logOutButtonText}`}
+              </button>
+            </div>
+          ) : (
+            <div className={style.loginButtonContainer}>
+              <button onClick={handleSingUpRedir}>
                 {`${registerButtonText}`}
               </button>
               <button
-                className={style.botones}
+                className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
                 onClick={handleLoginRedir}>
                 {`${loginButtonText}`}
               </button>
-            </>
+            </div>
           )}
         </div>
-       
       </nav>
       <Alerts />
     </div>

@@ -41,7 +41,7 @@ const LandingPage=()=>{
             {showAlert &&
             <div className={`alert alert-warning ${style.alertText}`} role="alert">
                 <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
-                Para realizar o aceptar reservas es necesario iniciar sesion.
+                Para realizar reservas es necesario iniciar sesion.
                 <a href={`/Login`} className="alert-link"> Iniciar sesion</a>.
             </div>
             }

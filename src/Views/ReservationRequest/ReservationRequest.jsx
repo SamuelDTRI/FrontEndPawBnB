@@ -61,58 +61,49 @@ const ReservationRequest = () => {
         dogSitterId: sitterId,
         rating: "4",
       }}
-      // validate={(valores) => {
-      //   let errores = {};
+      validate={(valores) => {
+         let errores = {};
 
-      //   //Validacion fecha ingreso
-      //   const currentDate = new Date();
-      //   const checkInDate = new Date(values.dateCheckIn);
-      //   if (!valores.dateCheckIn) {
-      //     errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
-      //   } else if (checkInDate <= currentDate) {
-      //     errores.dateCheckIn =
-      //       "La fecha de ingreso debe ser posterior a la fecha actual.";
-      //   }
+        //Validacion fecha ingreso
+        const currentDate = new Date();
+        const checkInDate = new Date(valores.dateCheckIn);
+        if (!valores.dateCheckIn) {
+          errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
+        } else if (checkInDate <= currentDate) {
+          errores.dateCheckIn =
+            "La fecha de ingreso debe ser posterior a la fecha actual.";
+        }
 
-      //   //Validacion fecha salida
-      //   const checkOutDate = new Date(values.dateCheckOut);
-      //   if (!valores.dateCheckOut) {
-      //     errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
-      //   } else if (checkOutDate <= checkInDate) {
-      //     errores.dateCheckOut =
-      //       "La fecha de salida debe ser posterior a la fecha de ingreso.";
-      //   }
+        //Validacion fecha salida
+        const checkOutDate = new Date(valores.dateCheckOut);
+        if (!valores.dateCheckOut) {
+          errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
+        } else if (checkOutDate <= checkInDate) {
+          errores.dateCheckOut =
+            "La fecha de salida debe ser posterior a la fecha de ingreso.";
+        }
 
-      //   //Validacion Horario ingreso
-      //   if (!valores.entryTime) {
-      //     errores.entryTime = "Por favor ingresa un horario de ingreso.";
-      //   }else if (!/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(values.entryTime)) {
-      //     errores.entryTime = "Por favor ingresa un horario en formato 24 horas.";
-      //   }
+        //Validacion Horario ingreso
+        if (!valores.entryTime) {
+          errores.entryTime = "Por favor ingresa un horario de ingreso.";
+        }
 
-      //     //Validacion Reservacion para
-      //     if (!valores.dogId) {
-      //       errores.dogId = "Por favor selecciona al menos una mascota.";
-      //     }
-      //   }
+          // //Validacion Reservacion para
+          // if (!valores.dogId) {
+          //   errores.dogId = "Por favor selecciona al menos una mascota.";
+          // }
+        
+        //Validacion notas
 
-      //   //Validacion Reservacion para
-      //   if (!valores.dogId) {
-      //     errores.dogId = "Por favor selecciona al menos una mascota.";
-      //   }
+        if (!valores.note) {
+          errores.note = "Por favor ingresa una observacion.";
+        } else if (valores.note.length > 256) {
+          errores.note =
+            "El texto es demasiado largo, por favor ingrese menos de 256 letras";
+        }
 
-      //Validacion notas
-      //   //Validacion notas
-
-      //   if (!valores.note) {
-      //     errores.note = "Por favor ingresa una observacion.";
-      //   } else if (valores.note.length > 256) {
-      //     errores.note =
-      //       "El texto es demasiado largo, por favor ingrese menos de 256 letras";
-      //   }
-
-      //   return errores;
-      // }}
+        return errores;
+      }}
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
         // Después de enviar la reserva
@@ -211,8 +202,8 @@ const ReservationRequest = () => {
 
               <div className="col-12">
                 <label htmlFor="note">Notas</label>
-                <Field
-                  type="text area"
+                <Field                  
+                  type="textarea"
                   id="note"
                   name="note"
                   placeholder="Observaciones..."

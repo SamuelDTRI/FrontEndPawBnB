@@ -12,12 +12,18 @@ const SitterReservations = ()=>{
 const dispatch = useDispatch()
 const today = new Date(); //contiene la fecha actual
 const {id} = useParams();
+
+//reservas filtradas por estados
 const [solicitudesPendientes,setSolicitudesPendientes] = useState(null);
 const [proximasReservas, setProximasReservas] = useState(null);
 const [reservasActivas,setReservasActivas] = useState(null);
 const [reservasCompletadas,setReservasCompletadas] = useState(null);
+
+
 const [componenteActual,setComponenteActual] =useState("todasLasReservas");
 const [reservaId, setReservaId] = useState(null);
+const [actualizar, setActualizar] = useState(false)
+
 
 const [mostrarReserva,setMostrarReserva] = useState({
    solicitudesDeReserva : false,
@@ -33,9 +39,9 @@ const filtradasPorStatus = ()=>{
    console.log("today", today)
    if(sitterReserves.length){
       let solicitudes = sitterReserves.filter((reserva)=>reserva.status==="pendiente");
-      let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="activo" 
+      let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="aprobado" 
       && new Date(reserva.dateCheckIn)>today);
-      let reservasActivas = sitterReserves.filter((reserva)=>reserva.status === "activo"
+      let reservasActivas = sitterReserves.filter((reserva)=>reserva.status === "aprobado"
       && new Date(reserva.dateCheckIn)<today && new Date(reserva.dateCheckOut)>today)
       let reservasCompletadas = sitterReserves.filter((reserva)=>reserva.status==="completado")
       if(solicitudes.length){setSolicitudesPendientes(solicitudes);}
@@ -65,19 +71,20 @@ useEffect(()=>{
    }
    fetchBookings();
    filtradasPorStatus()
-},[]);
+},[actualizar]);
 
 const handleVerSolicitud=(id)=>{
    setReservaId(id),
    setComponenteActual("verSolicitud")
 }
 
-
-
     return(
       componenteActual==="todasLasReservas"?(
         
         <div className="container">
+           
+           <button onClick={()=>setActualizar(!actualizar)} >Actualizar</button>
+           
            <h2>MIS RESERVAS</h2>
             
             <div className="mt-5">

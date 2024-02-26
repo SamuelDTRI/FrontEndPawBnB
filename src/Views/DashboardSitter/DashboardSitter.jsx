@@ -67,7 +67,6 @@ const DashboardSitter = () => {
 
   //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
-  console.log(linkActivo)
   return (
     <div className="container my-5 ">
       <div className="row">

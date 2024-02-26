@@ -8,6 +8,8 @@ import dashboardsitterSlice from "./linksActives";
 import adminUsersSlice from "./adminUsersSlice";
 import dogsSlice from "./dogsSlice";
 import reservationSlice from "./reservationSlice";
+import localidadesSlice from "./localidadesSlice";
+import sitterReserveSlice from "./sitterReserveSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,5 +21,7 @@ export const store = configureStore({
     adminUsers: adminUsersSlice,
     dogs: dogsSlice,
     reservation: reservationSlice,
+    neighborhoodSitter: localidadesSlice,
+    sitterReserve: sitterReserveSlice,
   },
 });

@@ -1,0 +1,27 @@
+.parrafo {
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+}
+.divTitulo {
+    text-align: center;
+    padding-bottom: 30px;
+}
+.titulo{
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.divlocalidad{
+    box-shadow: 1px 5px 10px rgba(128, 128, 128, 0.663);
+    height: 40px;
+    width: 200px;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.subtitulo{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}

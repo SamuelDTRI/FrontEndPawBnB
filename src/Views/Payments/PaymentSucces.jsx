@@ -1,8 +1,12 @@
 import React from "react";
-import style from "./PaymentSucces.module.css";
+import styles from "./PaymentSucces.module.css";
 
 const PaymentSucces = () => {
-  return <div>PaymentSucces</div>;
+  return (
+    <div className={styles.paymentSuccesContainer}>
+      <div className={styles.paymentSuccesText}>Payment Successful</div>
+    </div>
+  );
 };
 
 export default PaymentSucces;

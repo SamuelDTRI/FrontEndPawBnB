@@ -18,9 +18,7 @@ const FormDashboardDueño = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(
-        `https://backendpawbnb-production.up.railway.app/owners/${id}`
-      );
+      const { data } = await axios.get(`http://localhost:3000/owners/${id}`);
       dispatch(infoOwner(data));
     } catch (error) {
       console.error(error.message);
@@ -40,23 +38,23 @@ const FormDashboardDueño = () => {
         city,
         rates,
       } = values;
-      //  Llamo a la acción updateOwner del slice para enviar los datos actualizados.
-      dispatch(
+
+      // Llamo a la acción updateOwner del slice para enviar los datos actualizados.
+      await dispatch(
         updateOwner({
-          updatedOwner: {
-            id: id,
-            name,
-            surName,
-            phone,
-            email,
-            password,
-            address,
-            neighborhood,
-            city,
-            rates,
-          },
+          id: id,
+          name,
+          surName,
+          phone,
+          email,
+          password,
+          address,
+          neighborhood,
+          city,
+          rates,
         })
       );
+
       await currentSitter();
       resetForm();
       setFormSent(true);
@@ -122,7 +120,7 @@ const FormDashboardDueño = () => {
                 <ErrorMessage
                   name="surName"
                   component={() => (
-                    <div className={styles.error}>{errors.surname}</div>
+                    <div className={styles.error}>{errors.surName}</div>
                   )}
                 />
               </div>

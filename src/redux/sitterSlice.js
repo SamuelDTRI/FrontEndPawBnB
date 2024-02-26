@@ -19,7 +19,7 @@ export const fetchSitter = createAsyncThunk(
   "sitter/fetchSitter",
   async (id) => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       return data;
     } catch (error) {
       console.error("Error al obtener la información del cuidador:", error);
@@ -65,7 +65,7 @@ export const sitterSlice = createSlice({
     updateSitter: async (state, action) => {
       try {
         const { data } = await axios.put(
-          `https://backendpawbnb-production.up.railway.app/sitters/${action.payload.id}`,
+          `http://localhost:3000/sitters/${action.payload.id}`,
           action.payload.updatedSitter
         );
         state.completedProfile = true;

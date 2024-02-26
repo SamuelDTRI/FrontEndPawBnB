@@ -10,8 +10,9 @@
 }
 .contenedor {
 	display: flex;
-	align-items: flex-start;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 }
 
 .formulario {
@@ -65,11 +66,6 @@
 	font-size: 12px;
 	text-align: left;
 }
-.googleButton{
-	justify-content: right;
-	margin-top: 25px;
-	border-radius: 15px;
-}
 
 .formulario button[type="submit"] {
 	margin-top: 25px;
@@ -104,4 +100,23 @@
 
 .formulario input[type="radio"] {
 	width: auto;
+}
+
+.errorContainer {
+	margin: 15px auto 0;
+	min-height: 25px;
+}
+
+.googleButton{
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+
+.error{
+	color: #ba0a0d;
+	font-weight: 600;
+	font-size: 14px;
+	text-align: left;
 }

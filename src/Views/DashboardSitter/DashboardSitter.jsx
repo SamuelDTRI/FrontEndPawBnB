@@ -6,7 +6,7 @@ import GallerySitters from "../../Components/GallerySitters/GallerySitters";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { sitterInfo } from "../../redux/sitterSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 import SitterReservations from "../../Components/SitterReservations/SitterReservations";
 
@@ -23,7 +23,7 @@ const DashboardSitter = () => {
   
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
@@ -51,9 +51,9 @@ const DashboardSitter = () => {
       return;
     }
     event.preventDefault();
-    const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
-      photoProfile: imgProfile
-    })
+    const result = await axios.put(`http://localhost:3000/sitters/${id}`, {
+      photoProfile: imgProfile,
+    });
     try {
       console.log(result.data);
     } catch(error){
@@ -67,7 +67,6 @@ const DashboardSitter = () => {
 
   //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
-  console.log(linkActivo)
   return (
     <div className="container my-5 ">
       <div className="row">

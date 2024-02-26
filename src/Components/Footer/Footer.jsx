@@ -1,57 +1,126 @@
 import { useNavigate } from "react-router-dom";
+import style from "./Footer.module.css";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchNeighborhood } from "../../redux/localidadesSlice";
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSingUpRedir = () => {
-    navigate("/SignUpSitters");
-  };
+  const neighborhood = useSelector((state) => state.neighborhoodSitter.neighborhoods);
+  console.log(neighborhood)
+
+  const handleNavigation = (path) => {
+      navigate(path);
+  }
+
+  useEffect(() => {
+    dispatch(fetchNeighborhood());
+  }, [dispatch]);
+
+
   return (
-    <div className="card-group w-100 mt-5">
-      <div className=" card text-center mb-3 bg-warning">
-        <div className="card-body">
-          <h3 className="card-title mb-3">Cuidadores locales</h3>
-          <p className="card-subtitle mb-2 text-body-secondary">Belgrano</p>
-          <p className="card-subtitle mb-2 text-body-secondary">Palermo</p>
-          <p className="card-subtitle mb-2 text-body-secondary">San Isidro</p>
-          <p className="card-subtitle mb-2 text-body-secondary">Recoleta</p>
-          <p className="card-subtitle mb-2 text-body-secondary">
-            Puerto Madero
-          </p>
-          <p className="card-subtitle mb-2 text-body-secondary">Nuñez</p>
-          <p className="card-subtitle mb-2 text-body-secondary">Caballito</p>
+    <>
+    <div className={`container-fluid pt-5 ${style.divContainer}`}>
+
+      <div className={`row pb-2 ${style.footerContainer}`}>
+
+
+        <div className="col-xs-12 col-md-6 col-lg-4">
+          <p className={`h5 mb-3 ${style.titulos}`}>APRENDE MAS</p>
+
+          <hr className={style.hrstyle}/>
+          <p className={style.cardLink} onClick={() => { handleNavigation("/como-funciona"); }}>Como funciona PawBnb</p>
+          <p className={style.cardLink} onClick={() => { handleNavigation("/aboutUs"); }}>Sobre nosotros</p>
+          <p className={style.cardLink} onClick={() => { handleNavigation("/por-que-elegir"); }}>Por qué elegir PawBnb</p>
+          <p className={style.cardLink} onClick={() => { handleNavigation("/reviewsPawbnb"); }}>Pawbnb reviews</p>
+
+          <hr className={style.hrstyle} />
+
+          <p className={`h5 mb-3 ${style.titulos}`}>PODEMOS AYUDARTE</p>
+          <hr className={style.hrstyle} />
+          <p className={style.cardLink} onClick={() => { handleNavigation("/ayuda-faq"); }}>Ayuda y FAQ</p>
+      
         </div>
-      </div>
-      <div className="card text-center mb-3 bg-warning">
-        <div className="card-body">
-          <h3 className="card-title mb-3">Aprende mas</h3>
-          <p className="card-link">Como funciona PawBnb</p>
-          <p className="card-link">Tarifas de cuidadores locales</p>
-          <p className="card-link">Por que elegir PawBnb</p>
-          <p className="card-link">Pawbnb reviews</p>
-          <h3 className="card-title mb-3">Podemos ayudarte</h3>
-          <p className="card-link">Ayuda y FAQ</p>
+
+
+
+        <div className="col-xs-12 col-md-6 col-lg-4">
+          <p className={`h5 mb-3 ${style.titulos}`}>CUIDADORES LOCALES</p>
+
+          <hr  className={style.hrstyle}/>
+
+          <div className={style.principal}>
+            <div className={style.verticalLine}></div>
+
+            <div className={style.localidadesContainer}>
+              {neighborhood.length > 10 ? (
+                <>
+                  {neighborhood.slice(0, 10).map((localidad) => (
+                    <p key={localidad} className={style.localidades}>{localidad}</p>
+                  ))}
+                  <p className={style.localidadLink} onClick={() => { handleNavigation("/localidades") }}>Ver más localidades...</p>
+                </>
+                ) : (
+                <>
+                  {neighborhood.map((localidad) => (
+                  <p key={localidad} className={style.localidades}>{localidad}</p>
+                  ))}
+                </>
+              )}
+                     
+            </div>
+            <div className={style.verticalLineDos}></div>
+          
+          </div>
         </div>
-      </div>
-      <div className="card text-center mb-3 bg-warning">
-        <div className="card-body">
-          <h3 className="card-title mb-3">Conviértete en cuidador</h3>
-          <p className="card-text">
-            Se tu propio jefe. Ajusta tus tarifas y horarios. Conocerás perros
-            asombrosos cerca tuyo
-          </p>
-          <button
-            className="btn btn-light text-black mb-3 border-black"
-            onClick={handleSingUpRedir}>
-            Hazte cuidador
+
+
+
+        <div className="col-xs-12 col-md-6 col-lg-4">
+          <p className={`h5 mb-3 ${style.titulos}`}>CONVIERTETE EN CUIDADOR</p>
+          <hr className={style.hrstyle} />
+          <p className="mb-3">Se tu propio jefe. Ajusta tus tarifas y horarios. 
+          Conocerás perros asombrosos cerca tuyo.</p>
+          
+          <Link to={"/SignUpSitters"}>
+            <button className={style.btn}>
+              Hazte cuidador
+            </button>
+          </Link>
+
+          <hr className={style.hrstyle} />
+
+          <p className={`h5 mb-3 ${style.titulos}`}>CONTACTANOS</p>
+          <hr className={style.hrstyle} />
+          <div >
+            <a href="https://www.instagram.com/pawbnb_/" target="_blank" rel="noopener noreferrer" className={style.icons}><i className="bi bi-instagram"></i> @PawBnb_</a>
+          </div>
+          <div >
+            <a href="https://www.facebook.com/profile.php?id=61556490524338" target="_blank" rel="noopener noreferrer" className={style.icons}><i className="bi bi-facebook"></i> PawBnb</a>
+          </div>
+          <div >
+            <a href="https://twitter.com/paw_bnb" target="_blank" rel="noopener noreferrer" className={style.icons}><i className="bi bi-twitter-x"></i> @paw_bnb</a>
+          </div>
+          <div >
+            <i className="bi bi-whatsapp"> 11 2345 6789</i>
+          </div>
+          <button 
+          className={style.lastbtn}
+          onClick={() => { window.location.href = 'mailto:pawbnb45@gmail.com'; }}>
+           Envianos un correo
           </button>
-          <h3 className="card-title mb-3">Contactanos</h3>
-          <p>Buenos Aires, Argentina</p>
-          <button className="btn btn-light text-black border-black">
-            Hablemos
-          </button>
         </div>
+
+        <div className={`col-xs-12 pt-4 ${style.lastTextContainer}`}>
+          <p className={style.lastText}>PawBnb. © 2024 • All rights reserved | Buenos Aires, Argentina.</p>
+        </div>
+
       </div>
+
     </div>
+    </>
   );
 };
 

@@ -1,8 +1,12 @@
 import React from "react";
-import style from "./PaymentCancel.module.css";
+import styles from "./PaymentCancel.module.css";
 
 const PaymentCancel = () => {
-  return <div>PaymentCancel</div>;
+  return (
+    <div className={styles.paymentCancelContainer}>
+      <div className={styles.paymentCancelText}>Payment Cancelled</div>
+    </div>
+  );
 };
 
 export default PaymentCancel;

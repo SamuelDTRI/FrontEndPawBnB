@@ -1,0 +1,13 @@
+/* PaymentSucces.module.css */
+.paymentSuccesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ajusta según sea necesario */
+  background-color: #e6ffe6; /* Color de fondo claro para contraste */
+}
+
+.paymentSuccesText {
+  font-size: 24px; /* Tamaño de fuente más grande para visibilidad */
+  color: #006600; /* Color de texto oscuro para contraste */
+}

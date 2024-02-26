@@ -72,7 +72,7 @@ const FormInfoSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch, forceUpdate]);
+  }, [dispatch, handleFormSubmit,forceUpdate]);
 
   
 

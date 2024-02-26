@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 // import { useHistory } from "react-router-dom";
 
-const DetalleSolicitud = ({ id }) => {
+const DetalleSolicitud = ({ id}) => {
   const [reserva, setReserva] = useState(null);
   const today = new Date();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const DetalleSolicitud = ({ id }) => {
            if(reservaModificada.status===200){
             setReserva(reservaModificada.data)
             alert("Solicitud aceptada");
-            //  navigate(-1);
+            navigate("/Home")
            }
       } catch (error) {
         console.log(error);
@@ -63,8 +63,9 @@ const DetalleSolicitud = ({ id }) => {
             console.log(reservaModificada)
              if(reservaModificada.status===200){
               alert("Solicitud rechazada");
-               navigate(-1);
              }
+             navigate("/Home")
+
         } catch (error) {
           console.log(error);
         }

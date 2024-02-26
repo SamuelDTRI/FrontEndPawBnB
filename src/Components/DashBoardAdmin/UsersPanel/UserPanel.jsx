@@ -28,11 +28,13 @@ const UsersPanel = () => {
   const [selectedRole, setSelectedRole] = useState("all");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState("all");
   const barrios = Barrios;
+  const [currentPage, setCurrentPage] = useState(1);
   //Estado para realizar la búsqueda
   const [searchTerm, setSearchTerm] = useState("");
   //Función que maneja el paginado
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+    setCurrentPage(1)
   };
   const searchedUsers = filteredUsers.filter((user) => {
     const fullName = `${user.name} ${user.surName}`.toLowerCase();
@@ -46,7 +48,6 @@ const UsersPanel = () => {
     return regex.test(normalizedFullName);
   });
   // Estados y constantes relacionado al paginado
-  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;

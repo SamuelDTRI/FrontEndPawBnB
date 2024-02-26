@@ -96,9 +96,11 @@ export const ownerSlice = createSlice({
     },
     updateOwner: async (state, action) => {
       console.log(action.payload.updatedOwner)
+      const ownerId = action.payload.updatedOwner.id;
+      console.log(ownerId);
       try {
         const { data } = await axios.put(
-          `https://backendpawbnb-production.up.railway.app/owners`,
+          `http://localhost:3000/owners/${ownerId}`,
           action.payload.updatedOwner
         );
         

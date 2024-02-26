@@ -12,12 +12,39 @@ import soportePersonasReales from "../imagenes/soporte-personas-reales/help-cent
 import cuidadoresConfianza from "../imagenes/cuidadoresConfianza/cuidadoresDeConfianza..jpg"
 import dogPhoto from "../imagenes//programaMeet/dogdog.jpg"
 import SearchBar from "../SearchBar/SearchBar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 const LandingPage=()=>{
+    const navigate = useNavigate();
+    const userRole = useSelector((state) => state.auth.userRole);
+    const [showAlert, setShowAlert] = useState(false);
+
+    useEffect(() => {
+        if(showAlert) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [showAlert]);
+    
+    const handleReservaClick = () => {
+        if(userRole) {
+            navigate('/Home');
+        } else {
+            setShowAlert(true);
+        }
+    };
+
     return(
         <div>
             <NavBar/>
+            {showAlert &&
+            <div className={`alert alert-warning ${style.alertText}`} role="alert">
+                <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
+                Para realizar o aceptar reservas es necesario iniciar sesion.
+                <a href={`/Login`} className="alert-link"> Iniciar sesion</a>.
+            </div>
+            }
             <div className={style.contenedorPincipal}>
                
                <div className={"conteiner mt-5 custom-margin"}>
@@ -102,7 +129,7 @@ const LandingPage=()=>{
           </div>
        </div>
 
-        <div className={style.ContBtReservaCuidador}><button>RESERVA TU CUIDADOR</button></div>
+        <div className={style.ContBtReservaCuidador}><button onClick={handleReservaClick}>RESERVA TU CUIDADOR</button></div>
         {/* <Footer/> */}
         
         <div className={style.sectionDivider}

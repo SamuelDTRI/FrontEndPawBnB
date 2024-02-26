@@ -1,51 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const sendReservation = createAsyncThunk(
+export const sendReservation = createAsyncThunk( //envia la reserva
   "reservations/sendReservation",
   async (valores) => {
     try {
       console.log({ valores });
 
-      /*
-      {
-          status: "pendiente",
-          reviews: "asdasd",
-          rating: "5",
-          ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
-          dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
-          dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
-          dateCheckIn: "25/02/2024",
-          dateCheckOut: "27/02/2024",
-          entryTime: "10:30",
-          note: "asdasf"
-      }
-      */
       const peticion = {
-        startDate: "Hoy",
-        status: "pendiente",
-        reviews: "asdasdasd",
-        rating: "4",
-        ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
-        dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
-        dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
-        deleted: false,
+        dateCheckIn: valores.dateCheckIn,
+        dateCheckOut: valores.dateCheckOut,
+        entryTime: valores.entryTime,
+        dogId: valores.dogId,
+        note: valores.note,
+        status: valores.status,
+        reviews: valores.reviews,
+        ownerId: valores.ownerId,
+        dogSitterId: valores.dogSitterId,
+        rating: valores.rating,
       };
-      console.log({ peticion });
-
-      // const peticion = {
-      //   startDate: "Hoy",
-      //   status: "pendiente",
-      //   reviews: "asdasdasd",
-      //   rating: "4",
-      //   ownerId: "30ac4dab-9de3-408c-9513-36cb3c3eabed",
-      //   dogSitterId: "277093e3-ea16-44cf-8fbc-59c93214ed76",
-      //   dogId: "5dc64e88-b7d0-4eaf-80b7-f8e956bce91d",
-      //   deleted: false,
-      // };
+      console.log({ peticion: valores });
 
       let { data } = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/bookings",
+        "http://localhost:3000/bookings",
         peticion
       );
       return data;
@@ -55,7 +32,22 @@ export const sendReservation = createAsyncThunk(
     }
   }
 );
+export const updateStatus = createAsyncThunk( //actualiza el estado de la reserva
+  "reservations/updateStatus",
+  async ({ id, status }) => {
+    try {
+      const { data } = await axios.put (`http://localhost:3000/bookings/status/${id}`,{status});
+      return data;
+    }catch(error){
+      console.error({ mesagge: "Error al actualizar el estado de la reserva", error });
+      throw error;
+    
 
+
+    }
+    
+  }
+);
 //Almacen para los estados
 export const reservationSlice = createSlice({
   name: "reservation",
@@ -76,6 +68,15 @@ export const reservationSlice = createSlice({
     builder.addCase(sendReservation.fulfilled, (state, action) => {
       state.reservations = [...state.reservations, action.payload];
     });
+    builder.addCase(updateStatus.fulfilled, (state, action) => {
+      const index = state.reservations.findIndex((item)=> item.id ===action.payload.id );
+      if (index !== -1 ) {
+        state.reservations[index]=action.payload; //actualiza el estado de la reserva
+      } else {
+        console.log("No se encontro la reserva");
+      }
+      
+    })
   },
 });
 

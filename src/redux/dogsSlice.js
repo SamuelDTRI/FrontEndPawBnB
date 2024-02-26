@@ -6,7 +6,7 @@ export const loadDogsByOwner = createAsyncThunk(
   async (ownerId) => {
     try {
       const { data } = await axios.get(
-        `http://backendpawbnb-production.up.railway.app/dogs?ownerId=${ownerId}`
+        `http://localhost:3000/dogs?ownerId=${ownerId}`
       );
       return data;
     } catch (error) {
@@ -21,7 +21,7 @@ export const createDog = createAsyncThunk(
   async (createdDog) => {
     try {
       const { data } = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/dogs",
+        "http://localhost:3000/dogs",
         createdDog
       );
       return data;

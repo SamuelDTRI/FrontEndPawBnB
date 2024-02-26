@@ -33,9 +33,11 @@ const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
           <p>{rating}</p>
         </div>
         <div className="infoBtn">
-          <button className="btnBooking" onClick={handlePayment}>
+          <Link to = {`/reservation/${id}`}>
+          <button className="btnBooking" /*onClick={handlePayment}*/>
             Reservar ahora
           </button>
+          </Link>
           <Link to={`/sitterProfile/${id}`}>
             <button className="btnProfile">Ver perfil</button>
           </Link>

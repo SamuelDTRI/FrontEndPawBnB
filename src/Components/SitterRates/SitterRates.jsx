@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import styles from "./SitterRates.module.css";
+import { Link } from "react-router-dom";
 
 const SitterRates = ({ infoSitter }) => {
   return (

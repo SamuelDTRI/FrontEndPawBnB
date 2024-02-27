@@ -1,9 +1,11 @@
 import Formulario from "../../Helpers/Formulario";
-import React from "react";
+import styles from "./SignUpSitters.module.css"
 
 const SignUpSitters = () => {
   return (
-    <Formulario text= 'REGISTRATE COMO CUIDADOR' role= "DogSitter"/>
+    <div className={styles.signUPFormContainer}>
+      <Formulario text= 'REGISTRATE COMO CUIDADOR' role= "DogSitter"/>
+    </div>
     
   )
 };

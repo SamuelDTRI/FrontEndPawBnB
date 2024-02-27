@@ -181,9 +181,21 @@ const Formulario = (text, role) => {
         //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
         <Form className={styles.formulario}>
           <h2>{text.text}</h2>
+          <div className={styles.googleButton}>
+            {!googleUser && (
+              <GoogleButton
+                className="googleButton"
+                label="Regístrate con Google"
+                onClick={handleGoogleSignIn}
+              />
+            )}
+          </div>
           <div className={styles.container}>
             <div className={`col-12 ${styles.inputContainer}`}>
-              `<label htmlFor="name">Nombre*</label>
+              `
+              <label htmlFor="name">
+                <span>Nombre*</span>
+              </label>
               <Field
                 type="text"
                 id="name"
@@ -200,7 +212,9 @@ const Formulario = (text, role) => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="surName">Apellido*</label>
+              <label htmlFor="surName">
+                <span>Apellido*</span>
+              </label>
               <Field
                 type="text"
                 id="surName"
@@ -218,7 +232,9 @@ const Formulario = (text, role) => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="email">Email*</label>
+              <label htmlFor="email">
+                <span>Email*</span>
+              </label>
               <Field
                 id="email"
                 name="email"
@@ -234,7 +250,9 @@ const Formulario = (text, role) => {
                 />
               </div>
               <div className="col-12">
-                <label htmlFor="phone">Telefono*</label>
+                <label htmlFor="phone">
+                  <span>Telefono*</span>
+                </label>
                 <Field
                   type="text"
                   id="phone"
@@ -253,7 +271,9 @@ const Formulario = (text, role) => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="password">Contraseña*</label>
+              <label htmlFor="password">
+                <span>Contraseña*</span>
+              </label>
               <Field
                 type="password"
                 id="password"
@@ -270,7 +290,9 @@ const Formulario = (text, role) => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="confirmPassword">Repetir Contraseña*</label>
+              <label htmlFor="confirmPassword">
+                <span>Repetir Contraseña*</span>
+              </label>
               <Field
                 type="password"
                 id="confirmPassword"
@@ -290,15 +312,6 @@ const Formulario = (text, role) => {
             <div className={styles.submitMessage}>
               {formularioEnviado && (
                 <p className={styles.exito}>Formulario enviado con exito!</p>
-              )}
-            </div>
-            <div className={styles.googleButton}>
-              {!googleUser && (
-                <GoogleButton
-                  className="googleButton"
-                  label="Regístrate con Google"
-                  onClick={handleGoogleSignIn}
-                />
               )}
             </div>
           </div>

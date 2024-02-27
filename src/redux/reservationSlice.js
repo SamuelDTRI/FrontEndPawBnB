@@ -89,7 +89,7 @@ export const getReservation = createAsyncThunk (
   async ( id ) => {
     try {
 
-      const { data } = await axios.get(`http://localhost:3000/bookings/owner/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/bookings/owner/${id}`);
       console.log(data)
       
       return data;

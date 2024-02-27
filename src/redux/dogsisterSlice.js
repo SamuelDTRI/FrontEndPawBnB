@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   dogsisters: [],
   copyDogsisters: [],
+  allReviews: [],
 };
 
 export const dogsisterSlice = createSlice({
@@ -14,8 +15,12 @@ export const dogsisterSlice = createSlice({
       state.dogsisters = action.payload;
     },
 
+    addAllReview: (state, action) => {
+      state.allReviews = action.payload;
+    },
+
     setFilters: (state, action) => {
-      const { location, price } = action.payload;
+      const { location, price, rating } = action.payload;
       let filteredDogSisters = state.copyDogsisters;
     
       if (location) {
@@ -36,6 +41,15 @@ export const dogsisterSlice = createSlice({
           }
           return false;
         });
+      }
+
+      if(rating) {
+        if(rating && rating !== 'all'){
+          filteredDogSisters = filteredDogSisters.filter(dogSister => {
+            const sitterRating = state.allReviews.find(review => review.dogSitterId === dogSister.id)?.rating || 0;
+            return sitterRating == rating;
+          });
+        }
       }
     
       state.dogsisters = filteredDogSisters;
@@ -72,5 +86,5 @@ export const dogsisterSlice = createSlice({
   },
 });
 
-export const { addDogsister, setFilters, setOrder } = dogsisterSlice.actions;
+export const { addDogsister, setFilters, setOrder, addAllReview } = dogsisterSlice.actions;
 export default dogsisterSlice.reducer;

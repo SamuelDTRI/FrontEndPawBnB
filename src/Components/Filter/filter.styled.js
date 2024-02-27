@@ -58,6 +58,13 @@ export const ContainerFilter = styled.div`
                color: #FFA726;
             }
 
+            .bi-star{
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               color: #FFA726;
+            }
+
             .city-ubi{
                margin: 0;
                margin-left: 5px;

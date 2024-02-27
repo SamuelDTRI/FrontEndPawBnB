@@ -55,7 +55,7 @@ const Cards = () => {
     }
   };
 
-  const reviewCard = (id) => {
+  const ratingCard = (id) => {
     // Filtra las revisiones que corresponden al id de la card
     const cardReviews = allReview.filter(review => review.dogSitterId === id);
 
@@ -87,6 +87,12 @@ const Cards = () => {
     return stars;
   }
 
+  const reviewCard = (id) => {
+    const cardReviews = allReview.filter(review => review.dogSitterId === id);
+
+    return cardReviews.length;
+  }
+
   return (
     <ContainerCards>
       <div className="title-order">
@@ -106,9 +112,10 @@ const Cards = () => {
               image={allDogsister?.photoProfile ? allDogsister.photoProfile : imgDefault}
               name={allDogsister?.name}
               neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
-              rating={reviewCard(allDogsister?.id)}
+              rating={ratingCard(allDogsister?.id)}
               city={allDogsister?.city}
               rates={allDogsister?.rates}
+              review={reviewCard(allDogsister?.id)}
             />
           ))}
         </div>

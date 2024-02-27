@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ContainerCard } from "./card.styled";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
+const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
   const navigate = useNavigate();
   const reservation = () =>{
     navigate(`/reservation/${id}`);
@@ -21,7 +21,8 @@ const Card = ({image, name,neighborhood, rating, id, city, rates}) => {
           <p>{neighborhood}, {city}</p>
         </div>
         <div className="infoReview">
-          <p>{rating}</p>
+          <p className="star">{rating}</p>
+          <p className="review">({review})</p>
         </div>
         <div className="infoBtn">
           <button className="btnBooking" onClick={reservation}>Reservar ahora</button>

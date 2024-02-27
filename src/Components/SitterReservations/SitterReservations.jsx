@@ -58,7 +58,7 @@ useEffect(()=>{
    const fetchBookings = async ()=>{
       try {
          //guardamos todas las reservas en bookingsData
-         const {data} = await axios.get("http://localhost:3000/bookings");
+         const {data} = await axios.get("https://backendpawbnb-production.up.railway.app/bookings");
           if(data.length){
             const reservasFiltradas = data.filter((reserva)=>reserva.dogSitterId===id)
             await dispatch(GuardarReservas(reservasFiltradas))

@@ -19,7 +19,9 @@ export const fetchSitter = createAsyncThunk(
   "sitter/fetchSitter",
   async (id) => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/sitters/${id}`
+      );
       return data;
     } catch (error) {
       console.error("Error al obtener la información del cuidador:", error);

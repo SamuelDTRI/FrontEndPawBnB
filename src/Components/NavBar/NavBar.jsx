@@ -60,11 +60,13 @@ const handleClickMiPerfil=(userRole)=>{
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (
             <div className="d-flex col-12">
-              <button
-                className={`col-4 ${style.BtMiPerfil}`}
-                onClick={() => handleClickMiPerfil(userRole)}>
-                Mi perfil
-              </button>
+              {adminRole !== "admin" && (
+                <button
+                  className={`col-4 ${style.BtMiPerfil}`}
+                  onClick={() => handleClickMiPerfil(userRole)}>
+                  Mi perfil
+                </button>
+              )}
               <button
                 className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
                 onClick={handleSignOut}>

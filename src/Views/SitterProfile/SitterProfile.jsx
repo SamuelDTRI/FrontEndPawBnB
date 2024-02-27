@@ -15,6 +15,7 @@ const SitterProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [review, setReview] = useState([]);
+  const [comment, setComment] = useState(review);
   const imgDefault = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
   
   const infoSitter = useSelector((state) => state.sitter);
@@ -45,6 +46,11 @@ const SitterProfile = () => {
       try {
         const { data } = await axios.get(`http://localhost:3000/review/${id}`);
         setReview(data);
+        if(data.length > 2){
+          setComment(data.slice(0,2));
+        }else{
+          setComment(data);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -54,6 +60,11 @@ const SitterProfile = () => {
 
     fetchSitterData();
   }, [dispatch, id]);
+
+  const allComment = () => {
+    setComment(review);
+    document.getElementById('allViews').style.display = ('none');
+  }
 
   return (
     <div className="container col-10 my-5">
@@ -73,9 +84,9 @@ const SitterProfile = () => {
       </section>
       <section className="container mt-4">
         <h2>Reseñas de {infoSitter.name}</h2>
-        {review.length>0?
+        {review?.length>0?
           <>
-            {review.map((allReview) => (
+            {comment.map((allReview) => (
               <CardReview
                 key={allReview?.id}
                 comment={allReview?.comment}
@@ -84,7 +95,7 @@ const SitterProfile = () => {
                 photo={allReview?.Owner?.photo? allReview?.Owner.photo : imgDefault}
               />
             ))}
-            {/* <button className="mt-4">Ver mas Reviews</button> */}
+            {review.length > 2 && <button id="allViews" className="mt-4" onClick={allComment}>Ver mas Reviews</button>}
           </>
           :
           <p>No hay reseñas actualmente</p>

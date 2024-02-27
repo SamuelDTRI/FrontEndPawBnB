@@ -37,29 +37,31 @@ const FormReview = ({dogSitterId, ownerId}) => {
             console.log('error al cargar comentario', error);
         }
     }
-
+    
     const handleChange = (event) => {
-        let { name, value } = event.target;
-
-        if (value.length > 255) {
-            value = value.slice(0, 255);
-        }
-
-        // Verificar si la longitud del comentario alcanzó el límite y deshabilitar la entrada si es necesario
-        if (value.length === 255) {
-            event.target.setAttribute('readonly', true);
-        }
-
-        setFormData({
+        const { name, value } = event.target;
+        let newFormData = {
             ...formData,
             [name]: value
-        });
-
-        if(document.getElementById('textarea').value.length > 0 && formData.rating.length > 0){
+        };
+    
+        if (value.length > 255) {
+            newFormData[name] = value.slice(0, 255);
+        }
+    
+        // Verificar si la longitud del comentario alcanzó el límite y deshabilitar la entrada si es necesario
+        if (newFormData.comment.length === 255) {
+            event.target.setAttribute('readonly', true);
+        }
+    
+        setFormData(newFormData);
+    
+        // Verificar si ambos campos están llenos y habilitar el botón de enviar
+        if(newFormData.comment.length > 0 && newFormData.rating.length > 0){
             setBtnDisable(false);
             document.getElementById('sendBtn').style.backgroundColor = '#ffa726';
             document.getElementById('sendBtn').style.cursor = 'pointer';
-        }else{
+        } else {
             setBtnDisable(true);
             document.getElementById('sendBtn').style.backgroundColor = '#ffa72640';
             document.getElementById('sendBtn').style.cursor = 'default';

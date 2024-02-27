@@ -9,11 +9,11 @@ const SideBarPanel = () => {
             <div className={styles.adminInfoContainer}>
                 <div className={styles.adminName}>
                     <h4>{adminInfo.name}</h4>
-                    <h5>ADMIN</h5>
+                    <h5 className={styles.adminTitle}>ADMIN</h5>
                 </div>
             </div>
             <div className={`${styles.sideBarLinks}`}>
-                <ul>
+                <ul className={styles.linksContainer}>
                     <li>
                         <NavLink to="/dashboardAdmin">
                             <i className="bi bi-menu-button-wide"></i> Vista General

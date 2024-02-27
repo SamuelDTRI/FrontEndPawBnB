@@ -5,10 +5,16 @@
     justify-content: start;
     align-items: center;
 }
+.linksContainer {
+    min-width: 700px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
 .sideBarLinks {
-    text-align: left;
+    text-align: center;
     align-self: center;
-    
+    font-size: 18px;
 }
 .sideBarLinks li {
     list-style: none;
@@ -16,11 +22,15 @@
 }
 .sideBarLinks i {
     color: #ffa726;
+    
 }
 .adminInfoContainer{
     padding: auto;
 }
 .adminName {
     align-self: center;
+}
+.adminTitle {
+    font-size: 24px;
 }
 

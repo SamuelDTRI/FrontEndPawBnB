@@ -5,7 +5,7 @@ export const sendReservation = createAsyncThunk( //envia la reserva
   "reservations/sendReservation",
   async (valores) => {
     try {
-      console.log({ valores });
+      console.log({ valoresResSlic:valores });
 
       const peticion = {
         dateCheckIn: valores.dateCheckIn,

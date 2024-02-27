@@ -31,21 +31,26 @@ const ReservationRequest = () => {
     dispatch(loadDogsByOwner(userId));
   };
 
+  const getSitter = () =>{
+    return sitters.filter(s=>s.id == URL[URL.length - 1])[0].id
+  }
+
   useEffect(() => {
-    let sitterId = sitters.filter((sitter) => {
-      // mapea los sitters
+    // let _sitterId = sitters.filter((sitter) => {
+    //   // mapea los sitters
+    //   console.log({url:sitter})
+    //   return sitter.id
+    // });
+    console.log({sitterUE:sitters, idURL:URL[URL.length - 1], existSitter: sitters.filter(s=>s.id == URL[URL.length - 1])[0].id});
 
-      return sitter.id == URL[URL.length - 1];
-    });
-
-    setSitterId(sitterId[0].id);
+    // setSitterId(sitters.filter(s=>s.id == URL[URL.length - 1])[0].id);
   }, []);
 
   useEffect(() => {
     getDogs();
     console.log({ URL });
-    console.log({ sitters, userId, owner, auth, dogs, sitterId });
-  }, [userId]);
+    console.log({ sitters, userId, owner, auth, dogs, sitterId:getSitter() });
+  }, []);
 
   return (
     <Formik
@@ -58,7 +63,7 @@ const ReservationRequest = () => {
         status: "pendiente",
         reviews: "",
         ownerId: userId,
-        dogSitterId: sitterId,
+        dogSitterId: `${getSitter()}`,
         rating: "4",
       }}
       validate={(valores) => {
@@ -88,11 +93,6 @@ const ReservationRequest = () => {
           errores.entryTime = "Por favor ingresa un horario de ingreso.";
         }
 
-          // //Validacion Reservacion para
-          // if (!valores.dogId) {
-          //   errores.dogId = "Por favor selecciona al menos una mascota.";
-          // }
-        
         //Validacion notas
 
         if (!valores.note) {
@@ -107,6 +107,8 @@ const ReservationRequest = () => {
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
         // Después de enviar la reserva
+        console.log({valorOS:valores})
+        if(valores.dogId == "") valores.dogId=dogs[0].id;
         dispatch(sendReservation(valores));
         resetForm();
         console.log("Reserva enviada");

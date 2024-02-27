@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 import { Link } from "react-router-dom";
@@ -12,9 +11,9 @@ const SitterPresentation = ({ infoSitter }) => {
   const sitters = useSelector((state)=>state.dogsister.dogsisters)
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
-  const getSitterId = ()=>{
-    return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
-  }
+  // const getSitterId = ()=>{
+  //   //return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
+  // }
   useEffect(()=>{
     console.log({infoSitter,sitters})
     console.log({encontrado: sitters.filter((sitter)=>sitter.email == infoSitter.email)[0]})
@@ -47,11 +46,11 @@ const SitterPresentation = ({ infoSitter }) => {
                 <h2>5.0/5.0 ⭐</h2>
                 <p>(9 reseñas)</p>
               </div>
-              <Link to = {`/reservation/${getSitterId()}`}>
+              {/* <Link to = {`/reservation/${getSitterId()}`}>
               <button>
                 Reserva con {infoSitter.name}
               </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -1,75 +1,106 @@
-import {createSlice} from "@reduxjs/toolkit";
-import axios from "axios"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const reservationSlice = createSlice ({
-    name: "reservation",
-    initialState:{
-        reservations:[], //Una matriz que almacenará las reservaciones.
-        currentReservation:"",  //Variable que guarda la reservación actual, es decir, la que se está mostrando en el detalle de una reservación.
-        currentReservation:"",  //Variable que guarda la reservación actualmente seleccionada en el listado de reservas.
-        success: false, //Un booleano que indica si la última operación fue exitosa.
-        error: null, //Almacena cualquier mensaje de error.
-        loading: true, // Un indicador booleano para mostrar si la aplicación está cargando datos.
-    },
-    reducers: {
-        getReservationsStart:(state)=> { //Cambia el estado loading a true cuando se inicia la obtención de las reservaciones.
-            state.loading=true;
-        },
-        getReservationsSuccess:(state, action) =>{ //Actualiza el estado con las reservaciones obtenidas y cambia loading a false y success a true.
-            return{
-                ...state,
-                reservations:action.payload,
-                loading:false,
-                success:true
-            }
-        },
-        addReservationStart:(state)=>{//Reinicia cualquier error existente cuando se inicia el proceso de agregar una nueva reserva.
-            state.error=null;
-        },
-        addReservationFail:(state, action)=>{//Actualiza el estado con el error y cambia loading a false
-            return{
-                ...state,
-                error: action.payload,
-                loading:false
-            };
-        },
-        addReservationSuccess:(state, action)=>{ //Agrega una nueva reserva al estado y cambia loading a false y success a true.
-            const newReservation = action.payload;
-            state.reservations = [newReservation,...state.reservations]
-            state.loading=false;
-            state.success=true;
-        },
-        deleteReservation:(state, action)=>{//Elimina una reserva del estado según el ID proporcionado en la acción
-            let updatedList = state.reservations.filter(r=> r.id !== action.payload);
-            state.reservations = updatedList;
-        }
-    },
-    actions: {
-        //get all the reservations from server
-        getReservations: (dispatch) => {
-            dispatch(actions.getReservationsStart());
-            axios.get('/api/reservations')
-                .then(response => {  
-                    console.log('Got Reservations', response.data); 
-                    dispatch(actions.getReservationsSuccess(response.data));
-                })
-                .catch((err) => {
-                    console.log("Error getting reservations", err.message);
-                    dispatch(actions.getReservationsFail(err.message))
-                });
-        },
-        //add a new reservation to the list of reservations on the server and then
+export const sendReservation = createAsyncThunk( //envia la reserva
+  "reservations/sendReservation",
+  async (valores) => {
+    try {
+      console.log({ valoresResSlic:valores });
+
+      const peticion = {
+        dateCheckIn: valores.dateCheckIn,
+        dateCheckOut: valores.dateCheckOut,
+        entryTime: valores.entryTime,
+        dogId: valores.dogId,
+        note: valores.note,
+        status: valores.status,
+        reviews: valores.reviews,
+        ownerId: valores.ownerId,
+        dogSitterId: valores.dogSitterId,
+        rating: valores.rating,
+      };
+      console.log({ peticion: valores });
+
+      let { data } = await axios.post(
+        "https://backendpawbnb-production.up.railway.app/bookings",
+        peticion
+      );
+      return data;
+    } catch (error) {
+      console.error({ mesagge: "Error al enviar la reserva: ", error });
+      throw error;
     }
-        
+  }
+);
+export const updateStatus = createAsyncThunk( //actualiza el estado de la reserva
+  "reservations/updateStatus",
+  async ({ id, status }) => {
+    try {
+      const { data } = await axios.put (`https://backendpawbnb-production.up.railway.app/bookings/status/${id}`,{status});
+      return data;
+    }catch(error){
+      console.error({ mesagge: "Error al actualizar el estado de la reserva", error });
+      throw error;
+    
+
+
+    }
+    
+  }
+);
+//Almacen para los estados
+export const reservationSlice = createSlice({
+  name: "reservation",
+  initialState: {
+    reservations: [],
+    currentReservation: {},
+  },
+  reducer: {
+    //Setea el estado state segun la action realizada
+    setReservations: (state, action) => {
+      state.reservations = action.payload;
+    },
+    setCurrentReservation: (state, action) => {
+      state.currentReservation = action.payload;
+    },
+  },
+  
+  extraReducers: (builder) => {
+    builder.addCase(getReservation.fulfilled, (state, action) => {
+      state.reservations = [action.payload];
+    });
+    builder.addCase(sendReservation.fulfilled, (state, action) => {
+      state.reservations = [...state.reservations, action.payload];
+    });
+    builder.addCase(updateStatus.fulfilled, (state, action) => {
+      const index = state.reservations.findIndex((item)=> item.id ===action.payload.id );
+      if (index !== -1 ) {
+        state.reservations[index]=action.payload; //actualiza el estado de la reserva
+      } else {
+        console.log("No se encontro la reserva");
+      }
+      
+    })
+  },
 });
 
-export const ReservationContext = createContext();
-export default reservationSlice.reducer;
+export const getReservation = createAsyncThunk (
+  "reservation/getReservation",
+  async ( id ) => {
+    try {
 
-//Este contexto se utilizará para proporcionar el estado del slice a los componentes secundarios.
-/*function ReservationProvider({children}) {
-    const store = useReducer(reducer, initialState)};
-    
-    //crear un store con un reducer y un estado inicial. Este componente envuelve la aplicación y proporciona el contexto ReservationContext con el valor del store creado
-    return <ReservationContext.Provider value={store}>{children}</ReservationContext.Provider>*/
-    
+      const { data } = await axios.get(`http://localhost:3000/bookings/owner/${id}`);
+      console.log(data)
+      
+      return data;
+    }catch(error){
+      console.error({ mesagge: "Error al encontrar la reserva", error });
+      throw error;
+    }
+  })
+
+  //http://localhost:3000/bookings/owner/c928b4e0-d78f-4cb7-ab79-51e3ec508e1e
+
+export const { setReservations, setCurrentReservation } =
+  reservationSlice.actions;
+export default reservationSlice.reducer;

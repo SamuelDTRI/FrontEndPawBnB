@@ -20,7 +20,7 @@ const FormInfoSitter = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/sitters/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error(error.message);
@@ -60,6 +60,7 @@ const FormInfoSitter = () => {
           },
         })
       );
+
       await currentSitter();
       resetForm();
       setFormSent(true);
@@ -71,7 +72,9 @@ const FormInfoSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch, forceUpdate]);
+  }, [dispatch, handleFormSubmit,forceUpdate]);
+
+  
 
   return (
     <>
@@ -338,3 +341,7 @@ const FormInfoSitter = () => {
 };
 
 export default FormInfoSitter;
+
+
+
+

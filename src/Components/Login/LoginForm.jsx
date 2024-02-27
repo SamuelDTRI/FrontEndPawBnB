@@ -12,13 +12,16 @@ import { signUpOwner } from "../../redux/signUpSlice.js";
 
 
 const LoginForm = () => {
+  // eslint-disable-next-line no-unused-vars
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { googleSignIn, googleUser} = UserAuth();
   const error = useSelector((state) => state.auth.error);
+  // eslint-disable-next-line no-unused-vars
   const userRole = useSelector((state)=> state.auth.userRole);
-  const userId = useSelector((state) => state.auth.userId)
+  // eslint-disable-next-line no-unused-vars
+  const userId = useSelector((state) => state.auth.userId);
 
   const handleGoogleSignIn = async () => {
     try{
@@ -36,20 +39,26 @@ const LoginForm = () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
           // Verificar si el usuario ya está registrado
-          const { exist, checkId, checkRole } = await checkRegistration(email);
+          const { exist, checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
-            const { userRole } = await dispatch(
-              signUpOwner({ email: email }, "Owner")
-            );
-            console.log(userRole);
+            const { userRole } = (await dispatch(signUpOwner({ email: email }, "Owner"))) || {};
+            
             if (userRole) {
+              const { checkId, checkRole, checkDeleted } = (await checkRegistration(email)) || {};
+            dispatch(
+              googleLoginSuccess({
+                userId: checkId,
+                userRole: checkRole,
+                userDeleted: checkDeleted,
+              })
+            );
               navigate(`/Home`);
             }
           } else {
             // cambiamos el estado global para completar el logueo
             dispatch(
-              googleLoginSuccess({ userId: checkId, userRole: checkRole })
+              googleLoginSuccess({ userId: checkId, userRole: checkRole, userDeleted: checkDeleted })
             );
             if (checkRole === "Owner") {
               navigate(`/Home`);
@@ -69,7 +78,7 @@ const LoginForm = () => {
   }, [googleUser, navigate,dispatch]);
 
   const handleSubmit = async (formData) => {
-    const {userId, userRole}= await dispatch(loginUser(formData));
+    const { userId, userRole } = (await dispatch(loginUser(formData))) || {};
     if (userRole === "Owner") {
       navigate(`/Home`);
     } else if (userRole === "DogSitter") {
@@ -80,18 +89,18 @@ const LoginForm = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch({ type: "auth/loginFailure", payload: null });
-    }, 5000);
+    }, 8000);
     return () => clearTimeout(timeoutId);
   }, [error, dispatch]);
 
-  useEffect(() => {
-    // Redireccionamos al usuario después de un inicio de sesión exitoso
-    if (userRole === "Owner") {
-      navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
-    } else if (userRole === "DogSitter") {
-      navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
-    }
-  }, [userRole, userId, navigate]);
+  // useEffect(() => {
+  //   // Redireccionamos al usuario después de un inicio de sesión exitoso
+  //   if (userRole === "Owner") {
+  //     navigate(`/Home/${userId}`); // Redirige al dashboard del cliente en base a la Id
+  //   } else if (userRole === "DogSitter") {
+  //     navigate(`/dashboardSitter/${userId}`); // Redirige al dashboard del cuidador en base a la Id
+  //   }
+  // }, [userRole, userId, navigate]);
   
   return (
     <div>
@@ -121,8 +130,8 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
+            <h2>LOG IN</h2>
             <div className={styles.container}>
-              <h2>LOG IN</h2>
               <div>
                 <label htmlFor="correo">Email</label>
                 <Field
@@ -131,12 +140,14 @@ const LoginForm = () => {
                   name="email"
                   placeholder="example@gmail.com"
                 />
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="email"
+                    component={() => (
+                      <div className={styles.error}>{errors.email}</div>
+                    )}
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="contraseña">Contraseña</label>
@@ -146,19 +157,22 @@ const LoginForm = () => {
                   name="password"
                   placeholder="Tu Contraseña..."
                 />
-                <ErrorMessage
-                  name="password"
-                  component={() => (
-                    <div className={styles.error}>{errors.password}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="password"
+                    component={() => (
+                      <div className={styles.error}>{errors.password}</div>
+                    )}
+                  />
+                </div>
               </div>
               <button type="submit">Iniciar Sesión</button>
-              {formularioEnviado && (
+              {/* {formularioEnviado && (
                 <p className={styles.exito}>Formulario enviado con éxito!</p>
-              )}
-              {error && <p>{error}</p>}
-              <br />
+              )} */}
+              <div className={styles.errorContainer}>
+                {error && <p className={styles.error}>{error}</p>}
+              </div>
               <div className={styles.googleButton}>
                 <GoogleButton
                   className="googleButton"

@@ -4,6 +4,7 @@ import logo from "../imagenes/logo/logo-pawbnb-horizontal.png";
 import style from "./NavBar.module.css";
 import { UserAuth } from "../../context/AuthContext";
 import { logOutUser } from "../../redux/authSlice.js";
+import Alerts from "../Alerts/Alerts.jsx";
 
 const NavBar = () => {
   const {googleUser, googleLogOut} = UserAuth();
@@ -12,7 +13,7 @@ const NavBar = () => {
   const userRole = useSelector((state) => state.auth.userRole);
   const adminRole = useSelector((state) => state.adminUsers.adminRole )
   const idUsuarioActual = useSelector((state) => state.auth.userId)
-
+  console.log(adminRole)
   const logOutButtonText= " SALIR";
   const registerButtonText = "REGISTRATE";
   const loginButtonText = "INGRESAR";
@@ -40,9 +41,9 @@ const handleClickMiPerfil=(userRole)=>{
   if(userRole==="Owner"){
     navigate(`dashboardOwner/${idUsuarioActual}`)
   }
- if(userRole==="DogSitter"){
+  if(userRole==="DogSitter"){
   navigate(`dashboardSitter/${idUsuarioActual}`)
- }
+  }
 }
 
   return (
@@ -54,44 +55,42 @@ const handleClickMiPerfil=(userRole)=>{
           </Link>
         </div>
 
-        <button onClick={()=>navigate("Home")}>HOME</button>
+        <button onClick={() => navigate("Home")}>HOME</button>
         {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
- 
         <div className="col-12 col-md-3 m-1">
-          {googleUser || userRole || adminRole ?      
-          (
+          {googleUser || userRole ? (
             <div className="d-flex col-12">
-             <button className={`col-7 ${style.BtMiPerfil}`}
-              onClick={()=>handleClickMiPerfil(userRole)}
-             >
-              Mi perfil
-            </button>
-            <button
-              className={`btn border-warning text-warning col-4 ${style.BtSalir}`}
-              onClick={handleSignOut}>
-              <span className="iconButton">
-                <i className="bi bi-box-arrow-right"></i>
-              </span>
-              {`${logOutButtonText}`}
-            </button> 
-            </div>
-          )
-          : (
-            <>
+              {userRole !== "Admin" && (
+                <button
+                  className={`col-4 ${style.BtMiPerfil}`}
+                  onClick={() => handleClickMiPerfil(userRole)}>
+                  Mi perfil
+                </button>
+              )}
               <button
-                onClick={handleSingUpRedir}>
+                className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
+                onClick={handleSignOut}>
+                <span className="iconButton ">
+                  <i className="bi bi-box-arrow-right"></i>
+                </span>
+                {`${logOutButtonText}`}
+              </button>
+            </div>
+          ) : (
+            <div className={style.loginButtonContainer}>
+              <button onClick={handleSingUpRedir}>
                 {`${registerButtonText}`}
               </button>
               <button
-                className={style.botones}
+                className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
                 onClick={handleLoginRedir}>
                 {`${loginButtonText}`}
               </button>
-            </>
+            </div>
           )}
         </div>
-       
       </nav>
+      <Alerts />
     </div>
   );
 };

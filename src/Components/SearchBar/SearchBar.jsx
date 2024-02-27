@@ -17,7 +17,7 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3000/sitters');
+        const { data } = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
         dispatch(addDogsister(data));
         const uniqueBarrios = [...new Set(data.map(cuidador => cuidador.neighborhood))];
         setBarriosEnUso(uniqueBarrios);

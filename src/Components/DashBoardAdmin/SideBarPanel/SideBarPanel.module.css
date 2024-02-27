@@ -1,11 +1,36 @@
-.sideBarLinks {
-    text-align: left;
+.sideBarContainer {
+    min-height: 145px;
+    display: grid;
+    grid-template-columns: 30% auto;
+    justify-content: start;
+    align-items: center;
 }
-
+.linksContainer {
+    min-width: 700px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.sideBarLinks {
+    text-align: center;
+    align-self: center;
+    font-size: 18px;
+}
 .sideBarLinks li {
     list-style: none;
+    text-align: left;
 }
-
 .sideBarLinks i {
     color: #ffa726;
+    
 }
+.adminInfoContainer{
+    padding: auto;
+}
+.adminName {
+    align-self: center;
+}
+.adminTitle {
+    font-size: 24px;
+}
+

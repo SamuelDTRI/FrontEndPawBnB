@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { ContainerCard } from "./card.styled";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
   const navigate = useNavigate();
@@ -18,14 +18,20 @@ const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
         <div className="infoName">
           <p>{name}</p>
           <p>Tarifa ${rates}</p>
-          <p>{neighborhood}, {city}</p>
+          <p>
+            {neighborhood}, {city}
+          </p>
         </div>
         <div className="infoReview">
           <p className="star">{rating}</p>
           <p className="review">({review})</p>
         </div>
         <div className="infoBtn">
-          <button className="btnBooking" onClick={reservation}>Reservar ahora</button>
+          <Link to = {`/reservation/${id}`}>
+          <button className="btnBooking" /*onClick={handlePayment}*/>
+            Reservar ahora
+          </button>
+          </Link>
           <Link to={`/sitterProfile/${id}`}>
             <button className="btnProfile">Ver perfil</button>
           </Link>

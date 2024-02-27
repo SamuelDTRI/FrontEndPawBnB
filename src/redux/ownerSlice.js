@@ -1,6 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Crear una acción asíncrona para actualizar el propietario
+export const updateOwner = createAsyncThunk(
+  "owner/updateOwner",
+  async (updatedOwner, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `https://backendpawbnb-production.up.railway.app/owners/${updatedOwner.id}`,
+        updatedOwner
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 const initialState = {
   address: "",
   deleted: null,
@@ -15,21 +31,6 @@ const initialState = {
   surName: "",
   Dogs: [],
 };
-
-export const fetchDogsByOwnerId = createAsyncThunk(
-  "owner/fetchDogsByOwnerId",
-  async (ownerId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/owners/${ownerId}`
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching owner's dogs:", error);
-      throw error;
-    }
-  }
-);
 
 export const ownerSlice = createSlice({
   name: "owner",
@@ -66,25 +67,22 @@ export const ownerSlice = createSlice({
       state.Dogs = action.payload;
       console.log(action.payload, "sadafdasd");
     },
-    updateOwner: async (state, action) => {
-      console.log(action.payload.updatedOwner);
-      try {
-        const { data } = await axios.put(
-          "http://localhost:3000/owners",
-          action.payload.updatedOwner
-        );
-      } catch (error) {
-        console.error("Error al actualizar el cuidador:", error);
-        throw error;
-      }
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDogsByOwnerId.fulfilled, (state, action) => {
-      state.Dogs = action.payload;
-    });
+    builder
+      .addCase(updateOwner.fulfilled, (state, action) => {
+        // Actualizar el estado con los datos del propietario actualizado
+        return { ...state, ...action.payload };
+      })
+      .addCase(updateOwner.rejected, (state, action) => {
+        // Manejar el error
+        console.error(
+          "Error al actualizar el propietario:",
+          action.payload.error
+        );
+      });
   },
 });
 
-export const { infoOwner, updateOwner } = ownerSlice.actions;
+export const { infoOwner } = ownerSlice.actions;
 export default ownerSlice.reducer;

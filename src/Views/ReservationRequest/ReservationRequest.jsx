@@ -4,109 +4,132 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./ReservationRequest.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchDogsByOwnerId } from "../../redux/ownerSlice";
-// import { addReservationStart } from "./../../redux/reservationSlice";
+import { loadDogsByOwner } from "../../redux/dogsSlice";
+import { sendReservation } from "../../redux/reservationSlice";
 import { ownerSlice } from "../../redux/ownerSlice";
+import axios from "axios";
 
 const ReservationRequest = () => {
   const [formularioEnviado, cambiarFormularioEnviado] = useState(false);
+  const [sitterId, setSitterId] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  // const status = useSelector((state) => state.reservation.status);
 
   //Asi se atrapa el estado del id del usuario
   const userId = useSelector((state) => state.auth.userId);
   const owner = useSelector((state) => state.owner);
   const auth = useSelector((state) => state.auth);
-  const dogs = useSelector((state) => state.owner.Dogs.Dogs);
+  const dogs = useSelector((state) => state.dogs.dogsList);
+  const sitters = useSelector((state) => state.dogsister.dogsisters);
+  // const reservations = useSelector((state) => state.reservation.reservations);
+  const URL = window.location.href.split("/");
 
   const getDogs = () => {
-    dispatch(fetchDogsByOwnerId(userId));
+    dispatch(loadDogsByOwner(userId));
   };
+
+  const getSitter = () =>{
+    return sitters.filter(s=>s.id == URL[URL.length - 1])[0].id
+  }
+
+  useEffect(() => {
+    // let _sitterId = sitters.filter((sitter) => {
+    //   // mapea los sitters
+    //   console.log({url:sitter})
+    //   return sitter.id
+    // });
+    console.log({sitterUE:sitters, idURL:URL[URL.length - 1], existSitter: sitters.filter(s=>s.id == URL[URL.length - 1])[0].id});
+
+    // setSitterId(sitters.filter(s=>s.id == URL[URL.length - 1])[0].id);
+  }, []);
 
   useEffect(() => {
     getDogs();
-    console.log({ userId, owner, auth, dogs });
-  }, [userId]);
+    console.log({ URL });
+    console.log({ sitters, userId, owner, auth, dogs, sitterId:getSitter() });
+  }, []);
 
-  // const owner = useSelector((state) => state.owner);
-  // const OwnerDogsComponent = ({ ownerId }) => {
-  //   const dispatch = useDispatch();
-  //   const dogs = useSelector(state => state.owner.dogs);
-
-  //   useEffect(() => {
-  //     // Despacha la acción para obtener los perros del propietario al montar el componente
-  //     dispatch(fetchDogsByOwnerId(ownerId));
-  //   }, [dispatch, ownerId]);
-  // }
-
-  // console.log("antes", owner);
-  // useEffect(() => {
-  // dispatch(user.userId);
-  // }, [dispatch]);
-  // console.log("despues", owner);
-
-  const fechaActual = new Date();
-  const fechaIngresada = new Date();
   return (
     <Formik
       initialValues={{
         dateCheckIn: "",
         dateCheckOut: "",
         entryTime: "",
-        reservationFor: "",
+        dogId: "",
         note: "",
+        status: "pendiente",
+        reviews: "",
+        ownerId: userId,
+        dogSitterId: `${getSitter()}`,
+        rating: "4",
       }}
-      // validate={(valores) => {
-      //   let errores = {};
-      //   //Validacion fecha ingreso
-      //   if (!valores.dateCheckIn) {
-      //     errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
-      //   } else if (fechaIngresada <= fechaActual) {
-      //     errores.dateCheckIn =
-      //       "La fecha de ingreso debe ser posterior a la fecha actual.";
-      //   }
-      //   //Validacion fecha salida
-      //   if (!valores.dateCheckOut) {
-      //     errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
-      //   } else if (fechaIngresada <= fechaActual) {
-      //     errores.dateCheckOut =
-      //       "La fecha de salida debe ser posterior a la fecha actual.";
-      //   }
+      validate={(valores) => {
+         let errores = {};
 
-      //   //Validacion Horario ingreso
-      //   if (!valores.entryTime) {
-      //     errores.entryTime = "Por favor ingresa un horario de ingreso.";
-      //   }
+        //Validacion fecha ingreso
+        const currentDate = new Date();
+        const checkInDate = new Date(valores.dateCheckIn);
+        if (!valores.dateCheckIn) {
+          errores.dateCheckIn = "Por favor ingresa una fecha de ingreso.";
+        } else if (checkInDate <= currentDate) {
+          errores.dateCheckIn =
+            "La fecha de ingreso debe ser posterior a la fecha actual.";
+        }
 
-        //   //Validacion Reservacion para
-        //   if (!valores.reservationFor) {
-        //     errores.reservationFor = "Por favor selecciona al menos una mascota.";
-        //   }
+        //Validacion fecha salida
+        const checkOutDate = new Date(valores.dateCheckOut);
+        if (!valores.dateCheckOut) {
+          errores.dateCheckOut = "Por favor ingresa un fecha de salida.";
+        } else if (checkOutDate <= checkInDate) {
+          errores.dateCheckOut =
+            "La fecha de salida debe ser posterior a la fecha de ingreso.";
+        }
+
+        //Validacion Horario ingreso
+        if (!valores.entryTime) {
+          errores.entryTime = "Por favor ingresa un horario de ingreso.";
+        }
 
         //Validacion notas
 
-      //   if (!valores.note) {
-      //     errores.note = "Por favor ingresa una observacion.";
-      //   } else if (valores.note.length > 256) {
-      //     errores.note =
-      //       "El texto es demasiado largo, por favor ingrese menos de 256 letras";
-      //   }
+        if (!valores.note) {
+          errores.note = "Por favor ingresa una observacion.";
+        } else if (valores.note.length > 256) {
+          errores.note =
+            "El texto es demasiado largo, por favor ingrese menos de 256 letras";
+        }
 
-      //   return errores;
-      // }}
+        return errores;
+      }}
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
-        valores.reservationFor ? "" : (valores.reservationFor = dogs[0].id);
-        console.log({
-          valores: valores,
-        });
-        // dispatch(addReservationStart(valores));
+        // Después de enviar la reserva
+        console.log({valorOS:valores})
+        if(valores.dogId == "") valores.dogId=dogs[0].id;
+        dispatch(sendReservation(valores));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
         setTimeout(() => cambiarFormularioEnviado(false), 5000);
+
+        // Aquí agregamos la lógica de pago
+        const handlePayment = async () => {
+          try {
+            const response = await axios.post(
+              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
+            );
+            const url = response.data.url;
+            window.location.href = url;
+          } catch (error) {
+            console.error("Error al realizar el pago: ", error);
+          }
+        };
+
+        // Llamamos a la función de pago
+        handlePayment();
       }}
     >
       {({ errors }) => (
@@ -117,11 +140,7 @@ const ReservationRequest = () => {
           <div className={styles.container}>
             <div className={`col-12 ${styles.inputContainer}`}>
               <label htmlFor="dateCheckIn">Fecha de ingreso*</label>
-              <Field
-                type="date"
-                id="dateCheckIn"
-                name="dateCheckIn"
-              />
+              <Field type="date" id="dateCheckIn" name="dateCheckIn" />
               <ErrorMessage
                 name="dateCheckIn"
                 component={() => (
@@ -161,10 +180,10 @@ const ReservationRequest = () => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="reservationFor">Reservacion para</label>
+              <label htmlFor="dogId">Reservacion para</label>
               <Field
-                id="reservationFor"
-                name="reservationFor"
+                id="dogId"
+                name="dogId"
                 as="select"
                 className={styles.options}
                 key={`${Math.random()}`}
@@ -177,16 +196,16 @@ const ReservationRequest = () => {
                   : ""}
               </Field>
               <ErrorMessage
-                name="reservationFor"
+                name="dogId"
                 component={() => (
-                  <div className={styles.error}>{errors.reservationFor}</div>
+                  <div className={styles.error}>{errors.dogId}</div>
                 )}
               />
 
               <div className="col-12">
                 <label htmlFor="note">Notas</label>
-                <Field
-                  type="text area"
+                <Field                  
+                  type="textarea"
                   id="note"
                   name="note"
                   placeholder="Observaciones..."

@@ -4,6 +4,23 @@ import {useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
 import { fetchUsers } from "../../../redux/adminUsersSlice";
 import { Barrios } from "../../../Helpers/Barrios";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title, CategoryScale, LinearScale, BarElement, defaults } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Pie, Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartDataLabels,
+);
+
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
 
 const Panel = ()=>{
     const dispatch = useDispatch();
@@ -16,7 +33,6 @@ const Panel = ()=>{
     useEffect(() => {
         dispatch(fetchUsers());
     }, []);
-
 
     //Funciones para definir los barrios con mas cuidadores
     const neighborhoodCount = {};
@@ -51,43 +67,161 @@ const Panel = ()=>{
     });
     //Por ultimo convertimos al set en un arreglo
     const neighborhoodsWithoutSitters = Array.from(allNeighborhoodsSet);
-    console.log(neighborhoodsWithoutSitters)
+    
+    //Configuración de los datos para el gráfico de torta que representa el total de usuarios registrados
+    const usersPieChart = {
+      labels: [],
+      datasets: [
+        {
+          label: " # ",
+          data: [ownersList.length, sittersList.length],
+          backgroundColor: ["#FFA726", "#7B61FF"],
+          borderColor: ["#ed9615", "#6447f7"],
+          borderWidth: 1,
+          hoverOffset: 4,
+        },
+      ],
+    };
+    const optionsPieChart ={
+      plugins: {
+        datalabels: {
+          display: false,
+        }
+      }
+    };
+    //Configuración de los datos para el gráfico de barras que representa los 5 barrios con mas cuidadores
+    const topFiveNeighborhoodsChart = {
+      labels: topFiveNeighborhoods.map((neighborhood) => neighborhood[0]),
+      datasets: [
+        {
+          data: topFiveNeighborhoods.map((neighborhood) => neighborhood[1]),
+          backgroundColor: "#7B61FF",
+          borderColor:  "#6447f7",
+          borderWidth: 2,
+          hoverOffset: 2,
+        },
+      ],
+    };
+    const optionsBarChart = {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grace: "20%",
+          type: "linear",
+          ticks: {
+            stepSize: 0,
+          },
+          grid: {
+            display: false,
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+          // position: 'top',
+        },
+        datalabels: {
+          display: true,
+          color: "black",
+          align: "end",
+          anchor: "end",
+          font: { size: "14" },
+        },
+        title: {
+          display: false,
+        },
+      },
+    };
     return (
-      <div>
-        <h3 className={styles.title}>Usuarios :</h3>
-        <hr />
-        <div className={styles.flexContainer}>
-          <div>
-            <p>
-              Total de usuarios registrado: <span>{usersList.length}</span>
-            </p>
-            <p>
-              Cuidadores: <span>{sittersList.length}</span>
-            </p>
-            <p>
-              Clientes: <span>{ownersList.length}</span>
-            </p>
+      <div className={styles.container}>
+        <div className={styles.dataContainer}>
+          <div className={styles.chartCard}>
+            <h3 className={styles.title}>Usuarios Registrados</h3>
+            {ownersList.length > 0 || sittersList.length > 0 ? (
+              <div className={styles.pieChartData}>
+                <div className={styles.pieChartTotal}>
+                  <p className={styles.usersTotalTitle}>Total</p>
+                  <p className={styles.usersNumber}>{usersList.length}</p>
+                </div>
+                <div>
+                  <p
+                    className={`d-flex align-items-center ${styles.pieChartLabel}`}>
+                    <span className={`${styles.labelColor}`}></span>
+                    <span className={`me-auto ${styles.labelText}`}>
+                      Dueños
+                    </span>{" "}
+                    <span className={`ms-auto ${styles.labelNumber}`}>
+                      {sittersList.length}
+                    </span>
+                  </p>
+                  <p
+                    className={`d-flex align-items-center ${styles.pieChartLabel}`}>
+                    <span
+                      className={`${styles.labelColor} ${styles.labelColorTwo}`}></span>
+                    <span className={`me-auto ${styles.labelText}`}>
+                      Cuidadores
+                    </span>{" "}
+                    <span className={`ms-auto ${styles.labelNumber}`}>
+                      {sittersList.length}
+                    </span>
+                  </p>
+                </div>
+                <div className={styles.pieChartGraph}>
+                  <Pie data={usersPieChart} options={optionsPieChart}></Pie>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.dataErrorMessage}>
+                <h4>Lo sentimos,no hay datos para mostrar.</h4>
+              </div>
+            )}
           </div>
-          <div>
-            <p>Barrios con mas Cuidadores:</p>
-            <ol>
-              {topFiveNeighborhoods.map((neighborhood, index) => {
-                return (
-                  <li
-                    key={
-                      index
-                    }>{`${neighborhood[0]}: ${neighborhood[1]} cuidadores.`}</li>
-                );
-              })}
-            </ol>
+          <div className={styles.chartCard}>
+            <h3 className={styles.title}>Barrios con mas Cuidadores:</h3>
+            {/* <ol>
+            {topFiveNeighborhoods.map((neighborhood, index) => {
+              return (
+                <li
+                  key={
+                    index
+                  }>{`${neighborhood[0]}: ${neighborhood[1]} cuidadores.`}</li>
+              );
+            })}
+            </ol> */}
+            <div className={styles.barChartGraph}>
+              {sittersList.length > 0 ? (
+                <Bar
+                  data={topFiveNeighborhoodsChart}
+                  options={optionsBarChart}></Bar>
+              ) : (
+                <div className={styles.dataErrorMessage}>
+                  <h4>Lo sentimos,no hay datos para mostrar.</h4>
+                </div>
+              )}
+            </div>
           </div>
-          <div>
-            <p>Barrios sin Cuidadores:</p>
-            <ul className={styles.neighborhoodList}>
-                {neighborhoodsWithoutSitters.map((neighborhood, index) => (
+          <div className={styles.chartCard}>
+            <h3 className={styles.title}>Barrios sin Cuidadores</h3>
+            {sittersList.length > 0 ? (
+              <ul className={styles.neighborhoodList}>
+                <div className={styles.listsColumns}>
+                  {neighborhoodsWithoutSitters.map((neighborhood, index) => (
                     <li key={index}>{neighborhood}</li>
-                ))}
-            </ul>
+                  ))}
+                </div>
+              </ul>
+            ) : (
+              <div className={styles.dataErrorMessage}>
+                <h4>Lo sentimos,no hay datos para mostrar.</h4>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -5,12 +5,14 @@ import { loginFailure, loginStart, loginSuccess } from "./authSlice";
 export const fetchUsers = () => async (dispatch) => {
   try {
     // Primera llamada a axios para obtener sitters
-    const sittersResponse = await axios.get("http://localhost:3000/sitters");
-    const sitters = sittersResponse.data;
+    // const sittersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
+    const sittersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
+    const sitters = sittersResponse.data? sittersResponse.data : [];
 
     // Segunda llamada a axios para obtener owners
-    const ownersResponse = await axios.get("http://localhost:3000/owners");
-    const owners = ownersResponse.data;
+    // const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
+    const ownersResponse = await axios.get("https://backendpawbnb-production.up.railway.app/owners");
+    const owners = ownersResponse.data ?ownersResponse.data : [];
 
     // Dispatch para inicializar tanto sitters como owners
     dispatch(initialList([...sitters,...owners]));
@@ -35,6 +37,8 @@ const adminUsersSlice = createSlice({
     adminId: null,
     adminRole: null,
     adminDeleted: null,
+    adminInfo:{},
+    userInfo: {},
   },
   reducers: {
     initialList: (state, action) => {
@@ -100,7 +104,7 @@ const adminUsersSlice = createSlice({
       state.adminRole = action.payload.userRole;
       state.adminDeleted = action.payload.userDeleted;
     },
-    loginFailure(state, action) {
+    adminLoginFailure(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -109,27 +113,58 @@ const adminUsersSlice = createSlice({
       state.userId = null;
       state.userRole = null;
     },
+    setUserInfo(state, action){
+      state.userInfo = action.payload;
+    },
+    setAdminInfo(state, action){
+      state.adminInfo = action.payload;
+    }
   },
 });
 
 export const loginAdmin = (formData) => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const response = await axios.post(`http://localhost:3000/admin/login`, formData);
-    const { userId, userRole, userDeleted } = response.data;
-    dispatch(loginSuccess(response.data));
-    return {
-      userId,
-      userRole,
-      userDeleted
-    };
+    const response = await axios.post(
+      `https://backendpawbnb-production.up.railway.app/admin/login`,
+      formData
+    );
+    if(response.data){
+      const { userId, userRole, userDeleted } = response.data;
+      dispatch(loginSuccess(response.data));
+      const requestedInfo = await axios.get(`https://backendpawbnb-production.up.railway.app/admin/${userId}`);
+      if(requestedInfo) {
+        dispatch(setAdminInfo(requestedInfo.data));
+      }
+      return {
+        userId,
+        userRole,
+        userDeleted
+      };
+    }
   } catch (error) {
     if (error.response) {
       const errorMessage = error.response.data.error;
-      dispatch(loginFailure(errorMessage));
+      dispatch(adminLoginFailure(errorMessage));
     } else {
-      dispatch(loginFailure(error.message));
+      dispatch(adminLoginFailure(error.message));
     }
+  }
+};
+
+export const getUserInfo = ( id, role) => async (dispatch)=> {
+  try {
+    if( role === "Owner") {
+      const response = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${id}`);
+      console.log(response.data)
+      dispatch(setUserInfo(response.data));
+    }else {
+      const response = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      dispatch(setUserInfo(response.data));
+    }
+  } catch (error) {
+    const errorMessage = error.response.data.error;
+    dispatch(loginFailure(errorMessage));
   }
 };
 
@@ -141,6 +176,9 @@ export const {
   setSitters,
   filterUsersByRole,
   filterUsersByNeighborhood,
+  setUserInfo,
+  setAdminInfo,
+  adminLoginFailure,
 } = adminUsersSlice.actions;
 
 export default adminUsersSlice.reducer;

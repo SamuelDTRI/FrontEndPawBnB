@@ -65,6 +65,11 @@
 	font-size: 12px;
 	text-align: left;
 }
+
+.errorInputContainer {
+	min-height: 18px;
+}
+
 .googleButton{
 	justify-content: right;
 	margin-top: 25px;
@@ -104,4 +109,16 @@
 
 .formulario input[type="radio"] {
 	width: auto;
+}
+
+.errorContainer {
+	margin: 15px auto 0;
+	min-height: 25px;
+}
+
+.error{
+	color: #ba0a0d;
+	font-weight: 600;
+	font-size: 14px;
+	text-align: left;
 }

@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     const dogsisterAsync = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3000/sitters');
+        const { data } = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
         dispatch(addDogsister(data));
       } catch (error) {
         console.error('Error fetching dogsisters:', error);

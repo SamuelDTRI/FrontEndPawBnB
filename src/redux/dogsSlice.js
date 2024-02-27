@@ -6,7 +6,7 @@ export const loadDogsByOwner = createAsyncThunk(
   async (ownerId) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/dogs?ownerId=${ownerId}`
+        `https://backendpawbnb-production.up.railway.app/dogs?ownerId=${ownerId}`
       );
       return data;
     } catch (error) {
@@ -21,7 +21,7 @@ export const createDog = createAsyncThunk(
   async (createdDog) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/dogs",
+        "https://backendpawbnb-production.up.railway.app/dogs",
         createdDog
       );
       return data;
@@ -37,7 +37,7 @@ export const updateDog = createAsyncThunk(
   async ({ dogId, updatedDogData }) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:3000/dogs/${dogId}`,
+        `https://backendpawbnb-production.up.railway.app/dogs/${dogId}`,
         updatedDogData
       );
       return data;
@@ -69,6 +69,7 @@ const dogsSlice = createSlice({
       const dogsByOwner = action.payload.filter(
         (dog) => dog.ownerId === ownerId
       );
+      console.log({dogsByOwner})
       state.dogsList = dogsByOwner;
     });
     builder.addCase(createDog.fulfilled, (state, action) => {

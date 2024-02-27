@@ -17,7 +17,7 @@ const SitterPresentation = ({ infoSitter }) => {
   }
   useEffect(()=>{
     console.log({infoSitter,sitters})
-    console.log({encontrado: sitters.filter((sitter)=>sitter.email == infoSitter.email)[0]})
+    console.log({encontrado: sitters.filter((sitter)=>sitter.id == infoSitter.id)})
   },[])
   return (
     <div className="container">
@@ -47,11 +47,11 @@ const SitterPresentation = ({ infoSitter }) => {
                 <h2>5.0/5.0 ⭐</h2>
                 <p>(9 reseñas)</p>
               </div>
-              <Link to = {`/reservation/${getSitterId()}`}>
+              {/* <Link to = {`/reservation/${getSitterId()}`}>
               <button>
                 Reserva con {infoSitter.name}
               </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

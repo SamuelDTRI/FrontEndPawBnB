@@ -63,8 +63,7 @@ const DashboardSitter = () => {
 
   useEffect(() => {
     currentSitter();
-  }, [dispatch]);
-
+  }, []);
   //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
   return (
@@ -134,7 +133,8 @@ const DashboardSitter = () => {
                     </div>
                   )
                 }
-              </div>)
+              </div>
+              )
             }
           </div>
           <div className="row">
@@ -147,11 +147,11 @@ const DashboardSitter = () => {
           className={`col-md-8 col-sm-12 ms-3 ms-sm-4 sm-my-3 ${styles.formContainer}`}
         >
           {
-            linkActivo === "miGaleria"?(<GallerySitters/>)
-           : linkActivo === "misReservas"? (<SitterReservations/>) 
-            :(<FormInfoSitter/> 
-            // <h2>MI INFORMACION</h2>   
-           )
+             linkActivo === "miGaleria"?(<GallerySitters/>)
+            :linkActivo === "misReservas"? (<SitterReservations/>) 
+            :linkActivo==="miInfo"?(<FormInfoSitter/>)
+            :null
+            // <h2>MI INFORMACION</h2>  
           }
 
         </div>

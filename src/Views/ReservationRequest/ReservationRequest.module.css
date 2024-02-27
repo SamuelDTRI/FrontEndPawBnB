@@ -45,6 +45,7 @@
 	background-color: rgba(128, 128, 128, 0.295);
 } */
 
+
 .options, option{
 	width: 50%;
 	text-align: center;
@@ -103,6 +104,7 @@
 	margin-top: 25px;
 	border-radius: 15px;
 }
+
 
 .formulario button[type="submit"] {
 	margin-top: 25px;

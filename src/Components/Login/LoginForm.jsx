@@ -140,12 +140,14 @@ const LoginForm = () => {
                   name="email"
                   placeholder="example@gmail.com"
                 />
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="email"
+                    component={() => (
+                      <div className={styles.error}>{errors.email}</div>
+                    )}
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="contraseña">Contraseña</label>
@@ -155,12 +157,14 @@ const LoginForm = () => {
                   name="password"
                   placeholder="Tu Contraseña..."
                 />
-                <ErrorMessage
-                  name="password"
-                  component={() => (
-                    <div className={styles.error}>{errors.password}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="password"
+                    component={() => (
+                      <div className={styles.error}>{errors.password}</div>
+                    )}
+                  />
+                </div>
               </div>
               <button type="submit">Iniciar Sesión</button>
               {/* {formularioEnviado && (

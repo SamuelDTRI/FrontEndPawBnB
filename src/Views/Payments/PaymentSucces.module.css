@@ -1,13 +1,45 @@
-/* PaymentSucces.module.css */
 .paymentSuccesContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ajusta según sea necesario */
-  background-color: #e6ffe6; /* Color de fondo claro para contraste */
+  height: 100vh;
+  background-image: url("https://res.cloudinary.com/dlazmxpqm/image/upload/v1707404152/imagesPawBnB/d4urgnpnsgoyxv11rs0b.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.paymentSuccesBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Fondo blanco con opacidad para que se vea la imagen de fondo */
 }
 
 .paymentSuccesText {
-  font-size: 24px; /* Tamaño de fuente más grande para visibilidad */
-  color: #006600; /* Color de texto oscuro para contraste */
+  font-size: 1.5em; /* Tamaño de fuente más grande para visibilidad */
+  color: #000000; /* Color de texto negro */
+  text-align: center; /* Centrar el texto */
+}
+
+.button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ffffff; /* Color de fondo amarillo */
+  color: #000000; /* Color de texto negro */
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #505050; /* Color de fondo más oscuro al pasar el ratón */
 }

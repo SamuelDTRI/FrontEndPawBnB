@@ -31,61 +31,65 @@ const AdminLogin = () => {
         <div>
             <Formik
                 initialValues={{
-                    email: "",
-                    password: "",
+                email: "",
+                password: "",
                 }}
                 validate={(valores) => {
-                    let errores = {};
-                    //Validación Mail
-                    if (!valores.email) {
-                        errores.email = "Por favor ingresa un mail.";
-                    }
-                    // Validación Contraseña (Expresión regular)
-                    if (!valores.password) {
-                        errores.password = "Por favor ingresa una contraseña.";
-                    }
-                    return errores;
+                let errores = {};
+                //Validación Mail
+                if (!valores.email) {
+                    errores.email = "Por favor ingresa un mail.";
+                }
+                // Validación Contraseña (Expresión regular)
+                if (!valores.password) {
+                    errores.password = "Por favor ingresa una contraseña.";
+                }
+                return errores;
                 }}
                 onSubmit={(valores, { resetForm }) => {
-                    handleSubmit(valores);
-                    resetForm();
-                    cambiarFormularioEnviado(true);
-                    setTimeout(() => cambiarFormularioEnviado(false), 5000);
+                handleSubmit(valores);
+                resetForm();
+                cambiarFormularioEnviado(true);
+                setTimeout(() => cambiarFormularioEnviado(false), 5000);
                 }}>
                 {({ errors }) => (
-                    //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+                //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
                     <Form className={styles.formulario}>
                         <div className={styles.container}>
                             <h2>LOG IN</h2>
                             <div>
                                 <label htmlFor="correo">Email</label>
                                 <Field
-                                    type="email"
-                                    id="correo"
-                                    name="email"
-                                    placeholder="example@gmail.com"
+                                type="email"
+                                id="correo"
+                                name="email"
+                                placeholder="example@gmail.com"
                                 />
-                                <ErrorMessage
-                                    name="email"
-                                    component={() => (
+                                <div className={styles.errorInputContainer}>
+                                    <ErrorMessage
+                                        name="email"
+                                        component={() => (
                                         <div className={styles.error}>{errors.email}</div>
-                                    )}
-                                />
+                                        )}
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <label htmlFor="contraseña">Contraseña</label>
                                 <Field
-                                    type="password"
-                                    id="contraseña"
-                                    name="password"
-                                    placeholder="Tu Contraseña..."
+                                type="password"
+                                id="contraseña"
+                                name="password"
+                                placeholder="Tu Contraseña..."
                                 />
-                                <ErrorMessage
+                                <div className={styles.errorInputContainer}>
+                                    <ErrorMessage
                                     name="password"
                                     component={() => (
                                         <div className={styles.error}>{errors.password}</div>
                                     )}
-                                />
+                                    />
+                                </div>
                             </div>
                             <button type="submit">Iniciar Sesión</button>
                             {/* {formularioEnviado && (

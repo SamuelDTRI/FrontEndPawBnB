@@ -59,8 +59,10 @@
 }
 .inputContainer {
 	align-items: center;
+}
 
-
+.errorInputContainer {
+	min-height: 18px;
 }
 
 .formulario input:focus {
@@ -79,12 +81,12 @@
 }
 .googleButton{
 	justify-content: right;
-	margin-top: 25px;
+	margin-top: 15px;
 	border-radius: 15px;
 }
 
 .formulario button[type="submit"] {
-	margin-top: 25px;
+	margin-top: 18px;
 	display: block;
 	background: #ffa726;
 	font-weight: 600;
@@ -107,10 +109,14 @@
 	border-radius: 15px;
 }
 
+.submitMessage {
+	min-height: 16px;
+}
+
 .formulario .exito {
 	text-align: center;
 	font-size: 14px;
-	padding-top: 20px;
+	margin-top: 3px;
 	color: #02a802;
 }
 

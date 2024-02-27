@@ -34,7 +34,6 @@ const Panel = ()=>{
         dispatch(fetchUsers());
     }, []);
 
-
     //Funciones para definir los barrios con mas cuidadores
     const neighborhoodCount = {};
 
@@ -145,38 +144,44 @@ const Panel = ()=>{
         <div className={styles.dataContainer}>
           <div className={styles.chartCard}>
             <h3 className={styles.title}>Usuarios Registrados</h3>
-            <div className={styles.pieChartData}>
-              <div className={styles.pieChartTotal}>
-                <p className={styles.usersTotalTitle}>Total</p>
-                <p className={styles.usersNumber}>{usersList.length}</p>
+            {ownersList.length > 0 || sittersList.length > 0 ? (
+              <div className={styles.pieChartData}>
+                <div className={styles.pieChartTotal}>
+                  <p className={styles.usersTotalTitle}>Total</p>
+                  <p className={styles.usersNumber}>{usersList.length}</p>
+                </div>
+                <div>
+                  <p
+                    className={`d-flex align-items-center ${styles.pieChartLabel}`}>
+                    <span className={`${styles.labelColor}`}></span>
+                    <span className={`me-auto ${styles.labelText}`}>
+                      Dueños
+                    </span>{" "}
+                    <span className={`ms-auto ${styles.labelNumber}`}>
+                      {sittersList.length}
+                    </span>
+                  </p>
+                  <p
+                    className={`d-flex align-items-center ${styles.pieChartLabel}`}>
+                    <span
+                      className={`${styles.labelColor} ${styles.labelColorTwo}`}></span>
+                    <span className={`me-auto ${styles.labelText}`}>
+                      Cuidadores
+                    </span>{" "}
+                    <span className={`ms-auto ${styles.labelNumber}`}>
+                      {sittersList.length}
+                    </span>
+                  </p>
+                </div>
+                <div className={styles.pieChartGraph}>
+                  <Pie data={usersPieChart} options={optionsPieChart}></Pie>
+                </div>
               </div>
-              <div>
-                <p
-                  className={`d-flex align-items-center ${styles.pieChartLabel}`}>
-                  <span className={`${styles.labelColor}`}></span>
-                  <span className={`me-auto ${styles.labelText}`}>
-                    Dueños
-                  </span>{" "}
-                  <span className={`ms-auto ${styles.labelNumber}`}>
-                    {ownersList.length}
-                  </span>
-                </p>
-                <p
-                  className={`d-flex align-items-center ${styles.pieChartLabel}`}>
-                  <span
-                    className={`${styles.labelColor} ${styles.labelColorTwo}`}></span>
-                  <span className={`me-auto ${styles.labelText}`}>
-                    Cuidadores
-                  </span>{" "}
-                  <span className={`ms-auto ${styles.labelNumber}`}>
-                    {sittersList.length}
-                  </span>
-                </p>
+            ) : (
+              <div className={styles.dataErrorMessage}>
+                <h4>Lo sentimos,no hay datos para mostrar.</h4>
               </div>
-              <div className={styles.pieChartGraph}>
-                <Pie data={usersPieChart} options={optionsPieChart}></Pie>
-              </div>
-            </div>
+            )}
           </div>
           <div className={styles.chartCard}>
             <h3 className={styles.title}>Barrios con mas Cuidadores:</h3>
@@ -191,20 +196,32 @@ const Panel = ()=>{
             })}
             </ol> */}
             <div className={styles.barChartGraph}>
-              <Bar
-                data={topFiveNeighborhoodsChart}
-                options={optionsBarChart}></Bar>
+              {sittersList.length > 0 ? (
+                <Bar
+                  data={topFiveNeighborhoodsChart}
+                  options={optionsBarChart}></Bar>
+              ) : (
+                <div className={styles.dataErrorMessage}>
+                  <h4>Lo sentimos,no hay datos para mostrar.</h4>
+                </div>
+              )}
             </div>
           </div>
           <div className={styles.chartCard}>
             <h3 className={styles.title}>Barrios sin Cuidadores</h3>
-            <ul className={styles.neighborhoodList}>
-              <div className={styles.listsColumns}>
-                {neighborhoodsWithoutSitters.map((neighborhood, index) => (
-                  <li key={index}>{neighborhood}</li>
-                ))}
+            {sittersList.length > 0 ? (
+              <ul className={styles.neighborhoodList}>
+                <div className={styles.listsColumns}>
+                  {neighborhoodsWithoutSitters.map((neighborhood, index) => (
+                    <li key={index}>{neighborhood}</li>
+                  ))}
+                </div>
+              </ul>
+            ) : (
+              <div className={styles.dataErrorMessage}>
+                <h4>Lo sentimos,no hay datos para mostrar.</h4>
               </div>
-            </ul>
+            )}
           </div>
         </div>
       </div>

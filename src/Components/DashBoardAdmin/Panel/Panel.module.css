@@ -81,4 +81,14 @@
     column-fill: balance;
     column-rule: dotted 1px #333;
 }
+.dataErrorMessage {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.dataErrorMessage h4 {
+    margin: auto;
+    text-align: center;
+}
 

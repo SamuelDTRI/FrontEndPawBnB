@@ -1,17 +1,24 @@
 /* eslint-disable react/prop-types */
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const SitterPresentation = ({ infoSitter }) => {
+
+  const sitters = useSelector((state)=>state.dogsister.dogsisters)
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
-  const navigate = useNavigate();
-  const reservation = () => {
-    navigate(`/reservation/${infoSitter.id}`);
-  };
-
+  const getSitterId = ()=>{
+    return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
+  }
+  useEffect(()=>{
+    console.log({infoSitter,sitters})
+    console.log({encontrado: sitters.filter((sitter)=>sitter.id == infoSitter.id)})
+  },[])
   return (
     <div className="container">
       <div className="row">
@@ -40,9 +47,11 @@ const SitterPresentation = ({ infoSitter }) => {
                 <h2>5.0/5.0 ⭐</h2>
                 <p>(9 reseñas)</p>
               </div>
-              <button onClick={reservation}>
+              {/* <Link to = {`/reservation/${getSitterId()}`}>
+              <button>
                 Reserva con {infoSitter.name}
               </button>
+              </Link> */}
             </div>
           </div>
         </div>

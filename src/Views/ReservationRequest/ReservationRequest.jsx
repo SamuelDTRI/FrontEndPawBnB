@@ -31,9 +31,9 @@ const ReservationRequest = () => {
     dispatch(loadDogsByOwner(userId));
   };
 
-  const getSitter = () =>{
-    return sitters.filter(s=>s.id == URL[URL.length - 1])[0].id
-  }
+  const getSitter = () => {
+    return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+  };
 
   useEffect(() => {
     // let _sitterId = sitters.filter((sitter) => {
@@ -41,7 +41,11 @@ const ReservationRequest = () => {
     //   console.log({url:sitter})
     //   return sitter.id
     // });
-    console.log({sitterUE:sitters, idURL:URL[URL.length - 1], existSitter: sitters.filter(s=>s.id == URL[URL.length - 1])[0].id});
+    console.log({
+      sitterUE: sitters,
+      idURL: URL[URL.length - 1],
+      existSitter: sitters.filter((s) => s.id == URL[URL.length - 1])[0].id,
+    });
 
     // setSitterId(sitters.filter(s=>s.id == URL[URL.length - 1])[0].id);
   }, []);
@@ -49,7 +53,7 @@ const ReservationRequest = () => {
   useEffect(() => {
     getDogs();
     console.log({ URL });
-    console.log({ sitters, userId, owner, auth, dogs, sitterId:getSitter() });
+    console.log({ sitters, userId, owner, auth, dogs, sitterId: getSitter() });
   }, []);
 
   return (
@@ -67,7 +71,7 @@ const ReservationRequest = () => {
         rating: "4",
       }}
       validate={(valores) => {
-         let errores = {};
+        let errores = {};
 
         //Validacion fecha ingreso
         const currentDate = new Date();
@@ -107,19 +111,19 @@ const ReservationRequest = () => {
       onSubmit={(valores, { resetForm }) => {
         //En caso de no seleccionar un perro significa que quiere el primer perro
         // Después de enviar la reserva
-        console.log({valorOS:valores})
-        if(valores.dogId == "") valores.dogId=dogs[0].id;
+        console.log({ valorOS: valores });
+        if (valores.dogId == "") valores.dogId = dogs[0].id;
         dispatch(sendReservation(valores));
         resetForm();
         console.log("Reserva enviada");
         cambiarFormularioEnviado(true);
         setTimeout(() => cambiarFormularioEnviado(false), 5000);
 
-        // Aquí agregamos la lógica de pago
         const handlePayment = async () => {
           try {
             const response = await axios.post(
-              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
+              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
+              { productPrice: getSitter().rates } // Aquí envías el precio del cuidador seleccionado
             );
             const url = response.data.url;
             window.location.href = url;
@@ -204,7 +208,7 @@ const ReservationRequest = () => {
 
               <div className="col-12">
                 <label htmlFor="note">Notas</label>
-                <Field                  
+                <Field
                   type="textarea"
                   id="note"
                   name="note"

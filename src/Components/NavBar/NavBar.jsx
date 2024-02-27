@@ -13,7 +13,7 @@ const NavBar = () => {
   const userRole = useSelector((state) => state.auth.userRole);
   const adminRole = useSelector((state) => state.adminUsers.adminRole )
   const idUsuarioActual = useSelector((state) => state.auth.userId)
-
+  console.log(adminRole)
   const logOutButtonText= " SALIR";
   const registerButtonText = "REGISTRATE";
   const loginButtonText = "INGRESAR";
@@ -60,11 +60,13 @@ const handleClickMiPerfil=(userRole)=>{
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (
             <div className="d-flex col-12">
-              <button
-                className={`col-4 ${style.BtMiPerfil}`}
-                onClick={() => handleClickMiPerfil(userRole)}>
-                Mi perfil
-              </button>
+              {userRole !== "Admin" && (
+                <button
+                  className={`col-4 ${style.BtMiPerfil}`}
+                  onClick={() => handleClickMiPerfil(userRole)}>
+                  Mi perfil
+                </button>
+              )}
               <button
                 className={`btn border-warning border-2 text-warning fw-bold col-4 ${style.BtSalir}`}
                 onClick={handleSignOut}>

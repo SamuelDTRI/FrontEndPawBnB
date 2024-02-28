@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   surName: "",
   phone: "",
+  password: "",
   address: "",
   neighborhood: "",
   city: "",
@@ -41,6 +42,7 @@ export const sitterSlice = createSlice({
         surName,
         email,
         phone,
+        password,
         dateOfBirth,
         rates,
         city,
@@ -61,6 +63,7 @@ export const sitterSlice = createSlice({
       state.description = description;
       state.rates = rates;
       state.email = email;
+      state.password = password;
       state.photoProfile = photoProfile;
       state.photos = photos;
     },

@@ -20,7 +20,7 @@ const Home = () => {
     const dogsisterAsync = async () => {
       try {
         const { data } = await axios.get("https://backendpawbnb-production.up.railway.app/sitters");
-        const dogSittersNotNull = data.filter(dogSitter => dogSitter.neighborhood != null);
+        const dogSittersNotNull = data.filter(dogSitter => dogSitter.neighborhood != null && dogSitter.deleted === false);
         dispatch(addDogsister(dogSittersNotNull));
         setEmptyState(false);
       } catch (error) {

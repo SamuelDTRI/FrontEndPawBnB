@@ -3,18 +3,7 @@ import { Link } from "react-router-dom";
 import { ContainerCard } from "./card.styled";
 import axios from "axios";
 
-const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
-  const handlePayment = async () => {
-    try {
-      const response = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
-      );
-      const url = response.data.url;
-      window.location.href = url;
-    } catch (error) {
-      console.error("Error al realizar el pago: ", error);
-    }
-  };
+const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
 
   return (
     <ContainerCard>
@@ -30,7 +19,8 @@ const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
           </p>
         </div>
         <div className="infoReview">
-          <p>{rating}</p>
+          <p className="star">{rating}</p>
+          <p className="review">({review})</p>
         </div>
         <div className="infoBtn">
           <Link to = {`/reservation/${id}`}>

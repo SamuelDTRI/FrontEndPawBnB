@@ -32,28 +32,18 @@ const ReservationRequest = () => {
   };
 
   const getSitter = () => {
-    return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+    //return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+
+    return URL[URL.length - 1];
+
   };
 
-  useEffect(() => {
-    // let _sitterId = sitters.filter((sitter) => {
-    //   // mapea los sitters
-    //   console.log({url:sitter})
-    //   return sitter.id
-    // });
-    console.log({
-      sitterUE: sitters,
-      idURL: URL[URL.length - 1],
-      existSitter: sitters.filter((s) => s.id == URL[URL.length - 1])[0].id,
-    });
-
-    // setSitterId(sitters.filter(s=>s.id == URL[URL.length - 1])[0].id);
-  }, []);
+ 
 
   useEffect(() => {
     getDogs();
     console.log({ URL });
-    console.log({ sitters, userId, owner, auth, dogs, sitterId: getSitter() });
+    console.log({ sitters, userId, owner, auth, dogs, sitterId: getSitter() },);
   }, []);
 
   return (
@@ -122,7 +112,8 @@ const ReservationRequest = () => {
         const handlePayment = async () => {
           try {
             const response = await axios.post(
-              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
+             // "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
+              "https://localhost:3000/payment/create-checkout-session",
               { productPrice: getSitter().rates } // Aquí envías el precio del cuidador seleccionado
             );
             const url = response.data.url;
@@ -133,7 +124,7 @@ const ReservationRequest = () => {
         };
 
         // Llamamos a la función de pago
-        handlePayment();
+        //handlePayment();
       }}
     >
       {({ errors }) => (

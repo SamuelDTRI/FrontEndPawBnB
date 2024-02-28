@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 const ComoFunciona = () => {
   const navigate = useNavigate();
   const userRole = useSelector((state) => state.auth.userRole);
+  
 
   useEffect(() => {
     window.scrollTo(0, 0);

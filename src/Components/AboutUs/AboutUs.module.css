@@ -20,7 +20,7 @@
     padding: 20px;
     width: 50%;
     border-radius: 15px;
-    margin-left: 10%;
+    margin-left: 25%;
     color: aliceblue;
 }
 
@@ -32,9 +32,9 @@
     align-items: center;
     margin-top: 50px;
     margin-bottom: 20px;
-    margin-left: 40%;
+    margin-left: 25%;
     text-align: center;
-    background-color: rgba(0, 110, 255, 0.562);
+    background-color: #7B61FF;
     padding: 20px;
     width: 50%;
     border-radius: 15px;
@@ -48,7 +48,7 @@
     border-radius: 15px;
     margin-top: 50px;
     margin-bottom: 20px;
-    margin-left: 10%;
+    margin-left: 25%;
     padding: 20px;
     color: aliceblue;
 }
@@ -109,6 +109,7 @@
 
 .divFundadores{
     margin-top: 100px;
+    margin-bottom: 70px;
 }
 
 .tituloFundadores{
@@ -123,5 +124,9 @@
 .containerOpera{
     width: 35%;
     margin-left: 32.5%;
-    margin-top: 10%;
+}
+
+.logo{
+    width: 25%;
+    margin-top: 12%;
 }

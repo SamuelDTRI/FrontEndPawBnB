@@ -29,7 +29,7 @@ const Formulario = (text, role) => {
   const navigate = useNavigate()
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath)
+  
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
 
@@ -42,6 +42,7 @@ const Formulario = (text, role) => {
   };
   useEffect(() => {
     if (googleUser && googleUser.providerData) {
+      // console.log(googleUser)
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
@@ -51,7 +52,7 @@ const Formulario = (text, role) => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
@@ -66,7 +67,7 @@ const Formulario = (text, role) => {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
@@ -181,9 +182,21 @@ const Formulario = (text, role) => {
         //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
         <Form className={styles.formulario}>
           <h2>{text.text}</h2>
+          <div className={styles.googleButton}>
+            {!googleUser && (
+              <GoogleButton
+                className="googleButton"
+                label="Regístrate con Google"
+                onClick={handleGoogleSignIn}
+              />
+            )}
+          </div>
           <div className={styles.container}>
             <div className={`col-12 ${styles.inputContainer}`}>
-              `<label htmlFor="name">Nombre*</label>
+              `
+              <label htmlFor="name">
+                <span>Nombre*</span>
+              </label>
               <Field
                 type="text"
                 id="name"
@@ -200,7 +213,9 @@ const Formulario = (text, role) => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="surName">Apellido*</label>
+              <label htmlFor="surName">
+                <span>Apellido*</span>
+              </label>
               <Field
                 type="text"
                 id="surName"
@@ -218,7 +233,9 @@ const Formulario = (text, role) => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="email">Email*</label>
+              <label htmlFor="email">
+                <span>Email*</span>
+              </label>
               <Field
                 id="email"
                 name="email"
@@ -234,7 +251,9 @@ const Formulario = (text, role) => {
                 />
               </div>
               <div className="col-12">
-                <label htmlFor="phone">Telefono*</label>
+                <label htmlFor="phone">
+                  <span>Telefono*</span>
+                </label>
                 <Field
                   type="text"
                   id="phone"
@@ -253,7 +272,9 @@ const Formulario = (text, role) => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="password">Contraseña*</label>
+              <label htmlFor="password">
+                <span>Contraseña*</span>
+              </label>
               <Field
                 type="password"
                 id="password"
@@ -270,7 +291,9 @@ const Formulario = (text, role) => {
               </div>
             </div>
             <div className="col-12">
-              <label htmlFor="confirmPassword">Repetir Contraseña*</label>
+              <label htmlFor="confirmPassword">
+                <span>Repetir Contraseña*</span>
+              </label>
               <Field
                 type="password"
                 id="confirmPassword"
@@ -290,15 +313,6 @@ const Formulario = (text, role) => {
             <div className={styles.submitMessage}>
               {formularioEnviado && (
                 <p className={styles.exito}>Formulario enviado con exito!</p>
-              )}
-            </div>
-            <div className={styles.googleButton}>
-              {!googleUser && (
-                <GoogleButton
-                  className="googleButton"
-                  label="Regístrate con Google"
-                  onClick={handleGoogleSignIn}
-                />
               )}
             </div>
           </div>

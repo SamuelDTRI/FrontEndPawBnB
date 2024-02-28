@@ -5,12 +5,20 @@
 }
 
 /* ESTILOS EN CASO DE ESTAR EN PERFIL CON FOTO */
+.notification {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
 
 .imgProfileContainer {
     position: relative;
     padding-top: 30px;
     padding-left: 19px;
 }
+
 
 /* ESTILOS EN CASO DE ESTAR EN LA PERFIL SIN FOTO */
 
@@ -45,6 +53,15 @@
     width: 100%;
     height: 0;
     padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.imageProfileDos {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 20px;
+    margin-top: 10px;
     overflow: hidden;
 }
 

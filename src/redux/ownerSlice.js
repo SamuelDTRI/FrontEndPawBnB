@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Crear una acción asíncrona para actualizar el propietario
+
 export const updateOwner = createAsyncThunk(
   "owner/updateOwner",
   async (updatedOwner, thunkAPI) => {

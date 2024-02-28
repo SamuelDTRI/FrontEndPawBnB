@@ -28,7 +28,6 @@ const Panel = ()=>{
     const usersList = useSelector((state)=>state.adminUsers.usersList)
     const ownersList = useSelector((state) => state.adminUsers.owners);
     const sittersList = useSelector((state) => state.adminUsers.sitters);
-
     //generamos las lista al cargar el componente
     useEffect(() => {
         dispatch(fetchUsers());
@@ -40,12 +39,12 @@ const Panel = ()=>{
     // Contar cuidadores por barrio
     usersList.forEach((user) => {
         const { neighborhood, role } = user;
-        if (role === "DogSitter") {//se podría usar sittersList también
-                if (neighborhoodCount[neighborhood]) {
-                neighborhoodCount[neighborhood]++;
-            } else {
+        if (role === "DogSitter" && neighborhood !== null) {//se podría usar sittersList también
+          if (neighborhoodCount[neighborhood]) {
+            neighborhoodCount[neighborhood]++;
+          } else {
             neighborhoodCount[neighborhood] = 1;
-            }
+          }
         }
     });
     // Convertir objeto en array de pares clave-valor
@@ -169,7 +168,7 @@ const Panel = ()=>{
                       Cuidadores
                     </span>{" "}
                     <span className={`ms-auto ${styles.labelNumber}`}>
-                      {sittersList.length}
+                      {ownersList.length}
                     </span>
                   </p>
                 </div>

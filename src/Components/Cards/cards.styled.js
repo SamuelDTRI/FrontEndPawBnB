@@ -5,7 +5,7 @@ export const ContainerCards = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: start;
     flex-direction:column;
     gap: 20px;

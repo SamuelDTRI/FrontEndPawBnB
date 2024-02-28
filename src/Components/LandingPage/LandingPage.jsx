@@ -50,7 +50,7 @@ const LandingPage=()=>{
                <div className={"conteiner mt-5 custom-margin"}>
                 <div className="mx-5">
                 <div className="row">
-                    <div className="col-12 col-md-6 p-2">
+                    <div className={`col-12 col-md-6 p-2 ${style.contenedorTituloSubtitulo}`}>
                         <div className={style.titulo}>
                             RESERVA UN CUIDADOR DE CONFIANZA CERCA DE TI
                         </div>
@@ -59,12 +59,12 @@ const LandingPage=()=>{
                         Permitanos brindarle la hospitalidad que se merece a través de nuestra red nacional
                         de cuidadores! 
                         </div>    
-                        <div className={style.contenedorInputs}>
+                        {/* <div className={style.contenedorInputs}>
                            <SearchBar/> 
-                        </div>
+                        </div> */}
                     </div> 
                                     
-                    <div className="col-12 col-md-6 ">
+                    <div className="col-12 col-md-6">
                          <img src={BoxerPhoto} alt="perrito" className={style.imagenBoxer}/> 
                         </div>
                     </div>            

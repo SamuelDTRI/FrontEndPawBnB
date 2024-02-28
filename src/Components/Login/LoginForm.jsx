@@ -32,9 +32,7 @@ const LoginForm = () => {
   };
   useEffect(()=> {
     if (googleUser && googleUser.reloadUserInfo) {
-      // console.log(googleUser.reloadUserInfo.email)
       const email = googleUser.reloadUserInfo.email;
-      // console.log(googleUser.reloadUserInfo.email);
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario

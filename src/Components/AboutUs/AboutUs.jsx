@@ -24,7 +24,6 @@ const AboutUs = () => {
             sus dueños pueden disfrutar de la tranquilidad de saber que están en buenas manos.</p>
       </div>
       
-
       <div className={style.sectionVision}>  
         <h2>Visión:</h2>
         <p>Nuestra visión es ser la principal plataforma en línea para el cuidado de mascotas, 
@@ -80,10 +79,10 @@ const AboutUs = () => {
             <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/c0twdtewqthindsesmqw.jpg" alt="sebas" className={style.img} />
             <p className={style.nombres}>Sebastián Rodríguez</p>
           </div>
-          <div className={style.fundador}>
+          {/* <div className={style.fundador}>
             <img src={NoPhoto} alt="" className={style.img} />
             <p className={style.nombres}>Walter</p>
-          </div>
+          </div> */}
         </div>
       </div>
        <img className={style.imgDog} src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1708617906/PawBnB_Gallery/dc9dj4aaen4p66fjcfs3.jpg" alt="" />

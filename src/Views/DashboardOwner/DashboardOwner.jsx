@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import OwnerReservations from "../../Components/OwnerReservations/OwnerReservations"
+import OwnerReservations from "../../Components/OwnerReservations/OwnerReservations";
 import LinksDashboardOwner from "../../Components/LinksDashboardOwner/LinksDashboardOwner";
 import FormDashboardDueño from "../../Components/FormDashboardDueño/FormDashboardDueño";
 import FormAddDog from "../../Components/FormAddDog/FormAddDog";
-
 
 import styles from "./DashboardOwner.module.css";
 
 const DashboardOwner = () => {
   const [activeLink, setActiveLink] = useState("miInfo");
-  const [formType, setFormType] = useState("edit");
+  const [formType, setFormType] = useState("add");
   const dispatch = useDispatch();
 
   const ownerInfo = useSelector((state) => state.owner);
@@ -32,8 +31,8 @@ const DashboardOwner = () => {
       case "miPerro":
         return <FormAddDog formType={formType} />;
       case "misReservas":
-        return <OwnerReservations/>;
-        
+        return <OwnerReservations />;
+
       case "Favoritos":
         return {
           /* <Favoritos />; */

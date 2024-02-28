@@ -18,7 +18,9 @@ const FormDashboardDueño = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/owners/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`
+      );
       dispatch(infoOwner(data));
     } catch (error) {
       console.error(error.message);
@@ -59,6 +61,9 @@ const FormDashboardDueño = () => {
       resetForm();
       setFormSent(true);
       setForceUpdate((prev) => !prev);
+      setTimeout(() => {
+        setFormSent(false);
+      }, 3000);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -126,23 +131,7 @@ const FormDashboardDueño = () => {
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-lg-6 col-md-12">
-                <label htmlFor="email">Email</label>
-                <Field
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder={ownerInfo.email}
-                />
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
-                />
-              </div>
-              <div className="col-lg-6 col-md-12">
+            {/*  <div className="col-lg-6 col-md-12">
                 <label htmlFor="password">Contraseña</label>
                 <Field
                   type="password"
@@ -156,13 +145,12 @@ const FormDashboardDueño = () => {
                     <div className={styles.error}>{errors.password}</div>
                   )}
                 />
-              </div>
-            </div>
+              </div> */}
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="phone">Telefono</label>
                 <Field
-                  type="number"
+                  type="text"
                   id="phone"
                   name="phone"
                   placeholder={ownerInfo.phone}
@@ -186,6 +174,24 @@ const FormDashboardDueño = () => {
                   name="dateOfBirth"
                   component={() => (
                     <div className={styles.error}>{errors.dateOfBirth}</div>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-12 col-md-12">
+                <label htmlFor="email">Email</label>
+                <Field
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder={ownerInfo.email}
+                />
+                <ErrorMessage
+                  name="email"
+                  component={() => (
+                    <div className={styles.error}>{errors.email}</div>
                   )}
                 />
               </div>
@@ -252,7 +258,7 @@ const FormDashboardDueño = () => {
 
             <button type="submit">GUARDAR CAMBIOS</button>
             {formSent && (
-              <p className={styles.success}>Cambios guardados con exito!</p>
+              <p className={styles.success}>¡Cambios guardados con exito!</p>
             )}
           </Form>
         )}

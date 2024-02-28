@@ -69,7 +69,6 @@ const dogsSlice = createSlice({
       const dogsByOwner = action.payload.filter(
         (dog) => dog.ownerId === ownerId
       );
-      console.log({dogsByOwner})
       state.dogsList = dogsByOwner;
     });
     builder.addCase(createDog.fulfilled, (state, action) => {

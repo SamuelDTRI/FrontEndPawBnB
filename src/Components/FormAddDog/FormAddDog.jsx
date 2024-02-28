@@ -101,6 +101,9 @@ const FormAddDog = ({ formType }) => {
         );
         await resetForm();
         setFormSent(true);
+        setTimeout(() => {
+          setFormSent(false);
+        }, 3000);
       }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
@@ -115,12 +118,11 @@ const FormAddDog = ({ formType }) => {
     <>
       <Formik
         initialValues={initialValues}
-        // eslint-disable-next-line no-unused-vars
         validate={(values) => {
           let errors = {};
-          /* if (!values.name) {
+          if (!values.name) {
             errors.name = "Por favor ingresa el nombre de tu perro.";
-          } else  if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
             errors.name = "Ingresa solo letras y no más de 20 caracteres.";
           }
           if (!values.breed) {
@@ -140,16 +142,16 @@ const FormAddDog = ({ formType }) => {
 
           if (!values.description) {
             errors.description =
-              "Por favor ingresa breve descripción de tu perro.";
+              "Por favor ingresa breve descripcion de tu perro.";
           }
 
           if (!values.feedingInstructions) {
             errors.feedingInstruccions =
-              "Por favor proporciona las instrucciones de alimenticios de tu perro.";
+              "Por favor proporciona las instrucciones de alimentacios de tu perro.";
           }
 
           if (!values.vaccination) {
-            errors.vaccination = "Por favor selecciona una opción";
+            errors.vaccination = "Por favor selecciona una opcion";
           }
 
           if (!values.allergies) {
@@ -167,14 +169,15 @@ const FormAddDog = ({ formType }) => {
           }
           if (!values.behavior) {
             errors.behavior =
-              "Por favor ingresa una descripción del comportamiento de tu perro.";
+              "Por favor ingresa una descripcion del comportamiento de tu perro.";
           }
- */
+
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
           handleFormSubmit(values, dispatch, resetForm, setFormSent);
-        }}>
+        }}
+      >
         {({ errors }) => (
           <Form className={`container ${styles.form}`}>
             <div className="d-flex col-12">
@@ -187,16 +190,20 @@ const FormAddDog = ({ formType }) => {
                       ? styles.selectedBadge
                       : ""
                   }`}
-                  type="button">
+                  type="button"
+                >
                   {dog.name}
                 </button>
               ))}
-              <button
-                onClick={() => handleAddNewDogClick()}
-                className={styles.badge}
-                type="button">
-                Agregar Nuevo
-              </button>
+              {dogsList.length > 0 && (
+                <button
+                  onClick={() => handleAddNewDogClick()}
+                  className={styles.badge}
+                  type="button"
+                >
+                  Agregar Nuevo
+                </button>
+              )}
             </div>
             <h2>INFORMACION DE MI PERRO</h2>
             <div className="row">
@@ -260,9 +267,7 @@ const FormAddDog = ({ formType }) => {
                 <Field name="gender" as="select" className="">
                   <option value="">
                     {currentDog?.gender
-                      ? currentDog.gender === "male"
-                        ? "Macho"
-                        : "Hembra"
+                      ? currentDog.gender
                       : "Selecciona su genero"}
                   </option>
                   <option value="male">Macho</option>
@@ -278,7 +283,7 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="description">
-                Cuéntanos un poco sobre el/ella
+                Cuentanos un poco sobre el/ella
               </label>
               <Field
                 component="textarea"
@@ -300,7 +305,7 @@ const FormAddDog = ({ formType }) => {
             <h3>INFORMACION ADICIONAL</h3>
             <div className="col-12">
               <label htmlFor="feedingInstructions">
-                Instrucciones de alimentación
+                Instrucciones de alimentacion
               </label>
               <Field
                 component="textarea"
@@ -331,7 +336,7 @@ const FormAddDog = ({ formType }) => {
                 placeholder={
                   currentDog?.allergies
                     ? currentDog.allergies
-                    : "¿Tiene alergias o restricciones de algún tipo?"
+                    : "¿Tiene alergias o restricciones de algun tipo?"
                 }
               />
               <ErrorMessage
@@ -350,7 +355,7 @@ const FormAddDog = ({ formType }) => {
                 placeholder={
                   currentDog?.medication
                     ? currentDog.medication
-                    : "¿Toma alguna medicación?"
+                    : "¿Toma alguna medicacion?"
                 }
               />
               <ErrorMessage
@@ -362,7 +367,7 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="medicalCondition">
-                Condición medica (Pasada o presente)
+                Condicion medica (Pasada o presente)
               </label>
               <Field
                 component="textarea"
@@ -383,13 +388,13 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="vaccination">
-                Calendario de vacunación al dia
+                Calendario de vacunacion al dia
               </label>
               <Field name="vaccination" as="select" className="">
                 <option value="">
                   {currentDog?.vaccination
                     ? currentDog.vaccination
-                    : "Selecciona una opción"}
+                    : "Selecciona una opcion"}
                 </option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -420,7 +425,9 @@ const FormAddDog = ({ formType }) => {
                 )}
               />
             </div>
-            <button type="submit">AGREGAR PERRO</button>
+            <button type="submit">
+              {formType === "edit" ? "GUARDAR CAMBIOS" : "AGREGAR PERRO"}
+            </button>
             {formSent && (
               <p className={styles.success}>Perrito agregado con exito!</p>
             )}

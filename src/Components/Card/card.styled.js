@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const ContainerCard = styled.div`
     display: flex;
     flex-direction: column;
-    width: 250px;
+    flex-grow: 1;
+    width: 230px;
+    max-width: 290px;
     height: 450px;
     border-radius: 15px;
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);

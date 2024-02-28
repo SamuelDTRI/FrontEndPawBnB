@@ -29,14 +29,16 @@ const DashboardOwner = () => {
 
   const currentOwner = async () => { 
     try {
-      const { data } = await axios.get(`http://localhost:3000/owners/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`
+      );
       dispatch(infoOwner(data));
     } catch (error) {
       console.error("Error al obtener los datos del cuidador:", error);
     }
   };
 
-  //ESTA FUNCION CONVIERTE LA IMAGEN EN CODIGO PARA QUE SE MANDE AL BACK Y EL BACK 
+  //ESTA FUNCIÓN CONVIERTE LA IMAGEN EN CÓDIGO PARA QUE SE MANDE AL BACK Y EL BACK 
   //A CLOUDINARY Y CLOUDINARY TE DEVUELVA UNA URL
   const previewFiles = (file) => { 
     const reader = new FileReader(); 
@@ -47,14 +49,14 @@ const DashboardOwner = () => {
     // console.log(imgProfile);
   };
 
-  //LE ENVIA LA FOTO A LA FUNCION PREVIEWFILES
+  //LE ENVÍA LA FOTO A LA FUNCIÓN PREVIEWFILES
   const handleChange = (event) => {
     const file = event.target.files[0];
     setFile(file);
     previewFiles(file);
   };
 
-  //LE ENVIA EL CODIGO QUE TE DEVUELVE EL READER PARA ENVIARLO AL BACK
+  //LE ENVÍA EL CÓDIGO QUE TE DEVUELVE EL READER PARA ENVIARLO AL BACK
   const handleSubmit = async (event) => {
     if(!imgProfile) {
       alert("Debes Seleccionar Una Imagen.");
@@ -63,9 +65,12 @@ const DashboardOwner = () => {
     event.preventDefault();
 
     try {
-      const result = await axios.put(`http://localhost:3000/owners/${id}`, {
-        photo: imgProfile,
-      });
+      const result = await axios.put(
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`,
+        {
+          photo: imgProfile,
+        }
+      );
       console.log(result.data);
       setUploadSuccess(true);
       setTimeout(() => {

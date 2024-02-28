@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sitterInfo } from "../../redux/sitterSlice"; 
+import Swal from 'sweetalert2';
 
 const GallerySitters = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const GallerySitters = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   
-
+  
   const currentSitter = async () => {
     try {
       const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
@@ -44,38 +45,74 @@ const GallerySitters = () => {
 
   const handleFormSubmit = async () => {
     if(!imgGallery) {
-      alert("Debes Seleccionar Una Imagen.");
+      Swal.fire({
+        title: "Debes seleccionar una imagen.",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+        }
+      });
       return;
     }
-    
     try {
-      const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
+      await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
         photos: imgGallery,
       });
-      console.log(result.data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Tu imagen se ha subido correctamente!",
+        showConfirmButton: false,
+        timer: 3000
+      });
+      setImgGallery(null);
       setUploadSuccess(true);
       currentSitter();
-      navigate(`../dashboardSitter/${id}`)
-      setTimeout(() => {
-        setUploadSuccess(false)
-      }, 5000);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleDeletePhoto = async (index) => {
-    try {
-      await axios.delete(`https://backendpawbnb-production.up.railway.app/sitters/${id}/photos/${index}`);
-      currentSitter(); //actualizamos la galeria despues de la eliminacion
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás recuperar esta imagen después.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios.delete(`https://backendpawbnb-production.up.railway.app/sitters/${id}/photos/${index}`);
+          const updatedPhotos = infoSitter.photos.filter((_, i) => i !== index);
+          dispatch(sitterInfo({...infoSitter, photos: updatedPhotos }));
+          
+          Swal.fire({
+            title: "Eliminado",
+            text: "Tu imagen ha sido eliminada correctamente.",
+            icon: "success"
+          });
+        } catch (error) {
+          console.error("Error al eliminar la foto:", error)
+        }
+        
+      } 
 
-  // useEffect(() => {
-  //   currentSitter();
-  // }, [dispatch]);
+    });
+  };
 
   return (
     <div className={styles.galleryContainer}>
@@ -85,6 +122,8 @@ const GallerySitters = () => {
 
       <div className={styles.formContainer}>
         <div>
+         
+          {!imgGallery ? (
           <div className={styles.iconContainer}>
             <label htmlFor="fileInputs">
               <i className="bi bi-cloud-upload"></i>
@@ -93,6 +132,11 @@ const GallerySitters = () => {
               <p>SELECCIONA UNA IMAGEN</p>
             </div>
           </div>
+          ) : (
+            <div className={styles.imgContainer}>
+             <img src={imgGallery} alt="Aqui se vera tu imagen" className={styles.imgGallery}/>
+             </div>
+          )}
 
           <div className={styles.uploadContainer}>
             <Formik
@@ -115,6 +159,7 @@ const GallerySitters = () => {
                   accept="image/png, image/jpeg, image/jpg, image/jfif"
                   style={{ display: "none" }}
                 />
+                {!imgGallery ? (
                 <button 
                 type="button" 
                 className={styles.btnSubmit} 
@@ -124,6 +169,28 @@ const GallerySitters = () => {
                 }}>
                   SUBIR IMAGEN
                 </button>
+                ) : (
+                <>
+                <button 
+                type="button" 
+                className={styles.btnSubmit} 
+                onClick={() => {
+                  setIsSubmit(true);
+                  handleFormSubmit()
+                }}>
+                  SUBIR IMAGEN
+                </button> 
+
+                <button
+                className={styles.cancelatBtn}
+                onClick={() => {
+                  setImgGallery(null);
+                  setFile(null);
+                }}>
+                  CANCELAR
+                </button>
+                </>
+                )}
               </Form>
             )}
             </Formik>
@@ -131,12 +198,8 @@ const GallerySitters = () => {
         </div>
       </div>
 
-      {uploadSuccess && (
-        <div className={styles.notification}>La imagen se ha subido con éxito</div>
-      )}
-
         <div className={styles.gallery}>
-          <img src={imgGallery} alt="Aqui se vera tu imagen" />
+          {/* <img src={imgGallery} alt="Aqui se vera tu imagen" /> */}
           {infoSitter.photos?.map((photo, index) => (
             <div key={index} className={styles.photoContainer}>
               <img src={photo.url} alt={`Photo ${index}`} />

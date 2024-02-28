@@ -1,6 +1,6 @@
 import style from "./AboutUs.module.css";
 import NoPhoto from "../../Components/imagenes/fundadores/NoPhotoProfile.webp";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const AboutUs = () => {
@@ -10,7 +10,7 @@ const AboutUs = () => {
   return (
     <>
       <div className={style.containerTitulo}>
-        <h1 className={style.titulo}>Quienes Somos</h1>
+        <h1 className={style.titulo}>Quiénes Somos</h1>
       </div>
       <img className={style.imgDog} src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1708991497/PawBnB_Gallery/vqjbe4uekquexofask3b.jpg" alt="" />
 
@@ -53,32 +53,32 @@ const AboutUs = () => {
         <h1 className={style.tituloFundadores}>Fundadores:</h1>
         <div className={style.fundadoresContainer}>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/sevlb6sqlx7vu3ywj5z9.jpg" alt="Cande" className={style.img} />
             <p className={style.nombres}>Candela Dalmasso</p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100943/usnbqax5vuucspa1sxh4.jpg" alt="jorge" className={style.img} />
             <p className={style.nombres}>Jorge Osterrielt</p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
-            <p className={style.nombres}>Jonatan Rodriguez </p>
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/kfxgpxznasctbjwvgcgw.jpg" alt="jonatan" className={style.img} />
+            <p className={style.nombres}>Jonatan Rodríguez </p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
-            <p className={style.nombres}>Larizza Leon</p>
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/r3hbgtwy69gvj2xxv647.jpg" alt="lari" className={style.img} />
+            <p className={style.nombres}>Larizza León</p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
-            <p className={style.nombres}>Nicolas Soto</p>
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/s8uwzl9ocqmcdsykfgbq.jpg" alt="nico" className={style.img} />
+            <p className={style.nombres}>Nicolás Soto</p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
-            <p className={style.nombres}>Samuel Diaz</p>
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/yrahfbnrt4lri0rrvwyg.jpg" alt="samu" className={style.img} />
+            <p className={style.nombres}>Samuel Díaz</p>
           </div>
           <div className={style.fundador}>
-            <img src={NoPhoto} alt="" className={style.img} />
-            <p className={style.nombres}>Sebastian Rodirguez</p>
+            <img src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709100942/c0twdtewqthindsesmqw.jpg" alt="sebas" className={style.img} />
+            <p className={style.nombres}>Sebastián Rodríguez</p>
           </div>
           <div className={style.fundador}>
             <img src={NoPhoto} alt="" className={style.img} />
@@ -88,12 +88,13 @@ const AboutUs = () => {
       </div>
        <img className={style.imgDog} src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1708617906/PawBnB_Gallery/dc9dj4aaen4p66fjcfs3.jpg" alt="" />
       
-      <div className={style.containerOpera}>
+      {/* <div className={style.containerOpera}>
         <h3 className={style.ache}>PawBnb opera en la mayoría de las localidades de Buenos Aires, Argentina.</h3>
         <Link to={"/localidades"}>
           <button className={style.button}>Ver Localidades</button>
         </Link>
-      </div>
+      </div> */}
+      <img className={style.logo} src="https://res.cloudinary.com/dhec5eqoe/image/upload/v1709095507/cjjwajrzyzme3oekbyos.png" alt="pawbnb" />
     </>
   )
 };

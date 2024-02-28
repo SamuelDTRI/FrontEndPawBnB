@@ -61,7 +61,14 @@ const handleClickMiPerfil=(userRole)=>{
         </div>
         )}
 
-        <button onClick={() => navigate("Home")}>HOME</button>
+        {/* BLOQUEAR BOTON DE HOME PARA CUIDADORES */}
+        {userRole === 'Owner' &&
+          <button onClick={() => navigate("Home")}>HOME</button>
+        }
+        {!userRole &&
+          <button onClick={() => navigate("Home")}>HOME</button>
+        }
+
         {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (

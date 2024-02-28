@@ -41,6 +41,7 @@ const filtradasPorStatus = ()=>{
       let solicitudes = sitterReserves.filter((reserva)=>reserva.status==="pendiente");
       let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="aprobado" 
       && new Date(reserva.dateCheckIn)>today);
+      console.log("si entre", proximasReservas) 
       let reservasActivas = sitterReserves.filter((reserva)=>reserva.status === "aprobado"
       && new Date(reserva.dateCheckIn)<today && new Date(reserva.dateCheckOut)>today)
       let reservasCompletadas = sitterReserves.filter((reserva)=>reserva.status==="completado")
@@ -71,6 +72,10 @@ useEffect(()=>{
    }
    fetchBookings();
    filtradasPorStatus()
+   console.log("solicitudes pendientes : ", solicitudesPendientes)
+   console.log("proximas reservas : ", proximasReservas)
+   console.log("reservas activas : ", reservasActivas)
+   console.log("reservas completadas : ", reservasCompletadas)
 },[actualizar]);
 
 const handleVerSolicitud=(id)=>{
@@ -90,7 +95,6 @@ const handleVerSolicitud=(id)=>{
            </div>
            <div className="mb-5">
            <h2>MIS RESERVAS</h2>
-
            </div>
            
             
@@ -102,13 +106,14 @@ const handleVerSolicitud=(id)=>{
             {/* // mostrarReserva.solicitudesDeReserva &&  */}
             <div className={styles.contenedorSolicitudes}>
             { 
-            solicitudesPendientes!=null && solicitudesPendientes.map((solicitudIndiv,index)=>
+            solicitudesPendientes !=null && solicitudesPendientes.map((solicitudIndiv,index)=>
             (
                 <div className={`row ${styles.contenedorFechas}`}>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(solicitudIndiv.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(solicitudIndiv.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cliente: {solicitudIndiv.Owner.name}</div>
-                <button onClick={()=>handleVerSolicitud(solicitudIndiv.id)}>VER SOLICITUD</button>
+                <button onClick={()=>handleVerSolicitud(solicitudIndiv.id)} className={styles.button1}
+                >VER SOLICITUD</button>
                 </div> 
                 ))   
                }         
@@ -128,7 +133,8 @@ const handleVerSolicitud=(id)=>{
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(proxReservaInd.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(proxReservaInd.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador: {proxReservaInd.Owner.name}</div>
-                <button onClick={()=>handleVerSolicitud(proxReservaInd.id)}>Ver detalles</button>
+                <button onClick={()=>handleVerSolicitud(proxReservaInd.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
                ))
             } 
@@ -149,7 +155,8 @@ const handleVerSolicitud=(id)=>{
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(reservaActiva.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(reservaActiva.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador:{reservaActiva.Owner.name}</div>
-                <button onClick={()=>handleVerSolicitud(reservaActiva.id)}>Ver detalles</button>
+                <button onClick={()=>handleVerSolicitud(reservaActiva.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
             ))
          }
@@ -169,7 +176,8 @@ const handleVerSolicitud=(id)=>{
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(reservCompletadaInd.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(reservCompletadaInd.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador: {reservCompletadaInd.Owner.name}</div>
-                <button onClick={()=>handleVerSolicitud(reservCompletadaInd.id)}>Ver detalles</button>
+                <button onClick={()=>handleVerSolicitud(reservCompletadaInd.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
                ))     
             }

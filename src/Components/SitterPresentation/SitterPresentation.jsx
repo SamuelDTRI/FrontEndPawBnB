@@ -16,7 +16,7 @@ const SitterPresentation = ({ infoSitter }) => {
   // }
   useEffect(()=>{
     console.log({infoSitter,sitters})
-    console.log({encontrado: sitters.filter((sitter)=>sitter.email == infoSitter.email)[0]})
+    console.log({encontrado: sitters.filter((sitter)=>sitter.id == infoSitter.id)})
   },[])
   return (
     <div className="container">

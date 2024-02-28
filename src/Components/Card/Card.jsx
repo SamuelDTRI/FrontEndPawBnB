@@ -4,10 +4,6 @@ import { ContainerCard } from "./card.styled";
 import axios from "axios";
 
 const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
-  const navigate = useNavigate();
-  const reservation = () =>{
-    navigate(`/reservation/${id}`);
-   }
 
   return (
     <ContainerCard>

@@ -83,7 +83,7 @@ export const ContainerFilter = styled.div`
                background-color: #FFFFFF;
                color: #959595;
                border-radius: 8px;
-               width: 120px;
+               width: 140px;
                padding-left: 7px;
                height: 30px;
                border: 0px solid #ffa726;

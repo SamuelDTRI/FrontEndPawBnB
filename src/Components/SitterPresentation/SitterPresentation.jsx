@@ -65,11 +65,11 @@ const SitterPresentation = ({ infoSitter, review }) => {
                 <h2 className={styles.star}><i className="bi bi-star-fill"></i></h2>
                 <p>({review.length} reseñas)</p>
               </div>
-              {/* <Link to = {`/reservation/${getSitterId()}`}>
+             {/*  <Link to = {`/reservation/${getSitterId()}`}> */}
               <button>
                 Reserva con {infoSitter.name}
               </button>
-              </Link> */}
+              {/* </Link> */}
             </div>
           </div>
         </div>

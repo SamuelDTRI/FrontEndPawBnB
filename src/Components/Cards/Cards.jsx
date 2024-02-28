@@ -11,7 +11,7 @@ const imgDefault = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-pred
 
 const Cards = () => {
   const dogsisters = useSelector((state) => state.dogsister.dogsisters);
-
+  
   const [currentPage, setCurrentPage] = useState(0);
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(0);
@@ -77,7 +77,7 @@ const Cards = () => {
         stars.push(<i key={i} className="bi bi-star-fill"></i>);
       }else{
         if(ratingAverage > i && ratingAverage < i+1){
-          stars.push(<i class="bi bi-star-half"></i>);
+          stars.push(<i key={i} class="bi bi-star-half"></i>);
         }else {
           stars.push(<i key={i} className="bi bi-star"></i>);
         }

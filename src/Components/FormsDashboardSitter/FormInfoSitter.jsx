@@ -71,7 +71,7 @@ const FormInfoSitter = () => {
   };
 
   useEffect(() => {
-    currentSitter();
+    /* currentSitter(); */
   }, [dispatch, handleFormSubmit,forceUpdate]);
 
   

@@ -42,8 +42,9 @@ const Home = () => {
   return (
     <div>
       <div className={style.homeContainer}>
-        <FormReview dogSitterId='49a42f96-c59f-4313-8290-6936d4a69370' 
-        ownerId='4b0e5f84-9587-4051-afe0-4b70b0f5741f'/>
+        {/*componente del Formulario de review, utiizar solo para probar comentarios
+        <FormReview dogSitterId='ed8760c0-07a9-4838-8522-9e239c52cb80' 
+        ownerId='7edf8b7b-26d1-4ea5-9197-7b50c54d20e7'/> */}
         <Filter/>
         <Cards/>
       </div >

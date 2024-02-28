@@ -9,8 +9,6 @@ const Filter = () => {
     
     const dogsisters = useSelector((state) => state.dogsister.copyDogsisters);
     const review = useSelector((state) => state.dogsister.allReviews);
-    /* console.log(review)
-    console.log(dogsisters) */
 
     // Obtener ciudades únicas
     const [uniqueNeighborhood, setUniqueNeighborhood] = useState([]);
@@ -21,10 +19,12 @@ const Filter = () => {
 
     useEffect(() => {
         if (dogsisters.length > 0) {
-        const neighborhood = [...new Set(dogsisters.map(dogSister => dogSister.neighborhood))];
-        setUniqueNeighborhood(neighborhood);
+          const neighborhoods = dogsisters.map(dogSister => dogSister.neighborhood || 'Desconocidos');
+          const uniqueNeighborhoods = [...new Set(neighborhoods)];
+          const sortedNeighborhoods = uniqueNeighborhoods.sort((a, b) => a.localeCompare(b));
+          setUniqueNeighborhood(sortedNeighborhoods);
         }
-    }, [dogsisters]);
+      }, [dogsisters]);
 
     const handleFilters = () => {
         const objFilter = {location:null, price:null, rating:null};

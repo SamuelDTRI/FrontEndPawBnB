@@ -8,7 +8,7 @@ const SuspensionMessage = () => {
             alt="Perro triste"
           />
         </div>
-        <h3 >Lo sentimos, pero no tienes permiso para ver este contenido.</h3>
+        <h3 >Tu cuenta a sido suspendida, contáctate con nosotros para recibir más informacion.</h3>
       </div>
     );
 

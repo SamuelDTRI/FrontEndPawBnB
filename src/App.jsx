@@ -48,10 +48,6 @@ function App() {
   const userId = useSelector((state) => state.auth.userId);
   const userDeleted = useSelector((state) => state.auth.userDeleted);
 
-  const adminId = useSelector((state) => state.adminUsers.adminId);
-  const adminRole = useSelector((state) => state.adminUsers.adminRole);
-  const adminDeleted = useSelector((state) => state.adminUsers.adminDeleted);
-  
   useEffect(()=>{
     window.scrollTo(0,0);
   }, [pathname]);
@@ -71,10 +67,7 @@ function App() {
   const isUserSuspended = () => {
     return userId && userDeleted;
   };
-  const isAdminSuspended = () => {
-    return adminId && adminDeleted;
-  };
-  
+
   return (
     <div className="App">
       {showNav && <NavBar />}
@@ -120,25 +113,25 @@ function App() {
           />
         )}
         {/* Rutas para el panel de control del administrador */}
-        {adminId && adminRole && !adminDeleted ? (
+        {(userRole === "Admin") && !userDeleted ? (
           <>
             <Route path="/dashboardAdmin" element={<DashboardAdmin />}>
               <Route path="users" element={<UsersPanel />} />
               <Route path="users/profile/:role/:id" element={<UserProfile />} />
             </Route>
           </>
-        ) : (
+        ) : ( 
           <Route
             path="*"
             element={
-              isAdminSuspended() ? (
+              isUserSuspended() ? (
                 <Navigate to="/suspension-message" replace />
               ) : (
                 <Navigate to="/" replace />
               )
             }
           />
-        )}
+        )} 
         <Route path="/suspension-message" element={<SuspensionMessage />} />
       </Routes>
       <Footer />

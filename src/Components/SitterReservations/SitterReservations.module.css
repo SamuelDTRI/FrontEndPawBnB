@@ -34,6 +34,10 @@
     background-color:#D1FFA4;
 }
 
+.button1{
+width: 9em !important;
+margin: 0 auto;
+}
 .contenedorFechas{
     align-items: center;
     text-align: center;

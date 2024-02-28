@@ -28,7 +28,6 @@ const Panel = ()=>{
     const usersList = useSelector((state)=>state.adminUsers.usersList)
     const ownersList = useSelector((state) => state.adminUsers.owners);
     const sittersList = useSelector((state) => state.adminUsers.sitters);
-
     //generamos las lista al cargar el componente
     useEffect(() => {
         dispatch(fetchUsers());
@@ -169,7 +168,7 @@ const Panel = ()=>{
                       Cuidadores
                     </span>{" "}
                     <span className={`ms-auto ${styles.labelNumber}`}>
-                      {sittersList.length}
+                      {ownersList.length}
                     </span>
                   </p>
                 </div>

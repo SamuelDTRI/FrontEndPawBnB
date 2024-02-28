@@ -40,12 +40,12 @@ const Panel = ()=>{
     // Contar cuidadores por barrio
     usersList.forEach((user) => {
         const { neighborhood, role } = user;
-        if (role === "DogSitter") {//se podría usar sittersList también
-                if (neighborhoodCount[neighborhood]) {
-                neighborhoodCount[neighborhood]++;
-            } else {
+        if (role === "DogSitter" && neighborhood !== null) {//se podría usar sittersList también
+          if (neighborhoodCount[neighborhood]) {
+            neighborhoodCount[neighborhood]++;
+          } else {
             neighborhoodCount[neighborhood] = 1;
-            }
+          }
         }
     });
     // Convertir objeto en array de pares clave-valor

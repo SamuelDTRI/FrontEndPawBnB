@@ -20,7 +20,9 @@ const FormInfoSitter = () => {
 
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/sitters/${id}`
+      );
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error(error.message);
@@ -52,7 +54,7 @@ const FormInfoSitter = () => {
             password,
             phone,
             dateOfBirth,
-            rates,
+            rates: Number(rates),
             city,
             neighborhood,
             address,
@@ -73,8 +75,6 @@ const FormInfoSitter = () => {
   useEffect(() => {
     /* currentSitter(); */
   }, [dispatch, handleFormSubmit,forceUpdate]);
-
-  
 
   return (
     <>
@@ -241,12 +241,12 @@ const FormInfoSitter = () => {
               </div>
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="rates">Tarifa por dia</label>
-                <Field
-                  type="text"
-                  id="rates"
-                  name="rates"
-                  placeholder={infoSitter?.rates}
-                />
+                <Field as="select" id="rates" name="rates">
+                  <option value="">Selecciona una tarifa</option>
+                  <option value="10">10 USD</option>
+                  <option value="20">20 USD</option>
+                  <option value="30">30 USD</option>
+                </Field>
                 <ErrorMessage
                   name="rates"
                   component={() => (
@@ -328,8 +328,7 @@ const FormInfoSitter = () => {
                 )}
               />
             </div>
-            <button 
-            type="submit">GUARDAR CAMBIOS</button>
+            <button type="submit">GUARDAR CAMBIOS</button>
             {formSent && (
               <p className={styles.success}>Cambios guardados con exito!</p>
             )}
@@ -341,7 +340,3 @@ const FormInfoSitter = () => {
 };
 
 export default FormInfoSitter;
-
-
-
-

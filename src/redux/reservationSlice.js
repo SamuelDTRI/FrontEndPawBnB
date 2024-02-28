@@ -5,7 +5,7 @@ export const sendReservation = createAsyncThunk( //envia la reserva
   "reservations/sendReservation",
   async (valores) => {
     try {
-      console.log({ valoresResSlic:valores });
+      console.log({ valores });
 
       const peticion = {
         dateCheckIn: valores.dateCheckIn,
@@ -67,7 +67,7 @@ export const reservationSlice = createSlice({
   
   extraReducers: (builder) => {
     builder.addCase(getReservation.fulfilled, (state, action) => {
-      state.reservations = [action.payload];
+      state.reservations = [...state.reservations,action.payload];
     });
     builder.addCase(sendReservation.fulfilled, (state, action) => {
       state.reservations = [...state.reservations, action.payload];

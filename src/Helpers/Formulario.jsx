@@ -192,7 +192,7 @@ const Formulario = (text, role) => {
           </div>
           <div className={styles.container}>
             <div className={`col-12 ${styles.inputContainer}`}>
-              `
+              
               <label htmlFor="name">
                 <span>Nombre*</span>
               </label>
@@ -251,13 +251,13 @@ const Formulario = (text, role) => {
               </div>
               <div className="col-12">
                 <label htmlFor="phone">
-                  <span>Telefono*</span>
+                  <span>Teléfono*</span>
                 </label>
                 <Field
                   type="text"
                   id="phone"
                   name="phone"
-                  placeholder="Tu telefono..."
+                  placeholder="Tu teléfono..."
                 />
                 <div className={styles.errorInputContainer}>
                   <ErrorMessage

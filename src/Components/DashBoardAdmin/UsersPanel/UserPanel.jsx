@@ -113,6 +113,7 @@ const UsersPanel = () => {
     }
     setSortOrderName("asc");
     setSortOrderLastName("asc");
+    setCurrentPage(1);
   };
 
   const handleOptionChange = (event) => {

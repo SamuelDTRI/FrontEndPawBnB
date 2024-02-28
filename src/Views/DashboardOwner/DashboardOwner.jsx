@@ -5,6 +5,7 @@ import LinksDashboardOwner from "../../Components/LinksDashboardOwner/LinksDashb
 import FormDashboardDueño from "../../Components/FormDashboardDueño/FormDashboardDueño";
 import FormAddDog from "../../Components/FormAddDog/FormAddDog";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import styles from "./DashboardOwner.module.css";
 import axios from "axios";
@@ -27,16 +28,16 @@ const DashboardOwner = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   
 
-  const currentOwner = async () => { 
-    try {
-      const { data } = await axios.get(
-        `https://backendpawbnb-production.up.railway.app/owners/${id}`
-      );
-      dispatch(infoOwner(data));
-    } catch (error) {
-      console.error("Error al obtener los datos del cuidador:", error);
-    }
-  };
+  // const currentOwner = async () => { 
+  //   try {
+  //     const { data } = await axios.get(
+  //       `https://backendpawbnb-production.up.railway.app/owners/${id}`
+  //     );
+  //     dispatch(infoOwner(data));
+  //   } catch (error) {
+  //     console.error("Error al obtener los datos del cuidador:", error);
+  //   }
+  // };
 
   //ESTA FUNCIÓN CONVIERTE LA IMAGEN EN CÓDIGO PARA QUE SE MANDE AL BACK Y EL BACK 
   //A CLOUDINARY Y CLOUDINARY TE DEVUELVA UNA URL
@@ -59,33 +60,51 @@ const DashboardOwner = () => {
   //LE ENVÍA EL CÓDIGO QUE TE DEVUELVE EL READER PARA ENVIARLO AL BACK
   const handleSubmit = async (event) => {
     if(!imgProfile) {
-      alert("Debes Seleccionar Una Imagen.");
+      Swal.fire({
+        title: "Debes seleccionar una imagen.",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+        }
+      });
       return;
     }
-    event.preventDefault();
 
     try {
+      event.preventDefault();
       const result = await axios.put(
-        `https://backendpawbnb-production.up.railway.app/owners/${id}`,
-        {
+        `https://backendpawbnb-production.up.railway.app/owners/${id}`,{
           photo: imgProfile,
-        }
-      );
+      });
       console.log(result.data);
-      setUploadSuccess(true);
-      setTimeout(() => {
-        setUploadSuccess(false)
-      }, 5000);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Tu imagen se ha subido correctamente!",
+        showConfirmButton: false,
+        timer: 3000
+      });
       // Actualizar el estado global ownerInfo con la nueva URL de la foto
     dispatch(infoOwner({ ...ownerInfo, photo: result.data.photo }));
     } catch(error){
-      console.log(error);
+      console.log("Error al actualizar la imagen de perfil:", error);
     }
   };
 
-  useEffect(() => {
-    currentOwner();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   currentOwner();
+  // }, [dispatch]);
 
 
   const handleLinkClick = (informacion) => {
@@ -145,9 +164,9 @@ const DashboardOwner = () => {
                       }}
                       >ACTUALIZAR FOTO DE PERFIL</button>
                     </div> 
-                    {uploadSuccess && (
+                    {/* {uploadSuccess && (
                     <div className={styles.notification}>La imagen se ha subido con éxito</div>
-                    )}       
+                    )}        */}
                   </form>            
                 </div>
             </div>

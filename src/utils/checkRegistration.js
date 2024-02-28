@@ -6,7 +6,6 @@ const checkRegistration = async (email) => {
         const response = await axios.get(
             `https://backendpawbnb-production.up.railway.app/checkRegistration?email=${email}`
         );
-        console.log(response.data)
         const { exist, checkId, checkRole, checkDeleted} = response.data;
         return { exist, checkId, checkRole, checkDeleted }; // Devuelve true si el usuario ya está registrado, false de lo contrario
     } catch (error) {

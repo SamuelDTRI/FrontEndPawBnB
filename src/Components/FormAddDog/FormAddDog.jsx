@@ -115,6 +115,7 @@ const FormAddDog = ({ formType }) => {
     <>
       <Formik
         initialValues={initialValues}
+        // eslint-disable-next-line no-unused-vars
         validate={(values) => {
           let errors = {};
           /* if (!values.name) {
@@ -139,16 +140,16 @@ const FormAddDog = ({ formType }) => {
 
           if (!values.description) {
             errors.description =
-              "Por favor ingresa breve descripcion de tu perro.";
+              "Por favor ingresa breve descripción de tu perro.";
           }
 
           if (!values.feedingInstructions) {
             errors.feedingInstruccions =
-              "Por favor proporciona las instrucciones de alimentacios de tu perro.";
+              "Por favor proporciona las instrucciones de alimenticios de tu perro.";
           }
 
           if (!values.vaccination) {
-            errors.vaccination = "Por favor selecciona una opcion";
+            errors.vaccination = "Por favor selecciona una opción";
           }
 
           if (!values.allergies) {
@@ -166,15 +167,14 @@ const FormAddDog = ({ formType }) => {
           }
           if (!values.behavior) {
             errors.behavior =
-              "Por favor ingresa una descripcion del comportamiento de tu perro.";
+              "Por favor ingresa una descripción del comportamiento de tu perro.";
           }
  */
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
           handleFormSubmit(values, dispatch, resetForm, setFormSent);
-        }}
-      >
+        }}>
         {({ errors }) => (
           <Form className={`container ${styles.form}`}>
             <div className="d-flex col-12">
@@ -187,16 +187,14 @@ const FormAddDog = ({ formType }) => {
                       ? styles.selectedBadge
                       : ""
                   }`}
-                  type="button"
-                >
+                  type="button">
                   {dog.name}
                 </button>
               ))}
               <button
                 onClick={() => handleAddNewDogClick()}
                 className={styles.badge}
-                type="button"
-              >
+                type="button">
                 Agregar Nuevo
               </button>
             </div>
@@ -262,7 +260,9 @@ const FormAddDog = ({ formType }) => {
                 <Field name="gender" as="select" className="">
                   <option value="">
                     {currentDog?.gender
-                      ? currentDog.gender
+                      ? currentDog.gender === "male"
+                        ? "Macho"
+                        : "Hembra"
                       : "Selecciona su genero"}
                   </option>
                   <option value="male">Macho</option>
@@ -278,7 +278,7 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="description">
-                Cuentanos un poco sobre el/ella
+                Cuéntanos un poco sobre el/ella
               </label>
               <Field
                 component="textarea"
@@ -300,7 +300,7 @@ const FormAddDog = ({ formType }) => {
             <h3>INFORMACION ADICIONAL</h3>
             <div className="col-12">
               <label htmlFor="feedingInstructions">
-                Instrucciones de alimentacion
+                Instrucciones de alimentación
               </label>
               <Field
                 component="textarea"
@@ -331,7 +331,7 @@ const FormAddDog = ({ formType }) => {
                 placeholder={
                   currentDog?.allergies
                     ? currentDog.allergies
-                    : "¿Tiene alergias o restricciones de algun tipo?"
+                    : "¿Tiene alergias o restricciones de algún tipo?"
                 }
               />
               <ErrorMessage
@@ -350,7 +350,7 @@ const FormAddDog = ({ formType }) => {
                 placeholder={
                   currentDog?.medication
                     ? currentDog.medication
-                    : "¿Toma alguna medicacion?"
+                    : "¿Toma alguna medicación?"
                 }
               />
               <ErrorMessage
@@ -362,7 +362,7 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="medicalCondition">
-                Condicion medica (Pasada o presente)
+                Condición medica (Pasada o presente)
               </label>
               <Field
                 component="textarea"
@@ -383,13 +383,13 @@ const FormAddDog = ({ formType }) => {
             </div>
             <div className="col-12">
               <label htmlFor="vaccination">
-                Calendario de vacunacion al dia
+                Calendario de vacunación al dia
               </label>
               <Field name="vaccination" as="select" className="">
                 <option value="">
                   {currentDog?.vaccination
                     ? currentDog.vaccination
-                    : "Selecciona una opcion"}
+                    : "Selecciona una opción"}
                 </option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>

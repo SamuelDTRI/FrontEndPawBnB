@@ -49,11 +49,17 @@ const handleClickMiPerfil=(userRole)=>{
   return (
     <div className={`container-fluid ${style.navbar}`}>
       <nav className="navbar border-bottom bg-white">
+        {userRole ==='DogSitter' ? (
+        <div className={style.imagen}>
+            <img src={logo} alt="PawBnb" />
+        </div>
+        ) : (
         <div className={style.imagen}>
           <Link to="/">
             <img src={logo} alt="PawBnb" />
           </Link>
         </div>
+        )}
 
         <button onClick={()=>navigate("Home")}>HOME</button>
         {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}

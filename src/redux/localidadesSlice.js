@@ -13,7 +13,7 @@ export const fetchNeighborhood = createAsyncThunk(
     async () => {
         try {
             const { data } = await axios.get(`http://localhost:3000/sitters`);
-            console.log("Datos cargados correctamente:", data);
+            // console.log("Datos cargados correctamente:", data);
             return data;
         } catch (error) {
             console.error("Error al obtener la información de los cuidadores:", error);

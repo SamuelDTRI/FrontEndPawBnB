@@ -6,13 +6,10 @@ import { addDogsister } from "../../redux/dogsisterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import style from "./Home.module.css";
-import { useParams } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  //const completedProfile = useSelector((state) => state.sitter.completedProfile)
-
+  
 
   useEffect(() => {
     const dogsisterAsync = async () => {

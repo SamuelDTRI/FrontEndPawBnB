@@ -178,7 +178,7 @@ const Formulario = (text, role) => {
             <h2>{text.text}</h2>
             <div className={styles.container}>
               
-                <div className={`col-12 ${styles.inputContainer}`}>`
+                <div className={`col-12 ${styles.inputContainer}`}>
                   <label htmlFor="name">Nombre*</label>
                   <Field
                     type="text"
@@ -226,12 +226,12 @@ const Formulario = (text, role) => {
                   />
                 
                 <div className="col-12">
-                  <label htmlFor="phone">Telefono*</label>
+                  <label htmlFor="phone">Teléfono*</label>
                   <Field
                     type="text"
                     id="phone"
                     name="phone"
-                    placeholder="Tu telefono..."
+                    placeholder="Tu teléfono..."
                   />
                   <ErrorMessage
                     name="phone"
@@ -274,7 +274,7 @@ const Formulario = (text, role) => {
                 </div>
                   <button type="submit">REGISTRARSE</button>
                   {formularioEnviado && (
-                    <p className={styles.exito}>Formulario enviado con exito!</p>
+                    <p className={styles.exito}>¡Formulario enviado con éxito!</p>
                   )}
                   <div className={styles.googleButton}>
                   {!googleUser && (<GoogleButton

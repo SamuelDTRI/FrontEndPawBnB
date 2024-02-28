@@ -20,15 +20,16 @@ const DashboardSitter = () => {
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   
-  const currentSitter = async () => {
-    try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
-      dispatch(sitterInfo(data));
-    } catch (error) {
-      console.error("Error al obtener los datos del cuidador:", error);
-    }
-  };
+  // const currentSitter = async () => {
+  // try {
+  // const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+  // dispatch(sitterInfo(data));
+  // } catch (error) {
+  // console.error("Error al obtener los datos del cuidador:", error);
+  // }
+  // };
 
   const previewFiles = (file) => {
     const reader = new FileReader(); 
@@ -56,16 +57,18 @@ const DashboardSitter = () => {
     });
     try {
       console.log(result.data);
+      setUploadSuccess(true);
+      setTimeout(() => {
+        setUploadSuccess(false)
+      }, 5000);
     } catch(error){
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    currentSitter();
-  }, [dispatch]);
-
-  //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
+  // useEffect(() => {
+  //   currentSitter();
+  // }, [dispatch]);
 
   return (
     <div className="container my-5 ">
@@ -77,32 +80,17 @@ const DashboardSitter = () => {
               linkActivo === "miGaleria"? (
                 
               <div className={styles.imageProfileContainer}>
-
-                  {
-                    infoSitter.photoProfile ? (
-                      <div className={styles.imgGalleryContainer}>
-                        <img
-                          src={imgProfile || infoSitter.photoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>   
-                      </div>
-                    ) : (
-                      <div className={styles.imgProfileContainer}>
-                        <img
-                          src={imgProfile || NoPhotoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>    
-                      </div>
-                  )}
-
+                <div className={styles.imgGalleryContainer}>
+                  <img
+                    src={imgProfile || infoSitter.photoProfile || NoPhotoProfile}
+                    alt={infoSitter.name}
+                    className={styles.imageProfile}
+                  />
+                  <label htmlFor="fileInput" className={styles.iconImg}>
+                    <i className="bi bi-person-bounding-box"></i>
+                  </label>   
+                </div>
+               
                 <div>
                   <form onSubmit={event => handleSubmit(event)}>
                     <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
@@ -116,7 +104,10 @@ const DashboardSitter = () => {
                         handleSubmit(event)
                       }}
                       >ACTUALIZAR FOTO DE PERFIL</button>
-                    </div>        
+                    </div> 
+                    {uploadSuccess && (
+                    <div className={styles.notification}>La imagen se ha subido con éxito</div>
+                    )}       
                   </form>            
                 </div>
 

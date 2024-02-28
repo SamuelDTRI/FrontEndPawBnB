@@ -73,9 +73,9 @@ const GallerySitters = () => {
     }
   };
 
-  useEffect(() => {
-    currentSitter();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   currentSitter();
+  // }, [dispatch]);
 
   return (
     <div className={styles.galleryContainer}>

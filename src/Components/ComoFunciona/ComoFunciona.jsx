@@ -21,7 +21,7 @@ const ComoFunciona = () => {
   return (
   <>
   <div className={style.divTitulo}>
-    <h1 className={style.titulo}>Asi funciona PawBnb</h1>
+    <h1 className={style.titulo}>Así funciona PawBnb</h1>
   </div>
   
   <div className="container">
@@ -32,7 +32,7 @@ const ComoFunciona = () => {
         <div className={style.photos}><img src={dog4} alt="computerDog" className={style.computerDogPhoto}/></div>
         <div className={style.conteinerObj}>
           <div className={style.conteinerText}>
-            <p className={style.text}>REGISTRATE</p>
+            <p className={style.text}>REGÍSTRATE</p>
             <p className={style.text}>Crea tu cuenta completando nuestros sencillos formularios. Proporciona toda la información 
             importante sobre ti y tu mascota para encontrar el cuidador perfecto.</p>
           </div>

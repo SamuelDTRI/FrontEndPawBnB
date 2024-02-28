@@ -9,11 +9,10 @@ import style from "./Home.module.css";
 import { useParams } from "react-router-dom";
 import FormReview from "../../Components/FormReview/FormReview";
 
+
 const Home = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  //const completedProfile = useSelector((state) => state.sitter.completedProfile)
-
+  
 
   useEffect(() => {
     const dogsisterAsync = async () => {

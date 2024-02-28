@@ -6,7 +6,7 @@ const SignUpOwners = () => {
   
       return (
         <div className={styles.signUPFormContainer}>
-          <Formulario text= 'REGISTRATE' role = "Owner"/>
+          <Formulario text= 'REGÍSTRATE' role = "Owner"/>
         </div>
       )
 };

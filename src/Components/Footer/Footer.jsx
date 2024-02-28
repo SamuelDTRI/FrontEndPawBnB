@@ -2,17 +2,25 @@ import { useNavigate } from "react-router-dom";
 import style from "./Footer.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchNeighborhood } from "../../redux/localidadesSlice";
 
 const Footer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const neighborhood = useSelector((state) => state.neighborhoodSitter.neighborhoods);
-  console.log(neighborhood)
+  const userRole = useSelector((state) => state.auth.userRole);
+  const [alertOn, setAlertOn] = useState(false);
 
   const handleNavigation = (path) => {
       navigate(path);
+  }
+
+  const handleClick = () => {
+    setAlertOn(true);
+    setTimeout(() => {
+      setAlertOn(false);
+    }, 5000);
   }
 
   useEffect(() => {
@@ -83,12 +91,23 @@ const Footer = () => {
           <hr className={style.hrstyle} />
           <p className="mb-3">Se tu propio jefe. Ajusta tus tarifas y horarios. 
           Conocerás perros asombrosos cerca tuyo.</p>
-          
-          <Link to={"/SignUpSitters"}>
-            <button className={style.btn}>
+          { userRole ? (
+            <button className={style.btn} onClick={handleClick}>
               Hazte cuidador
             </button>
-          </Link>
+          ) : (
+            <Link to={"/SignUpSitters"}>
+              <button className={style.btn}>
+                Hazte cuidador
+              </button>
+            </Link>
+          )}
+          {alertOn &&
+          <div className={`alert alert-warning ${style.alertText}`} role="alert">
+            <i className={`bi bi-exclamation-triangle-fill ${style.icon}`}></i>
+            ¡Ya estás registrado como cuidador!
+          </div>
+          }
 
           <hr className={style.hrstyle} />
 

@@ -39,7 +39,7 @@ const PawbnbReviews = () => {
       <div className={style.stars}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
       </div>
-      <p>PawBnb ha sido una solución increíble para encontrar cuidadores de perros confiables. 
+      <p>PawBnb ha sido una solución increíble para encontrar cuidadores confiables. 
         ¡Me siento tranquilo sabiendo que mi perro está en buenas manos!</p>
     </div>
   </div>
@@ -51,7 +51,7 @@ const PawbnbReviews = () => {
       <div className={style.stars}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
       </div>
-      <p>Como dueño de un perro ocupado, PawBnb hace que sea fácil encontrar cuidadores para mi mascota. 
+      <p>Como dueño ocupado de un perro, PawBnb hace que sea fácil encontrar cuidadores para mi mascota. 
         Siempre he tenido experiencias positivas. ¡Gracias, PawBnb!</p>
     </div>
   </div>

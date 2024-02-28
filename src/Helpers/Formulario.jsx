@@ -261,6 +261,7 @@ const Formulario = (text, role) => {
                   placeholder="Tu telefono..."
                 />
                 <div className={styles.errorInputContainer}>
+
                   <ErrorMessage
                     name="phone"
                     component={() => (
@@ -269,6 +270,7 @@ const Formulario = (text, role) => {
                   />
                 </div>
               </div>
+
             </div>
 
             <div className="col-12">

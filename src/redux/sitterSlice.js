@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   surName: "",
   phone: "",
+  password: "",
   address: "",
   neighborhood: "",
   city: "",
@@ -19,7 +20,9 @@ export const fetchSitter = createAsyncThunk(
   "sitter/fetchSitter",
   async (id) => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/sitters/${id}`
+      );
       return data;
     } catch (error) {
       console.error("Error al obtener la información del cuidador:", error);
@@ -39,6 +42,7 @@ export const sitterSlice = createSlice({
         surName,
         email,
         phone,
+        password,
         dateOfBirth,
         rates,
         city,
@@ -59,6 +63,7 @@ export const sitterSlice = createSlice({
       state.description = description;
       state.rates = rates;
       state.email = email;
+      state.password = password;
       state.photoProfile = photoProfile;
       state.photos = photos;
     },

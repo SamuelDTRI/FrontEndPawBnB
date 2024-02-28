@@ -44,9 +44,11 @@ export const ContainerOrder = styled.div`
             padding-left: 7px;
             height: 30px;
             border: 0px solid #ffa726;
+            outline: 0;
 
             option{
                 background-color: #FFFFFF;
+                text-align: left;
             }
         }
 

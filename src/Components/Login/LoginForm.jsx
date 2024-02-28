@@ -32,9 +32,7 @@ const LoginForm = () => {
   };
   useEffect(()=> {
     if (googleUser && googleUser.reloadUserInfo) {
-      // console.log(googleUser.reloadUserInfo.email)
       const email = googleUser.reloadUserInfo.email;
-      // console.log(googleUser.reloadUserInfo.email);
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
@@ -130,37 +128,52 @@ const LoginForm = () => {
         {({ errors }) => (
           //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
           <Form className={styles.formulario}>
-            <h2>LOG IN</h2>
+            <h2>INGRESAR</h2>
+            <div className={styles.googleButton}>
+              <GoogleButton
+                className="googleButton"
+                label="Iniciar sesión con Google"
+                onClick={handleGoogleSignIn}
+              />
+            </div>
             <div className={styles.container}>
               <div>
-                <label htmlFor="correo">Email</label>
+                <label htmlFor="correo" className={styles.label}>
+                  <span>Email</span>
+                </label>
                 <Field
                   type="email"
                   id="correo"
                   name="email"
                   placeholder="example@gmail.com"
                 />
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="email"
+                    component={() => (
+                      <div className={styles.error}>{errors.email}</div>
+                    )}
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="contraseña">Contraseña</label>
+                <label htmlFor="contraseña">
+                  <span>Contraseña</span>
+                </label>
                 <Field
                   type="password"
                   id="contraseña"
                   name="password"
                   placeholder="Tu Contraseña..."
                 />
-                <ErrorMessage
-                  name="password"
-                  component={() => (
-                    <div className={styles.error}>{errors.password}</div>
-                  )}
-                />
+                <div className={styles.errorInputContainer}>
+                  <ErrorMessage
+                    name="password"
+                    component={() => (
+                      <div className={styles.error}>{errors.password}</div>
+                    )}
+                  />
+                </div>
               </div>
               <button type="submit">Iniciar Sesión</button>
               {/* {formularioEnviado && (
@@ -168,13 +181,6 @@ const LoginForm = () => {
               )} */}
               <div className={styles.errorContainer}>
                 {error && <p className={styles.error}>{error}</p>}
-              </div>
-              <div className={styles.googleButton}>
-                <GoogleButton
-                  className="googleButton"
-                  label="Inicia sesión con Google"
-                  onClick={handleGoogleSignIn}
-                />
               </div>
             </div>
           </Form>

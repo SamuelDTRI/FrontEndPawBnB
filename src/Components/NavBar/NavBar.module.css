@@ -18,4 +18,10 @@
 
 .BtnSalir{
     margin-right: 1rem;
+    font-weight: 600;
+}
+
+.loginButtonContainer{
+    display: flex;
+    gap: 35px;
 }

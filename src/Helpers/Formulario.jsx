@@ -29,7 +29,7 @@ const Formulario = (text, role) => {
   const navigate = useNavigate()
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath)
+  
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
 
@@ -42,6 +42,7 @@ const Formulario = (text, role) => {
   };
   useEffect(() => {
     if (googleUser && googleUser.providerData) {
+      // console.log(googleUser)
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
@@ -51,7 +52,7 @@ const Formulario = (text, role) => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
@@ -66,7 +67,7 @@ const Formulario = (text, role) => {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
@@ -101,138 +102,166 @@ const Formulario = (text, role) => {
     }
   }, [googleUser, navigate, dispatch, currentPath]);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch({ type: "auth/loginFailure", payload: null });
+    }, 8000);
+    return () => clearTimeout(timeoutId);
+  }, [formularioEnviado, dispatch]);
+
   return (
-    
-      <Formik
-        initialValues={{
-          name: "",
-          surName: "",
-          email: "",
-          phone: "",
-          password: "",
-          confirmPassword: '',
-        }}
-        validate={(valores) => {
-          
-          let errores = {};
-          //Validacion name
-          if (!valores.name) {
-            errores.name = "Por favor ingresa un nombre.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.name)) {
-            errores.name = "Ingresa solo letras y no más de 20 caracteres.";
-          }
-          //Validacion Apellido
-          if (!valores.surName) {
-            errores.surName = "Por favor ingresa un apellido.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.surName)) {
-            errores.surName = "Ingresa solo letras y no más de 20 caracteres.";
-          }
+    <Formik
+      initialValues={{
+        name: "",
+        surName: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+      }}
+      validate={(valores) => {
+        let errores = {};
+        //Validacion name
+        if (!valores.name) {
+          errores.name = "Por favor ingresa un nombre.";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.name)) {
+          errores.name = "Ingresa solo letras y no más de 20 caracteres.";
+        }
+        //Validacion Apellido
+        if (!valores.surName) {
+          errores.surName = "Por favor ingresa un apellido.";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(valores.surName)) {
+          errores.surName = "Ingresa solo letras y no más de 20 caracteres.";
+        }
 
-          //Validacion Mail
-          if (!valores.email) {
-            errores.email = "Por favor ingresa un mail.";
-          } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
-            errores.email =
-              "El email solo puede contener letras, numeros, puntos, guiones, y guion bajo";
-          }
+        //Validacion Mail
+        if (!valores.email) {
+          errores.email = "Por favor ingresa un mail.";
+        } else if (
+          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+            valores.email
+          )
+        ) {
+          errores.email =
+            "El email solo puede contener letras, numeros, puntos, guiones, y guion bajo";
+        }
 
-          //Validacion phone
-          if (!valores.phone) {
-            errores.phone = "Por favor ingresa un phone.";
-          } else if (!/^\d{10}$/.test(valores.phone)) {
-            errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-          }
-          // Validación password (Expresion regular)
-          // if (!valores.password) {
-          //   errores.password = "Por favor ingresa una contraseña.";
-          // } else if (
-          //   !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
-          //     valores.password
-          //   )
-          // ) {
-          //   errores.password =
-          //     "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
-          // }
-          //Validacion de ambas contraseñas
-          
+        //Validacion phone
+        if (!valores.phone) {
+          errores.phone = "Por favor ingresa un phone.";
+        } else if (!/^\d{10}$/.test(valores.phone)) {
+          errores.phone = "Ingresa solo numeros y no más de 10 caracteres.";
+        }
+        // Validación password (Expresion regular)
+        // if (!valores.password) {
+        //   errores.password = "Por favor ingresa una contraseña.";
+        // } else if (
+        //   !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,])[A-Za-z\d@$!%*?&.,]{8,}$/.test(
+        //     valores.password
+        //   )
+        // ) {
+        //   errores.password =
+        //     "La contraseña debe contener al menos 8 caracteres, Minúsculas, Mayúsculas y al menos un caracter especial.";
+        // }
+        //Validacion de ambas contraseñas
 
-          
+        return errores;
+      }}
+      validationSchema={SignupSchema}
+      onSubmit={async (valores, { resetForm }) => {
+        const { userRole } = dispatch(
+          signUpOwner(valores, text.role, navigate("/Login"))
+        );
+        if (userRole) navigate("/Login");
+        resetForm();
+        console.log("Se enviaron los datos");
+        cambiarFormularioEnviado(true);
+        setTimeout(() => cambiarFormularioEnviado(false), 5000);
+      }}>
+      {({ errors }) => (
+        //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+        <Form className={styles.formulario}>
+          <h2>{text.text}</h2>
+          <div className={styles.googleButton}>
+            {!googleUser && (
+              <GoogleButton
+                className="googleButton"
+                label="Regístrate con Google"
+                onClick={handleGoogleSignIn}
+              />
+            )}
+          </div>
+          <div className={styles.container}>
+            <div className={`col-12 ${styles.inputContainer}`}>
+              `
+              <label htmlFor="name">
+                <span>Nombre*</span>
+              </label>
+              <Field
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Tu primer Nombre..."
+              />
+              <div className={styles.errorInputContainer}>
+                <ErrorMessage
+                  name="name"
+                  component={() => (
+                    <div className={styles.error}>{errors.name}</div>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="col-12">
+              <label htmlFor="surName">
+                <span>Apellido*</span>
+              </label>
+              <Field
+                type="text"
+                id="surName"
+                name="surName"
+                placeholder="Tu Apellido..."
+              />
+              <div className={styles.errorInputContainer}>
+                <ErrorMessage
+                  name="surName"
+                  component={() => (
+                    <div className={styles.error}>{errors.surName}</div>
+                  )}
+                />
+              </div>
+            </div>
 
-          return errores;
-        }}
-        validationSchema={SignupSchema}
-        
-        onSubmit= {async (valores, { resetForm }) => {
-          const {userRole}= dispatch(
-            signUpOwner(valores, text.role, navigate("/Login"))
-          );
-            if(userRole) navigate("/Login");
-          resetForm();
-          console.log("Se enviaron los datos");
-          cambiarFormularioEnviado(true);
-          setTimeout(() => cambiarFormularioEnviado(false), 5000);
-        }}>
-        {({ errors }) => (
-          //{( {values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
-          <Form className={styles.formulario}>
-            <h2>{text.text}</h2>
-            <div className={styles.container}>
-              
-                <div className={`col-12 ${styles.inputContainer}`}>
-                  <label htmlFor="name">Nombre*</label>
-                  <Field
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Tu primer Nombre..."
-                  />
-                  <ErrorMessage
-                    name="name"
-                    component={() => (
-                      <div className={styles.error}>{errors.name}</div>
-                    )}
-                  />
-                </div>
-                <div className="col-12">
-                  <label htmlFor="surName">Apellido*</label>
-                  <Field
-                    type="text"
-                    id="surName"
-                    name="surName"
-                    placeholder="Tu Apellido..."
-                  />
-                  <ErrorMessage
-                    name="surName"
-                    component={() => (
-                      <div className={styles.error}>{errors.surName}</div>
-                    )}
-                  />
-                </div>
-              
-              
-                <div className="col-12">
-                  <label htmlFor="email">Email*</label>
-                  <Field
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component={() => (
-                      <div className={styles.error}>{errors.email}</div>
-                    )}
-                  />
-                
-                <div className="col-12">
-                  <label htmlFor="phone">Teléfono*</label>
-                  <Field
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Tu teléfono..."
-                  />
+            <div className="col-12">
+              <label htmlFor="email">
+                <span>Email*</span>
+              </label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                placeholder="example@gmail.com"
+              />
+              <div className={styles.errorInputContainer}>
+                <ErrorMessage
+                  name="email"
+                  component={() => (
+                    <div className={styles.error}>{errors.email}</div>
+                  )}
+                />
+              </div>
+              <div className="col-12">
+                <label htmlFor="phone">
+                  <span>Telefono*</span>
+                </label>
+                <Field
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="Tu telefono..."
+                />
+                <div className={styles.errorInputContainer}>
+
                   <ErrorMessage
                     name="phone"
                     component={() => (
@@ -241,54 +270,57 @@ const Formulario = (text, role) => {
                   />
                 </div>
               </div>
-              
-                <div className="col-12">
-                  <label htmlFor="password">Contraseña*</label>
-                  <Field
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Tu Contraseña..."
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component={() => (
-                      <div className={styles.error}>{errors.password}</div>
-                    )}
-                  />
-                </div>
-                <div className="col-12">
-                  <label htmlFor="confirmPassword">Repetir Contraseña*</label>
-                  <Field
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder="Tu Contraseña..."
-                  />
-                  <ErrorMessage
-                    name="confirmPassword"
-                    component={() => (
-                      <div className={styles.error}>{errors.confirmPassword}</div>
-                    )}
-                  />
-                </div>
-                  <button type="submit">REGISTRARSE</button>
-                  {formularioEnviado && (
-                    <p className={styles.exito}>¡Formulario enviado con éxito!</p>
-                  )}
-                  <div className={styles.googleButton}>
-                  {!googleUser && (<GoogleButton
-                      className="googleButton"
-                      label="Regístrate con Google"
-                      onClick={handleGoogleSignIn}
-                    />)}
-                  </div>
+
             </div>
-          </Form>
-        )}
-      </Formik>
-      
-    
+
+            <div className="col-12">
+              <label htmlFor="password">
+                <span>Contraseña*</span>
+              </label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Tu Contraseña..."
+              />
+              <div className={styles.errorInputContainer}>
+                <ErrorMessage
+                  name="password"
+                  component={() => (
+                    <div className={styles.error}>{errors.password}</div>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="col-12">
+              <label htmlFor="confirmPassword">
+                <span>Repetir Contraseña*</span>
+              </label>
+              <Field
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Tu Contraseña..."
+              />
+              <div className={styles.errorInputContainer}>
+                <ErrorMessage
+                  name="confirmPassword"
+                  component={() => (
+                    <div className={styles.error}>{errors.confirmPassword}</div>
+                  )}
+                />
+              </div>
+            </div>
+            <button type="submit">REGISTRARSE</button>
+            <div className={styles.submitMessage}>
+              {formularioEnviado && (
+                <p className={styles.exito}>Formulario enviado con exito!</p>
+              )}
+            </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

@@ -1,32 +1,37 @@
+import { Modal, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
-import { sitterInfo, updateSitter } from "../../redux/sitterSlice";
 import { Cities } from "../../Helpers/Cities";
 import { Barrios } from "../../Helpers/Barrios";
-
-import axios from "axios";
 import styles from "./FormInfoSitter.module.css";
+import axios from "axios";
 
 const FormInfoSitter = () => {
   const [formSent, setFormSent] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
   const infoSitter = useSelector((state) => state.sitter);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+  const handleEmailClose = () => setShowEmailModal(false);
+  const handleEmailShow = () => setShowEmailModal(true);
 
   const dispatch = useDispatch();
   const { id } = useParams();
-
   const currentSitter = async () => {
     try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+      const { data } = await axios.get(
+        `https://backendpawbnb-production.up.railway.app/sitters/${id}`
+      );
       dispatch(sitterInfo(data));
     } catch (error) {
       console.error(error.message);
     }
   };
-
   const handleFormSubmit = async (values, dispatch, resetForm, setFormSent) => {
     try {
       const {
@@ -52,7 +57,7 @@ const FormInfoSitter = () => {
             password,
             phone,
             dateOfBirth,
-            rates,
+            rates: Number(rates),
             city,
             neighborhood,
             address,
@@ -60,7 +65,6 @@ const FormInfoSitter = () => {
           },
         })
       );
-
       await currentSitter();
       resetForm();
       setFormSent(true);
@@ -69,12 +73,10 @@ const FormInfoSitter = () => {
       console.error("Error al enviar el formulario:", error);
     }
   };
-
   useEffect(() => {
+
     currentSitter();
   }, [dispatch, forceUpdate]);
-
-  
 
   return (
     <>
@@ -94,54 +96,29 @@ const FormInfoSitter = () => {
         }}
         validate={(values) => {
           let errors = {};
-          /*   if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-            errors.name = "Ingresa solo letras y no más de 20 caracteres.";
+          if (values.name.length > 15) {
+            errors.name = "El nombre no puede tener más de 15 caracteres";
           }
-          if (!values.surName) {
-            errors.surName = "Por favor ingresa un apellido.";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.surName)) {
-            errors.surName = "Ingresa solo letras y no más de 20 caracteres.";
+          if (values.surName.length > 15) {
+            errors.surName = "El apellido no puede tener más de 15 caracteres";
           }
-          if (!values.dateOfBirth) {
-            errors.dateOfBirth = "Por favor ingresa tu fecha de nacimiento.";
+          if (values.phone.length > 10) {
+            errors.phone = "El teléfono no puede tener más de 10 dígitos";
           }
-          if (!values.rates) {
-            errors.rates = "Por favor ingresa tu tarifa por día.";
-          } else if (!/^\d+(\.\d{1,2})?$/.test(values.rates)) {
-            errors.rates = "Ingresa una tarifa válida.";
+          if (values.address.length > 20) {
+            errors.address = "La dirección no puede tener más de 20 caracteres";
           }
-          if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-              values.email
-            )
-          ) {
-            errors.email =
-              "El correo solo puede contener letras, numeros, puntos, guiones, y guion bajo";
+          if (values.description.length > 200) {
+            errors.description =
+              "La descripción no puede tener más de 200 caracteres";
           }
-          if (!/^\d{10}$/.test(values.phone)) {
-            errors.phone = "Ingresa solo numeros y no más de 10 caracteres.";
-          }
-
-          if (!values.neighborhood) {
-            errors.neighborhood = "Por favor ingresa un Barrio.";
-          }
-          if (!values.city) {
-            errors.city = "Por favor ingresa una ciudad.";
-          }
-          if (!values.address) {
-            errors.address = "Por favor ingresa una direccion.";
-          }
-          if (!values.description) {
-            errors.description = "Por favor ingresa una descripcion.";
-          } */
-
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
           handleFormSubmit(values, dispatch, resetForm, setFormSent);
         }}
       >
-        {({ errors }) => (
+        {({ isValid, errors, touched }) => (
           <Form className={`container ${styles.form}`}>
             <div className="row">
               <div className="col-lg-6 col-md-12">
@@ -175,54 +152,87 @@ const FormInfoSitter = () => {
                 />
               </div>
             </div>
-
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="email">Email</label>
                 <Field
-                  type="email"
+                  type="text"
                   id="email"
                   name="email"
                   placeholder={infoSitter?.email}
+                  disabled
                 />
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
-                />
+                <button
+                  type="button"
+                  onClick={handleEmailShow}
+                  className="form button[type='submit']"
+                >
+                  Cambiar correo electrónico
+                </button>
+                <Modal show={showEmailModal} onHide={handleEmailClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Cambio de correo electrónico</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Para cambiar tu correo electrónico, por favor ponte en
+                    contacto con el equipo de PawBnB.
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleEmailClose}>
+                      Cerrar
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="phone">Telefono</label>
+                <label htmlFor="password">Contraseña</label>
                 <Field
-                  type="number"
-                  id="phone"
-                  name="phone"
-                  placeholder={infoSitter?.phone}
-                />
-                <ErrorMessage
-                  name="phone"
-                  component={() => (
-                    <div className={styles.error}>{errors.phone}</div>
-                  )}
-                />
-              </div>
-            </div>
-            {/* <div className="col-12">
-            <label htmlFor="password">Contraseña</label>
-                <Field
-                  type="password"
+                  type="text"
                   id="password"
                   name="password"
                   placeholder={infoSitter?.password}
+                  disabled
                 />
-                <ErrorMessage
-                  name="password"
-                  component={() => (
-                    <div className={styles.error}>{errors.password}</div>
-                  )}
-                />
-            </div> */}
+                <button
+                  type="button"
+                  onClick={handleShow}
+                  className="form button[type='submit']"
+                >
+                  Cambiar contraseña
+                </button>
+                <Modal show={showModal} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Cambio de contraseña</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Para cambiar tu contraseña, por favor ponte en contacto con
+                    el equipo de PawBnB.
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cerrar
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
+              <div className="row d-flex justify-content-center">
+                <div className="col-lg-6 col-md-8">
+                  <label htmlFor="phone">Telefono</label>
+                  <Field
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    placeholder={infoSitter?.phone}
+                  />
+                  <ErrorMessage
+                    name="phone"
+                    component={() => (
+                      <div className={styles.error}>{errors.phone}</div>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
@@ -241,12 +251,14 @@ const FormInfoSitter = () => {
               </div>
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="rates">Tarifa por dia</label>
-                <Field
-                  type="text"
-                  id="rates"
-                  name="rates"
-                  placeholder={infoSitter?.rates}
-                />
+                <Field as="select" id="rates" name="rates">
+                  <option value="" disabled>
+                    Selecciona una tarifa
+                  </option>
+                  <option value="10">10 USD</option>
+                  <option value="20">20 USD</option>
+                  <option value="30">30 USD</option>
+                </Field>
                 <ErrorMessage
                   name="rates"
                   component={() => (
@@ -258,14 +270,8 @@ const FormInfoSitter = () => {
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="city">Ciudad</label>
-                <Field name="city" as="select">
-                  {Cities?.map((city) => {
-                    return (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    );
-                  })}
+                <Field name="city" as="select" disabled>
+                  <option value="CABA">CABA</option>
                 </Field>
                 <ErrorMessage
                   name="city"
@@ -316,7 +322,7 @@ const FormInfoSitter = () => {
             <div className="">
               <label htmlFor="description">Descripcion</label>
               <Field
-                type="text"
+                as="textarea"
                 id="description"
                 name="description"
                 placeholder={infoSitter?.description}
@@ -328,11 +334,18 @@ const FormInfoSitter = () => {
                 )}
               />
             </div>
-            <button 
-            type="submit">GUARDAR CAMBIOS</button>
-            {formSent && (
-              <p className={styles.success}>Cambios guardados con exito!</p>
-            )}
+            <div className="col-12">
+              <button
+                type="submit"
+                disabled={!isValid}
+                style={{ cursor: isValid ? "pointer" : "not-allowed" }}
+              >
+                GUARDAR CAMBIOS
+              </button>
+              {formSent && (
+                <p className={styles.success}>Cambios guardados con exito!</p>
+              )}
+            </div>
           </Form>
         )}
       </Formik>
@@ -341,7 +354,3 @@ const FormInfoSitter = () => {
 };
 
 export default FormInfoSitter;
-
-
-
-

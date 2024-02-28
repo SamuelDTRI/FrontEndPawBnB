@@ -21,7 +21,6 @@
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
 	margin-top: 80px;
-	margin-left: 350px;
 	height: 30%;
     width: 40%;
 	background: #f9f5f3;
@@ -30,17 +29,23 @@
 }
 
 .formulario > div {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 .formulario label {
-	display: block;
 	display: flex;
 	font-weight: 600;
 	font-size: 18px;
 	margin-bottom: 5px;
 }
 
+.formulario label span {
+	display: inline-block;
+	margin: 0 auto;
+}
+.container {
+	margin-top: 25px;
+}
 .formulario input,
 .formulario textarea {
 	font-family: 'Open Sans', sans-serif;
@@ -68,7 +73,7 @@
 }
 
 .formulario button[type="submit"] {
-	margin-top: 25px;
+	margin-top: 18px;
 	display: block;
 	background: #ffa726;
 	font-weight: 600;
@@ -107,7 +112,12 @@
 	min-height: 25px;
 }
 
+.errorInputContainer {
+	min-height: 18px;
+}
+
 .googleButton{
+	margin-top: 25px;
 	border-radius: 15px;
 	display: flex;
 	justify-content: center;

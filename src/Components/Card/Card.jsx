@@ -4,20 +4,9 @@ import { ContainerCard } from "./card.styled";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
+const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
   const userRole = useSelector((state) => state.auth.userRole);
 
-  const handlePayment = async () => {
-    try {
-      const response = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
-      );
-      const url = response.data.url;
-      window.location.href = url;
-    } catch (error) {
-      console.error("Error al realizar el pago: ", error);
-    }
-  };
 
   return (
     <ContainerCard>
@@ -33,7 +22,8 @@ const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
           </p>
         </div>
         <div className="infoReview">
-          <p>{rating}</p>
+          <p className="star">{rating}</p>
+          <p className="review">({review})</p>
         </div>
         {userRole === 'DogSitter' ? (
           <div className="infoBtn">

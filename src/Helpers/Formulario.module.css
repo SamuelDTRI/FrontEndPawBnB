@@ -23,7 +23,6 @@
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
 	margin-top: 80px;
-	margin-left: 350px;
 	height: 30%;
     width: 40%;
 	background: #f9f5f3;
@@ -44,6 +43,11 @@
 	margin-bottom: 5px;
 }
 
+.formulario label span {
+	display: inline-block;
+	margin: 0 auto;
+}
+
 .formulario input,
 .formulario textarea {
 	font-family: 'Open Sans', sans-serif;
@@ -59,8 +63,10 @@
 }
 .inputContainer {
 	align-items: center;
+}
 
-
+.errorInputContainer {
+	min-height: 18px;
 }
 
 .formulario input:focus {
@@ -78,13 +84,15 @@
 
 }
 .googleButton{
-	justify-content: right;
 	margin-top: 25px;
 	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	text-align: center;
 }
 
 .formulario button[type="submit"] {
-	margin-top: 25px;
+	margin-top: 18px;
 	display: block;
 	background: #ffa726;
 	font-weight: 600;
@@ -107,10 +115,14 @@
 	border-radius: 15px;
 }
 
+.submitMessage {
+	min-height: 16px;
+}
+
 .formulario .exito {
 	text-align: center;
 	font-size: 14px;
-	padding-top: 20px;
+	margin-top: 3px;
 	color: #02a802;
 }
 

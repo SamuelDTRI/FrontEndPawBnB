@@ -23,7 +23,6 @@
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
 	min-width: 500px;
 	margin-top: 80px;
-	margin-left: 350px;
 	height: 30%;
     width: 40%;
 	background: #f9f5f3;
@@ -42,6 +41,11 @@
 	font-weight: 600;
 	font-size: 18px;
 	margin-bottom: 5px;
+}
+
+.formulario label span {
+	display: inline-block;
+	margin: 0 auto;
 }
 
 .formulario input,
@@ -80,9 +84,11 @@
 
 }
 .googleButton{
-	justify-content: right;
-	margin-top: 15px;
+	margin-top: 25px;
 	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	text-align: center;
 }
 
 .formulario button[type="submit"] {

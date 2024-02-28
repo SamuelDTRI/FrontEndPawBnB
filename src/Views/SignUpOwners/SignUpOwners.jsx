@@ -1,14 +1,14 @@
-import React, {useState} from "react";
 import Formulario from "../../Helpers/Formulario";
+
+import styles from "./SignUpOwners.module.css";
 
 const SignUpOwners = () => {
   
       return (
-        <Formulario text= 'REGISTRATE' role = "Owner"/>
-        
+        <div className={styles.signUPFormContainer}>
+          <Formulario text= 'REGISTRATE' role = "Owner"/>
+        </div>
       )
-    
-
 };
 
 export default SignUpOwners;

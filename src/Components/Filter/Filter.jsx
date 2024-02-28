@@ -8,6 +8,7 @@ const Filter = () => {
     const dispatch = useDispatch();
     
     const dogsisters = useSelector((state) => state.dogsister.copyDogsisters);
+    const review = useSelector((state) => state.dogsister.allReviews);
 
     // Obtener ciudades únicas
     const [uniqueNeighborhood, setUniqueNeighborhood] = useState([]);
@@ -18,13 +19,15 @@ const Filter = () => {
 
     useEffect(() => {
         if (dogsisters.length > 0) {
-        const neighborhood = [...new Set(dogsisters.map(dogSister => dogSister.neighborhood))];
-        setUniqueNeighborhood(neighborhood);
+          const neighborhoods = dogsisters.map(dogSister => dogSister.neighborhood || 'Desconocidos');
+          const uniqueNeighborhoods = [...new Set(neighborhoods)];
+          const sortedNeighborhoods = uniqueNeighborhoods.sort((a, b) => a.localeCompare(b));
+          setUniqueNeighborhood(sortedNeighborhoods);
         }
-    }, [dogsisters]);
+      }, [dogsisters]);
 
     const handleFilters = () => {
-        const objFilter = {location:null, price:null};
+        const objFilter = {location:null, price:null, rating:null};
 
         if(document.getElementById('location').value){
 
@@ -57,6 +60,20 @@ const Filter = () => {
             }
         }
 
+        if(document.getElementById('rating').value){
+            if(document.getElementById('rating').value == 'all'){
+                document.getElementById('rating').style.backgroundColor='#FFFFFF';
+                document.getElementById('rating').style.border='0px solid #ffa726';
+
+                objFilter.rating = document.getElementById('rating').value;
+            }else{
+                document.getElementById('rating').style.backgroundColor='#ffa72615';
+                document.getElementById('rating').style.border='2px solid #ffa726';
+
+                objFilter.rating = document.getElementById('rating').value;
+            }
+        }
+
         dispatch(setFilters(objFilter));
     }
 
@@ -86,8 +103,9 @@ const Filter = () => {
     }
 
     const cleanFilterRates = () => {
-        const objFilter = {location:null, price:null};
+        const objFilter = {location:null, price:null, rating:null};
         objFilter.location = document.getElementById('location').value;
+        objFilter.rating = document.getElementById('rating').value;
         //rates clean
         document.getElementById('minRates').value = null;
         document.getElementById('maxRates').value = null;
@@ -138,13 +156,13 @@ const Filter = () => {
                         <button className="btn-rates-rest" id="btnFilterPriceRest" disabled={btnDisableRes} onClick={cleanFilterRates}>Restablecer</button>
                 </div>
 
-                {/* <div className="filter filter-city">
+                <div className="filter filter-city">
                     <div className="city-title">
                         <i className="bi bi-star"></i>
                         <p className="city-ubi">Rating</p>
                     </div>
                     <div className="select">
-                        <select className='select-box'>
+                        <select className='select-box' id="rating" onChange={handleFilters}>
                             <option value="all">Todos</option>
                             <option value="1">⭐</option>
                             <option value="2">⭐⭐</option>
@@ -153,10 +171,10 @@ const Filter = () => {
                             <option value="5">⭐⭐⭐⭐⭐</option>
                         </select>
                         <div className="arrow">
-                                <img src={arrowIcon} alt="arrow down" />
+                            <i className="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
         </ContainerFilter>
     )

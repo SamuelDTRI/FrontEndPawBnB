@@ -14,7 +14,6 @@ const AdminLogin = () => {
     
     const handleSubmit = async (formData) => {
         const { userRole } = (await dispatch(loginAdmin(formData))) || {};
-        console.log(userRole)
         if(userRole){
             navigate(`/dashboardAdmin`);
         }

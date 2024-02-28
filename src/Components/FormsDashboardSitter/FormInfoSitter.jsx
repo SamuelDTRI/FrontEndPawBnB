@@ -74,8 +74,10 @@ const FormInfoSitter = () => {
     }
   };
   useEffect(() => {
+
     currentSitter();
   }, [dispatch, forceUpdate]);
+
   return (
     <>
       <Formik

@@ -15,27 +15,27 @@ const dispatch = useDispatch()
   return (
     <div>
     <div className={styles.sideBarLinks}>
-      <ul>
+      <ul className={styles.buttonList}>
         <li>
-          <a href="#" onClick={()=> handleClick("miInfo")}>
+          <button onClick={()=> handleClick("miInfo")} >
             <i className="bi bi-person-vcard"></i> Mi informacion
-          </a>
+          </button>
         </li>
         <li>
-          <a href="#" onClick={()=>handleClick("miGaleria")}>
-            <i className="bi bi-images"></i> Mi galeria
-          </a>
+          <button onClick={()=>handleClick("miGaleria")}>
+          <i className="bi bi-images"></i> Mi galeria
+          </button>
         </li>
         <li>
-          <a href="#" onClick={()=>handleClick("misReservas")}>
+          <button onClick={()=>handleClick("misReservas")}>
             <i className="bi bi-calendar4-week"></i> Mis reservas
-          </a>
+          </button>
         </li>
-        <li>
+        {/* <li>
           <a href="#" onClick={()=>handleClick("pagos")}>
             <i className="bi bi-coin"></i> Pagos
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
     </div>

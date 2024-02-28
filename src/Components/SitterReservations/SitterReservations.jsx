@@ -25,12 +25,12 @@ const [reservaId, setReservaId] = useState(null);
 const [actualizar, setActualizar] = useState(false)
 
 
-const [mostrarReserva,setMostrarReserva] = useState({
-   solicitudesDeReserva : false,
-   proximasReservas: false,
-   reservasActivas: false,
-   reservasCompletadas: false
-});
+// const [mostrarReserva,setMostrarReserva] = useState({
+//    solicitudesDeReserva : false,
+//    proximasReservas: false,
+//    reservasActivas: false,
+//    reservasCompletadas: false
+// });
 const sitterReserves=useSelector(state=>state.sitterReserve.reservas) 
 
 
@@ -41,6 +41,7 @@ const filtradasPorStatus = ()=>{
       let solicitudes = sitterReserves.filter((reserva)=>reserva.status==="pendiente");
       let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="aprobado" 
       && new Date(reserva.dateCheckIn)>today);
+      console.log("si entre", proximasReservas) 
       let reservasActivas = sitterReserves.filter((reserva)=>reserva.status === "aprobado"
       && new Date(reserva.dateCheckIn)<today && new Date(reserva.dateCheckOut)>today)
       let reservasCompletadas = sitterReserves.filter((reserva)=>reserva.status==="completado")
@@ -71,6 +72,10 @@ useEffect(()=>{
    }
    fetchBookings();
    filtradasPorStatus()
+   console.log("solicitudes pendientes : ", solicitudesPendientes)
+   console.log("proximas reservas : ", proximasReservas)
+   console.log("reservas activas : ", reservasActivas)
+   console.log("reservas completadas : ", reservasCompletadas)
 },[actualizar]);
 
 const handleVerSolicitud=(id)=>{
@@ -82,87 +87,101 @@ const handleVerSolicitud=(id)=>{
       componenteActual==="todasLasReservas"?(
         
         <div className="container">
-           
-           <button onClick={()=>setActualizar(!actualizar)} >Actualizar</button>
-           
+           <div className={styles.contenedorDeBoton}>
+           <button onClick={()=>setActualizar(!actualizar)} >
+           <i class={`bi bi-repeat ${styles.BtActualizar}`}></i>
+           </button>
+
+           </div>
+           <div className="mb-5">
            <h2>MIS RESERVAS</h2>
+           </div>
+           
             
+               <h5>SOLICITUDES DE RESERVA</h5>
             <div className="mt-5">
-              <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva,
+              {/* <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva,
                solicitudesDeReserva: !mostrarReserva.solicitudesDeReserva})}>
-                <h3>SOLICITUDES DE RESERVA</h3>
-             </button>          
+             </button>           */}
+            {/* // mostrarReserva.solicitudesDeReserva &&  */}
+            <div className={styles.contenedorSolicitudes}>
             { 
-            mostrarReserva.solicitudesDeReserva && solicitudesPendientes!=null && solicitudesPendientes.map((solicitudIndiv,index)=>
+            solicitudesPendientes !=null && solicitudesPendientes.map((solicitudIndiv,index)=>
             (
-            <div key={index} className={styles.contenedorSolicitudes}>
                 <div className={`row ${styles.contenedorFechas}`}>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(solicitudIndiv.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(solicitudIndiv.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cliente: {solicitudIndiv.Owner.name}</div>
+                <button onClick={()=>handleVerSolicitud(solicitudIndiv.id)} className={styles.button1}
+                >VER SOLICITUD</button>
                 </div> 
-                <button onClick={()=>handleVerSolicitud(solicitudIndiv.id)}>VER SOLICITUD</button>
-             </div>
-            ))   
-            }         
+                ))   
+               }         
+               </div>
             </div>
 
             <div className="mt-5">
-           <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva,
-            proximasReservas: !mostrarReserva.proximasReservas})}><h3>PROXIMAS RESERVAS</h3></button>
+               <h5>PROXIMAS RESERVAS</h5>
+           {/* <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva,
+            proximasReservas: !mostrarReserva.proximasReservas})}></button> */}
+            <div className={styles.contProxReservas}>
            { 
-            mostrarReserva.proximasReservas && proximasReservas!=null && proximasReservas.map((proxReservaInd,index)=>
+            // mostrarReserva.proximasReservas && 
+            proximasReservas!=null && proximasReservas.map((proxReservaInd,index)=>
             (
-             <div key={index} className={styles.contProxReservas}>
                 <div className={`row ${styles.contenedorFechas}`}>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(proxReservaInd.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(proxReservaInd.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador: {proxReservaInd.Owner.name}</div>
+                <button onClick={()=>handleVerSolicitud(proxReservaInd.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
-                <button onClick={()=>handleVerSolicitud(proxReservaInd.id)}>Ver detalles</button>
-             </div>          
                ))
-             } 
+            } 
+            </div>          
             </div>
            
 
             <div className="mt-5">
-           <button className= "bg-white text-dark"onClick={()=>setMostrarReserva({...mostrarReserva, reservasActivas: !mostrarReserva.reservasActivas})}>
-            <h3>RESERVAS ACTIVAS</h3>
-            </button>
+            <h5>RESERVAS ACTIVAS</h5>
+           {/* <button className= "bg-white text-dark"onClick={()=>setMostrarReserva({...mostrarReserva, reservasActivas: !mostrarReserva.reservasActivas})}>
+            </button> */}
+            <div className={styles.contReservasActivas}>
             { 
-              mostrarReserva.reservasActivas && reservasActivas !== null && reservasActivas.map((reservaActiva,index) =>
+            //   mostrarReserva.reservasActivas && 
+              reservasActivas !== null && reservasActivas.map((reservaActiva,index) =>
              ( 
-             <div key={index} className={styles.contReservasActivas}>
                 <div className={`row ${styles.contenedorFechas}`}>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(reservaActiva.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(reservaActiva.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador:{reservaActiva.Owner.name}</div>
+                <button onClick={()=>handleVerSolicitud(reservaActiva.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
-                <button onClick={()=>handleVerSolicitud(reservaActiva.id)}>Ver detalles</button>
-             </div>            
             ))
-           }
+         }
+         </div>            
             </div>
 
             <div className="mt-5">
-           <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva, reservasCompletadas: !mostrarReserva.reservasCompletadas})}>
-            <h3>RESERVAS COMPLETADAS</h3>
-            </button>
+            <h5>RESERVAS COMPLETADAS</h5>
+           {/* <button className="bg-white text-dark" onClick={()=>setMostrarReserva({...mostrarReserva, reservasCompletadas: !mostrarReserva.reservasCompletadas})}>
+            </button> */}
+               <div className={styles.contenedorSolicitudes}>
             {
-               mostrarReserva.reservasCompletadas && reservasCompletadas !==null && reservasCompletadas.map((reservCompletadaInd,index)=>
+               // mostrarReserva.reservasCompletadas && 
+               reservasCompletadas !==null && reservasCompletadas.map((reservCompletadaInd,index)=>
                (    
-                
-                <div key={index} className={styles.contenedorSolicitudes}>
                 <div className={`row ${styles.reservasCompletadas}`}>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Inicio: {new Date(reservCompletadaInd.dateCheckIn).toLocaleDateString()}</div> 
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Salida: {new Date(reservCompletadaInd.dateCheckOut).toLocaleDateString()}</div>
                 <div className={`col-12 col-md-4 ${styles.iFsFC}`}>Cuidador: {reservCompletadaInd.Owner.name}</div>
+                <button onClick={()=>handleVerSolicitud(reservCompletadaInd.id)} className={styles.button1}
+                >Ver detalles</button>
                 </div> 
-                <button onClick={()=>handleVerSolicitud(reservCompletadaInd.id)}>Ver detalles</button>
-                </div>     
                ))     
             }
+            </div>     
             </div>
 
         </div>

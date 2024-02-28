@@ -2,6 +2,65 @@
     width: 100%;
 }
 
+.containerTitulo{
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+
+
+.sectionMision{
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 80px;
+    text-align: center;
+    flex-basis: 50%;
+    background-color: #ffa826de;
+    padding: 20px;
+    width: 50%;
+    border-radius: 15px;
+    margin-left: 25%;
+    color: aliceblue;
+}
+
+
+
+
+.sectionVision {
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 25%;
+    text-align: center;
+    background-color: #7B61FF;
+    padding: 20px;
+    width: 50%;
+    border-radius: 15px;
+    color: aliceblue;
+}
+
+
+.objetivosContainer{
+    width: 50%;
+    background-color: #ffa826de;
+    border-radius: 15px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 25%;
+    padding: 20px;
+    color: aliceblue;
+}
+
+.tituloObj{
+    text-align: center;
+}
+
+.objetivos{
+    text-align: center;
+}
+
 .fundadoresContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -24,13 +83,50 @@
     margin-top: 20px;
 }
 
-.containerMision{
-    text-align: left;
-    width: 50%;
+
+
+.imgContainer img {
+    max-width: 100%;
+    height: auto;
+    flex-basis: 50%;
+    text-align: center;
 }
+
+
 
 .containerVision {
     text-align: right;
-    width: 50%;
-    margin-left: 50%;
+    flex-basis: 50%;
+    background-color: rgba(0, 255, 255, 0.395);
+    padding: 20px;
+}
+
+.imgDog{
+    height: 550px;
+    border-radius: 0;
+    margin-top: 80px;
+}
+
+.divFundadores{
+    margin-top: 100px;
+    margin-bottom: 70px;
+}
+
+.tituloFundadores{
+    margin-bottom: 30px;
+}
+
+.nombres{
+    margin-top: 15px;
+    font-size: 22px;
+}
+
+.containerOpera{
+    width: 35%;
+    margin-left: 32.5%;
+}
+
+.logo{
+    width: 25%;
+    margin-top: 12%;
 }

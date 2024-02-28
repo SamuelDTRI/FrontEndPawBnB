@@ -29,7 +29,7 @@ const Formulario = (text, role) => {
   const navigate = useNavigate()
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath)
+  
     // Traer los datos del store de Redux
   const { googleSignIn, googleUser } = UserAuth();
 
@@ -42,6 +42,7 @@ const Formulario = (text, role) => {
   };
   useEffect(() => {
     if (googleUser && googleUser.providerData) {
+      // console.log(googleUser)
       const fetchUserData = async () => {
         try {
           // Esperar a que el estado user se actualice y luego obtener el correo electrónico del usuario
@@ -51,7 +52,7 @@ const Formulario = (text, role) => {
           // Si el usuario no está registrado, redirigir al formulario de registro
           if (!exist) {
             if (currentPath == "/SignUpSitters") {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "DogSitter")
               );
               if (userRole) {
@@ -66,7 +67,7 @@ const Formulario = (text, role) => {
                 navigate(`/dashboardSitter/${userId}`);
               }
             } else {
-              const { userId, userRole } = dispatch(
+              const { userId, userRole } = await dispatch(
                 signUpOwner({ email: email }, "Owner")
               );
               if (userRole) {
@@ -260,6 +261,7 @@ const Formulario = (text, role) => {
                   placeholder="Tu telefono..."
                 />
                 <div className={styles.errorInputContainer}>
+
                   <ErrorMessage
                     name="phone"
                     component={() => (
@@ -268,6 +270,7 @@ const Formulario = (text, role) => {
                   />
                 </div>
               </div>
+
             </div>
 
             <div className="col-12">

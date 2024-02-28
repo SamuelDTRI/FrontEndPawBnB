@@ -28,18 +28,19 @@ const Alerts = () => {
   //FORMULARIO DE OWNER
   const ownerAddress = useSelector((state) => state.owner.address);
   const ownerNeighborhood = useSelector((state) => state.owner.neighborhood);
+  //falta fecha de nacimiento
   
   // FORMULARIO DEL PERRO
+  const dogExist = useSelector((state) => state.owner.Dogs);
 
   useEffect(() => {
-    if(ownerAddress && ownerNeighborhood){
+    if(ownerAddress && ownerNeighborhood && dogExist >= 0){
         setFormFillerOwner(true);
     } else {
         setFormFillerOwner(false);
       }
   }, [ownerAddress, ownerNeighborhood]);
 
-  
 
   return (
     <>

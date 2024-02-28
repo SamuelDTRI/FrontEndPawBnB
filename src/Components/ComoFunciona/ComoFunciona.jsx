@@ -5,23 +5,51 @@ import duena1 from "../../Components/imagenes/perros/cuidadora3.jpg";
 import dog4 from "../../Components/imagenes/perros/dog9.jpg";
 import perro from "../../Components/imagenes/perros/66.jpg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Swal from 'sweetalert2';
+// import 'sweetalert2/src/sweetalert2.scss'
 
 
 
 const ComoFunciona = () => {
   const navigate = useNavigate();
+  const userRole = useSelector((state) => state.auth.userRole);
+  
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   const handleSignUp = () => {
-    navigate("/SignUp")
+    if(userRole === "Owner"){
+      navigate("/Home");
+    } else if (userRole === "DogSitter"){
+      Swal.fire({
+        title: "Te encuentras registrado como Cuidador.",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+         popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+    } else{
+      navigate("/SignUp");
+    }
   }
 
   return (
   <>
   <div className={style.divTitulo}>
-    <h1 className={style.titulo}>Asi funciona PawBnb</h1>
+    <h1 className={style.titulo}>Así funciona PawBnb</h1>
   </div>
   
   <div className="container">
@@ -32,7 +60,7 @@ const ComoFunciona = () => {
         <div className={style.photos}><img src={dog4} alt="computerDog" className={style.computerDogPhoto}/></div>
         <div className={style.conteinerObj}>
           <div className={style.conteinerText}>
-            <p className={style.text}>REGISTRATE</p>
+            <p className={style.text}>REGÍSTRATE</p>
             <p className={style.text}>Crea tu cuenta completando nuestros sencillos formularios. Proporciona toda la información 
             importante sobre ti y tu mascota para encontrar el cuidador perfecto.</p>
           </div>
@@ -66,7 +94,7 @@ const ComoFunciona = () => {
     </div>
   </div>
 
-
+  
   <button 
     className={style.btn}
     onClick={handleSignUp}>

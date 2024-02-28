@@ -2,19 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ContainerCard } from "./card.styled";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
-  const handlePayment = async () => {
-    try {
-      const response = await axios.post(
-        "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session"
-      );
-      const url = response.data.url;
-      window.location.href = url;
-    } catch (error) {
-      console.error("Error al realizar el pago: ", error);
-    }
-  };
+const Card = ({image, name,neighborhood, rating, id, city, rates, review}) => {
+  const userRole = useSelector((state) => state.auth.userRole);
+
 
   return (
     <ContainerCard>
@@ -30,18 +22,28 @@ const Card = ({ image, name, neighborhood, rating, id, city, rates }) => {
           </p>
         </div>
         <div className="infoReview">
-          <p>{rating}</p>
+          <p className="star">{rating}</p>
+          <p className="review">({review})</p>
         </div>
-        <div className="infoBtn">
-          <Link to = {`/reservation/${id}`}>
-          <button className="btnBooking" /*onClick={handlePayment}*/>
-            Reservar ahora
-          </button>
-          </Link>
-          <Link to={`/sitterProfile/${id}`}>
-            <button className="btnProfile">Ver perfil</button>
-          </Link>
-        </div>
+        {userRole === 'DogSitter' ? (
+          <div className="infoBtn">
+            <Link to={`/sitterProfile/${id}`}>
+              <button className="btnBooking">Ver perfil</button>
+            </Link>
+          </div>
+        ) : (
+          <div className="infoBtn">
+            <Link to = {`/reservation/${id}`}>
+              <button className="btnBooking" /*onClick={handlePayment}*/>
+                Reservar ahora
+                </button>
+                </Link>
+                <Link to={`/sitterProfile/${id}`}>
+              <button className="btnProfile">Ver perfil</button>
+            </Link>
+          </div>
+        )}
+
       </div>
     </ContainerCard>
   );

@@ -1,8 +1,18 @@
 .divContainer{
-    margin-top: 100px;
+    margin-top: 0px;
 }
 
+ .alertText {
+     text-align: left;
+     height: 60px;
+     margin-bottom: 10px;
+     margin-top: 10px;
+     margin-left: 20px;
+ }
 
+ .icon {
+     margin-right: 7px;
+ }
 .hrstyle{
     border: none;
     border-top: 1.6px solid rgba(0, 0, 0, 0.485);

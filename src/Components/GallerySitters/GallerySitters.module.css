@@ -8,10 +8,13 @@
   margin-bottom: 20px;
   border-radius: 15px;
 }
-
+.btnSubmit{
+  margin-top: 20px;
+}
 .iconContainer:hover {
   font-size: 130px;
 }
+
 
 .gallery {
   display: grid;
@@ -20,6 +23,8 @@
   margin-bottom: 13px;
   margin-top: 50px;
 }
+
+
 
 .photoContainer {
   position: relative;
@@ -41,6 +46,7 @@
 .photoContainer:hover img {
   transform: scale(1.05);
 }
+
 
 .deleteButton {
   position: absolute;
@@ -103,4 +109,28 @@
 .seleccionUnaImg p {
   font-size: 20px;
   color: #333;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  /* Espacio entre la imagen y el botón de eliminar */
+}
+
+.imgGallery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  object-fit: contain;
+}
+
+.cancelatBtn{
+  margin-left: 34px;
 }

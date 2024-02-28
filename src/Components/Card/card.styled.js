@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const ContainerCard = styled.div`
     display: flex;
     flex-direction: column;
-    width: 250px;
+    flex-grow: 1;
+    width: 230px;
+    max-width: 290px;
     height: 450px;
     border-radius: 15px;
     box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.295);
@@ -28,11 +30,10 @@ export const ContainerCard = styled.div`
 
     .infoContainer{
         display: flex;
-        height: 45%;
+        height: auto;
         justify-content: space-between;
         flex-direction: column;
-        row-gap: 7px;
-        padding: 0 10px 20px 10px;
+        padding: 0 10px 17px 10px;
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
 
@@ -50,13 +51,23 @@ export const ContainerCard = styled.div`
         }
         .infoReview{
             display: flex;
-            align-items: flex-start;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 7px;
+            font-size: 1.2em;
 
+            .star{
+                color: #FAAF19;
+            }
+            .review{
+
+            }
             p{
                 margin: 0;
             }
         }
         .infoBtn{
+            margin-top: 5px;
 
             button{
                 height: 30px;

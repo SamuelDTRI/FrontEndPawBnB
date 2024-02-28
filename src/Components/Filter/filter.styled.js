@@ -58,6 +58,13 @@ export const ContainerFilter = styled.div`
                color: #FFA726;
             }
 
+            .bi-star{
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               color: #FFA726;
+            }
+
             .city-ubi{
                margin: 0;
                margin-left: 5px;
@@ -76,13 +83,15 @@ export const ContainerFilter = styled.div`
                background-color: #FFFFFF;
                color: #959595;
                border-radius: 8px;
-               width: 120px;
+               width: 140px;
                padding-left: 7px;
                height: 30px;
                border: 0px solid #ffa726;
+               outline: 0;
 
                option{
                   background-color: #FFFFFF;
+                  text-align: left;
                }
             }
 
@@ -139,6 +148,7 @@ export const ContainerFilter = styled.div`
                border: none;
                padding-left: 5px;
                border: 0px solid red;
+               outline: 0;
             }
             .btn-rates{
                background-color: #ffa72640;
@@ -148,6 +158,10 @@ export const ContainerFilter = styled.div`
                align-items: center;
                cursor: default;
             }
+            .btn-rates:hover{
+               border-color: transparent;
+               box-shadow: none;
+            }
          }
          .btn-rates-rest{
             background-color: #ffa72640;
@@ -156,6 +170,10 @@ export const ContainerFilter = styled.div`
             justify-content: center;
             align-items: center;
             cursor: default;
+         }
+         .btn-rates-rest:hover{
+            border-color: transparent;
+            box-shadow: none;
          }
       }
    }

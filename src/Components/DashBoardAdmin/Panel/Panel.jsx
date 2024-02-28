@@ -50,7 +50,7 @@ const Panel = () => {
   // Contar cuidadores por barrio
   usersList.forEach((user) => {
     const { neighborhood, role } = user;
-    if (role === "DogSitter") {
+    if (role === "DogSitter" && neighborhood !== null) {
       //se podría usar sittersList también
       if (neighborhoodCount[neighborhood]) {
         neighborhoodCount[neighborhood]++;
@@ -183,7 +183,7 @@ const Panel = () => {
                     Cuidadores
                   </span>{" "}
                   <span className={`ms-auto ${styles.labelNumber}`}>
-                    {sittersList.length}
+                    {ownersList.length}
                   </span>
                 </p>
               </div>

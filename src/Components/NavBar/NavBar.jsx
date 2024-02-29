@@ -73,7 +73,9 @@ const handleClickMiPerfil=(userRole)=>{
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (
             <div className="d-flex col-12">
+
               {userRole !== "Admin" && (
+              
                 <button
                   className={`col-4 ${style.BtMiPerfil}`}
                   onClick={() => handleClickMiPerfil(userRole)}>

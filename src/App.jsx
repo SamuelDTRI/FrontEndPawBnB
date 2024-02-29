@@ -86,16 +86,16 @@ function App() {
         <Route path="/ayuda-faq" element={<AyudaFaq />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/localidades" element={<Localidades />} />
+        <Route path="/sitterProfile/:id" element={<SitterProfile />} />
+        <Route
+          path="/reservation/:id"
+          element={userId ? <ReservationRequest /> : <SignUpOwners />}
+        />
         {/* Rutas privadas */}
         {userId && userRole && !userDeleted ? (
           <>
             <Route path="/dashboardSitter/:id" element={<DashboardSitter />} />
             <Route path="/dashboardOwner/:id" element={<DashboardOwner />} />
-            <Route path="/sitterProfile/:id" element={<SitterProfile />} />
-            <Route
-              path="/reservation/:id"
-              element={userId ? <ReservationRequest /> : <SignUpOwners />}
-            />
             <Route path="/Pay" element={<PaymentCheckout />} />
             <Route path="/PaySuccess" element={<PaymentSucces />} />
             <Route path="/PayCancel" element={<PaymentCancel />} />

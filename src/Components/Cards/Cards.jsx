@@ -96,7 +96,7 @@ const Cards = () => {
   return (
     <ContainerCards>
       <div className="title-order">
-        <div className="title"><h2>Cuidadores en CABA</h2></div>
+        <div className="title"><h2>Elige el cuidador para tu mascota.</h2></div>
         {items.length>1?
           <Order/>
           :

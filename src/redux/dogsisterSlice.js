@@ -62,8 +62,9 @@ export const dogsisterSlice = createSlice({
               return ratingSum += +allReview?.rating;
             });
         
-            ratingAverage = (ratingSum / ratingArray.length).toFixed(0);
-
+            /* ratingAverage = (ratingSum / ratingArray.length).toFixed(0); */
+            ratingAverage = ratingSum / ratingArray.length;
+            
           }
           
           return ratingAverage;
@@ -73,7 +74,8 @@ export const dogsisterSlice = createSlice({
           // Filtrar las dogSisters basadas en el rating promedio calculado
           filteredDogSisters = filteredDogSisters.filter(dogSister => {
             const sitterRating = ratingCard(dogSister.id); // Obtener el rating promedio del cuidador
-            return sitterRating == +rating;
+            let sitterString = sitterRating.toString().charAt(0);
+            return sitterString == rating;
           });
         }
       }

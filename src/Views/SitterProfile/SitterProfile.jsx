@@ -44,7 +44,7 @@ const SitterProfile = () => {
 
     const reviewAsync = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/review/${id}`);
+        const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/review/${id}`);
         setReview(data);
         if(data.length > 2){
           setComment(data.slice(0,2));

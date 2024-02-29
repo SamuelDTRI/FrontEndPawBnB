@@ -6,7 +6,11 @@ height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
-background-color: #ccc;
+background-color: #414040fc;
+position: fixed;
+z-index: 5;
+right: 0;
+top: 0;
 
 .container{
     display: flex;

@@ -16,12 +16,14 @@ const OwnerReservations = () => {
   const dogSitters = useSelector((state) => state.dogsister.dogsisters);
   
   const [review, setReview] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+
   const handleReview = () => {
     setReview(true);
+    setDisableBtn(true);
+    document.getElementById('btnReview').style.backgroundColor = '#ffa72640';
+    document.getElementById('btnReview').style.cursor = 'default';
   }
-
-  
-
 
   const getfecha = (str) => {
     let date = new Date(str);
@@ -225,10 +227,9 @@ const OwnerReservations = () => {
                           Cuidador: {getSitter(reserva.dogSitterId)}/
                           {getDog(reserva.dogId)}
                         </div>
-                      <button onClick={handleReview}>Dejar comentario</button>
-                        {review?
-                          <FormReview dogSitterId={reserva.dogSitterId} ownerId={reserva.ownerId} reviewState={review}/>                          :
-                          <></>
+                      <button disabled={disableBtn} id="btnReview" onClick={handleReview}>Dejar comentario</button>
+                        {
+                          review && <FormReview dogSitterId={reserva.dogSitterId} ownerId={reserva.ownerId} reviewState={review}/>  
                         }
                         </div>
                         </div>

@@ -4,7 +4,7 @@ import { ContainerFormReview } from "./formReview.styled";
 import Swal from 'sweetalert2';
 
 
-const FormReview = ({dogSitterId, ownerId, reviewState}) => {
+const FormReview = ({dogSitterId, ownerId, setReview}) => {
 
     const [formData, setFormData] = useState({
         dogSitterId: dogSitterId,
@@ -40,8 +40,13 @@ const FormReview = ({dogSitterId, ownerId, reviewState}) => {
             setBtnDisable(true);
             document.getElementById('sendBtn').style.backgroundColor = '#ffa72640';
             document.getElementById('sendBtn').style.cursor = 'default';
-            reviewState=false;
+            setReview(false);
         } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se pudo enviar tu comentario"
+            });
             console.log('error al cargar comentario', error);
         }
     }

@@ -3,6 +3,7 @@ import { getReservation } from "../../redux/reservationSlice";
 import styles from "./OwnerReservations.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FormReview from "../FormReview/FormReview";
 
 const OwnerReservations = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,11 @@ const OwnerReservations = () => {
   );
   const dogs = useSelector((state) => state.dogs.dogsList);
   const dogSitters = useSelector((state) => state.dogsister.dogsisters);
+  
+  const [review, setReview] = useState(false);
+  const handleReview = () => {
+    setReview(true);
+  }
 
   const getfecha = (str) => {
     let date = new Date(str);
@@ -32,6 +38,7 @@ const OwnerReservations = () => {
 
   const getSitter = (id) => {
     const sitter = dogSitters.filter((DS) => DS.id === id)[0];
+    console.log("SITTERR",sitter)
     return sitter ? sitter.name : "Sitter not found";
   };
 
@@ -51,11 +58,13 @@ const OwnerReservations = () => {
       <div className="mt-5">
         <div className={styles.contReservasActivas}>
           {reservations
-            ? reservations.map((reserva) => {
+            ? reservations.map((reserva) => { 
+               
                 if (reserva.status == "pendiente") {
                   return (
                     <>
-                      <div
+                    <div key={reserva.id}>
+                      <div 
                         className={`row ${styles.contenedorFechas} ${
                           styles[reserva.status]
                         }`}
@@ -71,6 +80,7 @@ const OwnerReservations = () => {
                           {getDog(reserva.dogId)}
                         </div>
                       </div>
+                    </div>
                     </>
                   );
                 }
@@ -87,11 +97,13 @@ const OwnerReservations = () => {
                 if (reserva.status === "activo") {
                   return (
                     <>
+                    <div key={reserva.id}>
+
                       <div
                         className={`row ${styles.contenedorFechas} ${
                           styles[reserva.status]
                         }`}
-                      >
+                        >
                         <div className={`col-12 col-md-4 ${styles.iFsFC}`}>
                           Inicio: {getfecha(reserva.dateCheckIn)}
                         </div>
@@ -99,10 +111,12 @@ const OwnerReservations = () => {
                           Salida: {getfecha(reserva.dateCheckOut)}
                         </div>
                         <div className={`col-12 col-md-4 ${styles.iFsFC}`}>
-                          Cuidador: {getSitter(reserva.dogSitterId).name}/
-                          {getDog(reserva.dogId).name}
+                          Cuidador: {getSitter(reserva.dogSitterId)}/
+                          {getDog(reserva.dogId)}
                         </div>
                       </div>
+                        </div>
+                    
                     </>
                   );
                 }
@@ -119,11 +133,13 @@ const OwnerReservations = () => {
                 if (reserva.status === "aprobado") {
                   return (
                     <>
+                    <div key={reserva.id}>
+
                       <div
                         className={`row ${styles.contenedorFechas} ${
                           styles[reserva.status]
                         }`}
-                      >
+                        >
                         <div className={`col-12 col-md-4 ${styles.iFsFC}`}>
                           Inicio: {getfecha(reserva.dateCheckIn)}
                         </div>
@@ -135,6 +151,7 @@ const OwnerReservations = () => {
                           {getDog(reserva.dogId).name}
                         </div>
                       </div>
+                        </div>
                     </>
                   );
                 }
@@ -148,14 +165,17 @@ const OwnerReservations = () => {
         <div className={styles.contReservasActivas}>
           {reservations
             ? reservations.map((reserva) => {
+               console.log("RESERVA", reserva)
                 if (reserva.status === "completado") {
                   return (
                     <>
+                    <div key={reserva.id}>
+
                       <div
                         className={`row ${styles.contenedorFechas} ${
                           styles[reserva.status]
                         }`}
-                      >
+                        >
                         <div className={`col-12 col-md-4 ${styles.iFsFC}`}>
                           Inicio: {getfecha(reserva.dateCheckIn)}
                         </div>
@@ -166,7 +186,13 @@ const OwnerReservations = () => {
                           Cuidador: {getSitter(reserva.dogSitterId).name}/
                           {getDog(reserva.dogId).name}
                         </div>
-                      </div>
+                      <button onClick={handleReview}>Dejar comentario</button>
+                        {review?
+                          <FormReview dogSitterId={reserva.dogSitterId} ownerId={reserva.ownerId} reviewState={review}/>                          :
+                          <></>
+                        }
+                        </div>
+                        </div>
                     </>
                   );
                 }
@@ -183,11 +209,13 @@ const OwnerReservations = () => {
                 if (reserva.status === "cancelado") {
                   return (
                     <>
+                    <div key={reserva.id}>
+
                       <div
                         className={`row ${styles.contenedorFechas} ${
                           styles[reserva.status]
                         }`}
-                      >
+                        >
                         <div className={`col-12 col-md-4 ${styles.iFsFC}`}>
                           Inicio: {getfecha(reserva.dateCheckIn)}
                         </div>
@@ -199,6 +227,7 @@ const OwnerReservations = () => {
                           {getDog(reserva.dogId).name}
                         </div>
                       </div>
+                        </div>
                     </>
                   );
                 }

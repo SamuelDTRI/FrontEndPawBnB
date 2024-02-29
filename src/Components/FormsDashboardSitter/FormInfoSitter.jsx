@@ -66,9 +66,9 @@ const FormInfoSitter = () => {
         })
       );
       await currentSitter();
+      setForceUpdate((prev) => !prev);
       resetForm();
       setFormSent(true);
-      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
@@ -152,8 +152,8 @@ const FormInfoSitter = () => {
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-6 col-md-12">
+             <div className="row">
+            { /* <div className="col-lg-6 col-md-12">
                 <label htmlFor="email">Email</label>
                 <Field
                   type="text"
@@ -214,9 +214,9 @@ const FormInfoSitter = () => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-              </div>
+              </div> */}
               <div className="row d-flex justify-content-center">
-                <div className="col-lg-6 col-md-8">
+                <div className="col-lg-12 col-md-8">
                   <label htmlFor="phone">Telefono</label>
                   <Field
                     type="text"

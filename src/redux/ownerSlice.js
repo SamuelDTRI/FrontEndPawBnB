@@ -2,11 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Crear una acción asíncrona para actualizar el propietario
+
 export const updateOwner = createAsyncThunk(
   "owner/updateOwner",
   async (updatedOwner, thunkAPI) => {
     try {
       const response = await axios.put(
+        //`http://localhost:3000/owners/${updatedOwner.id}`,
         `https://backendpawbnb-production.up.railway.app/owners/${updatedOwner.id}`,
         updatedOwner
       );

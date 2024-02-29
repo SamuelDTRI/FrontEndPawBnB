@@ -26,34 +26,32 @@ const ReservationRequest = () => {
   const sitters = useSelector((state) => state.dogsister.dogsisters);
   // const reservations = useSelector((state) => state.reservation.reservations);
   const URL = window.location.href.split("/");
-
   const getDogs = () => {
     dispatch(loadDogsByOwner(userId));
   };
 
+ console.log("PARA PROBAR")
+
   const getSitter = () => {
-    return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+
+    let dogSitter = sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+    return dogSitter.id
+
+    
+
   };
+  const getSitterRate =()=>{
+    let dogSitterRate = sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+    console.log("DOGSITTER",dogSitterRate)
+    return dogSitterRate.rates
+  }
 
-  useEffect(() => {
-    // let _sitterId = sitters.filter((sitter) => {
-    //   // mapea los sitters
-    //   console.log({url:sitter})
-    //   return sitter.id
-    // });
-    console.log({
-      sitterUE: sitters,
-      idURL: URL[URL.length - 1],
-      existSitter: sitters.filter((s) => s.id == URL[URL.length - 1])[0].id,
-    });
-
-    // setSitterId(sitters.filter(s=>s.id == URL[URL.length - 1])[0].id);
-  }, []);
+ 
 
   useEffect(() => {
     getDogs();
     console.log({ URL });
-    console.log({ sitters, userId, owner, auth, dogs, sitterId: getSitter() });
+    console.log({ sitters, userId, owner, auth, dogs, sitterId: getSitter() },);
   }, []);
 
   return (
@@ -99,12 +97,12 @@ const ReservationRequest = () => {
 
         //Validacion notas
 
-        if (!valores.note) {
-          errores.note = "Por favor ingresa una observacion.";
-        } else if (valores.note.length > 256) {
-          errores.note =
-            "El texto es demasiado largo, por favor ingrese menos de 256 letras";
-        }
+        // if (!valores.note) {
+        //   errores.note = "Por favor ingresa una observacion.";
+        // } else if (valores.note.length > 256) {
+        //   errores.note =
+        //     "El texto es demasiado largo, por favor ingrese menos de 256 letras";
+        // }
 
         return errores;
       }}
@@ -123,7 +121,11 @@ const ReservationRequest = () => {
           try {
             const response = await axios.post(
               "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
-              { productPrice: getSitter().rates } // Aquí envías el precio del cuidador seleccionado
+
+               { productPrice: getSitterRate() } 
+              // Aquí envías el precio del cuidador seleccionado
+
+             
             );
             const url = response.data.url;
             window.location.href = url;
@@ -133,7 +135,7 @@ const ReservationRequest = () => {
         };
 
         // Llamamos a la función de pago
-        handlePayment();
+         handlePayment();
       }}
     >
       {({ errors }) => (
@@ -205,7 +207,6 @@ const ReservationRequest = () => {
                   <div className={styles.error}>{errors.dogId}</div>
                 )}
               />
-
               <div className="col-12">
                 <label htmlFor="note">Notas</label>
                 <Field

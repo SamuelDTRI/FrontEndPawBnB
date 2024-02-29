@@ -29,3 +29,8 @@
       text-align: left;
       font-weight: 400;
     }
+
+    .star {
+      display: flex;
+      color: #FFA726;
+    }

@@ -4,16 +4,18 @@ import Card from "../Card/Card";
 import Order from "../Order/Order";
 import { ContainerCards } from "./cards.styled";
 import Pagination from "../Pagination/pagination";
+import axios from 'axios';
 
 const RESULT_PAGE = 12;
-const imgDefautl = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
+const imgDefault = "https://thumbs.dreamstime.com/b/vector-de-perfil-avatar-predeterminado-foto-usuario-medios-sociales-icono-183042379.jpg";
 
 const Cards = () => {
   const dogsisters = useSelector((state) => state.dogsister.dogsisters);
-
+  
   const [currentPage, setCurrentPage] = useState(0);
   const [items, setItems] = useState([]);
   const [pages, setPages] = useState(0);
+  const [allReview, setAllReview] = useState([]);
 
   useEffect(() => {
     // Actualiza los elementos cuando cambia la lista completa de dogsisters
@@ -22,6 +24,17 @@ const Cards = () => {
     setItems(dogsisters.slice(startIndex, endIndex));
     const pagesTotal = Math.floor(dogsisters.length / RESULT_PAGE);
     setPages(pagesTotal);
+
+    const reviewAsync = async () => {
+      try {
+        const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/review`);
+        setAllReview(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    reviewAsync();
   }, [dogsisters, currentPage]);
 
   const nextHandler = () => {
@@ -42,6 +55,44 @@ const Cards = () => {
     }
   };
 
+  const ratingCard = (id) => {
+    // Filtra las revisiones que corresponden al id de la card
+    const cardReviews = allReview.filter(review => review.dogSitterId === id);
+
+    let ratingSum = 0;//suma total
+    let ratingAverage = 0;//promedio
+    const stars = [];
+    
+    if(cardReviews.length > 0){
+      
+      const ratingArray = cardReviews.map((allReview) => {
+        return ratingSum += +allReview?.rating;
+      });
+  
+      ratingAverage = (ratingSum / ratingArray.length).toFixed(1);
+    }
+    
+    for (let i = 1; i <= 5; i++) {
+      if (i <= ratingAverage) {
+        stars.push(<i key={i} className="bi bi-star-fill"></i>);
+      }else{
+        if(ratingAverage > i && ratingAverage < i+1){
+          stars.push(<i key={i} class="bi bi-star-half"></i>);
+        }else {
+          stars.push(<i key={i} className="bi bi-star"></i>);
+        }
+      }
+    }
+    
+    return stars;
+  }
+
+  const reviewCard = (id) => {
+    const cardReviews = allReview.filter(review => review.dogSitterId === id);
+
+    return cardReviews.length;
+  }
+
   return (
     <ContainerCards>
       <div className="title-order">
@@ -58,12 +109,13 @@ const Cards = () => {
             <Card
               key={allDogsister?.id}
               id={allDogsister?.id}
-              image={allDogsister?.photoProfile ? allDogsister.photoProfile : imgDefautl}
+              image={allDogsister?.photoProfile ? allDogsister.photoProfile : imgDefault}
               name={allDogsister?.name}
               neighborhood={allDogsister?.neighborhood? allDogsister?.neighborhood : 'Desconocido' }
-              rating={"⭐⭐⭐"}
+              rating={ratingCard(allDogsister?.id)}
               city={allDogsister?.city}
               rates={allDogsister?.rates}
+              review={reviewCard(allDogsister?.id)}
             />
           ))}
         </div>

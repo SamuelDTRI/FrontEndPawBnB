@@ -45,6 +45,7 @@ export const loginUser = (formData) => async (dispatch) => {
     console.log({formData})
     try {
         const response = await axios.post(
+            //`http://localhost:3000/login`,
             `https://backendpawbnb-production.up.railway.app/login`,
             formData
         ); 
@@ -59,9 +60,11 @@ export const loginUser = (formData) => async (dispatch) => {
     } catch (error) {
         if (error.response) {
             const errorMessage = error.response.data.error;
+            console.log(errorMessage);
             dispatch(loginFailure(errorMessage));
         } else {
             dispatch(loginFailure(error.message)); 
+            console.log(error);
         }
     }
 };

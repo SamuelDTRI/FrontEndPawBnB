@@ -9,26 +9,29 @@ import { sitterInfo } from "../../redux/sitterSlice";
 import { Link, useParams } from "react-router-dom";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp"
 import SitterReservations from "../../Components/SitterReservations/SitterReservations";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 
 const DashboardSitter = () => {
+  const {id} = useParams();
+  const dispatch = useDispatch();
+  
   const [file, setFile] = useState("");
   const [imgProfile, setImgProfile] = useState("");
-  const dispatch = useDispatch();
-  const {id} = useParams();
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const linkActivo = useSelector((state) => state.dashboard.linkActive);
   const infoSitter = useSelector((state) => state.sitter);
-  const [isSubmit, setIsSubmit] = useState(false);
+
   
-  const currentSitter = async () => {
-    try {
-      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
-      dispatch(sitterInfo(data));
-    } catch (error) {
-      console.error("Error al obtener los datos del cuidador:", error);
-    }
-  };
+  // const currentSitter = async () => {
+  // try {
+  // const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters/${id}`);
+  // dispatch(sitterInfo(data));
+  // } catch (error) {
+  // console.error("Error al obtener los datos del cuidador:", error);
+  // }
+  // };
 
   const previewFiles = (file) => {
     const reader = new FileReader(); 
@@ -47,24 +50,45 @@ const DashboardSitter = () => {
 
   const handleSubmit = async (event) => {
     if(!imgProfile) {
-      alert("Debes Seleccionar Una Imagen.");
+      Swal.fire({
+        title: "Debes seleccionar una imagen.",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+        }
+      });
       return;
     }
-    event.preventDefault();
-    const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
-      photoProfile: imgProfile,
-    });
     try {
+      event.preventDefault();
+      const result = await axios.put(`https://backendpawbnb-production.up.railway.app/sitters/${id}`, {
+        photoProfile: imgProfile,
+      });
       console.log(result.data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Tu imagen se ha subido correctamente!",
+        showConfirmButton: false,
+        timer: 3000
+      });
+      dispatch(sitterInfo({...infoSitter, photoProfile: imgProfile }));
+
     } catch(error){
-      console.log(error);
+      console.log("Error al actualizar la imagen de perfil:", error);
     }
   };
-
-  useEffect(() => {
-    currentSitter();
-  }, [linkActivo]);
-  //const lastPhoto = infoSitter.photoProfile && infoSitter.photoProfile.length > 0 ? infoSitter.photoProfile[infoSitter.photoProfile.length - 1].url : '';
 
   return (
     <div className="container my-5 ">
@@ -76,32 +100,17 @@ const DashboardSitter = () => {
               linkActivo === "miGaleria"? (
                 
               <div className={styles.imageProfileContainer}>
-
-                  {
-                    infoSitter.photoProfile ? (
-                      <div className={styles.imgGalleryContainer}>
-                        <img
-                          src={imgProfile || infoSitter.photoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>   
-                      </div>
-                    ) : (
-                      <div className={styles.imgProfileContainer}>
-                        <img
-                          src={imgProfile || NoPhotoProfile}
-                          alt={infoSitter.name}
-                          className={styles.imageProfile}
-                        />
-                        <label htmlFor="fileInput" className={styles.iconImg}>
-                          <i className="bi bi-person-bounding-box"></i>
-                        </label>    
-                      </div>
-                  )}
-
+                <div className={styles.imgGalleryContainer}>
+                  <img
+                    src={imgProfile || infoSitter.photoProfile || NoPhotoProfile}
+                    alt={infoSitter.name}
+                    className={styles.imageProfile}
+                  />
+                  <label htmlFor="fileInput" className={styles.iconImg}>
+                    <i className="bi bi-person-bounding-box"></i>
+                  </label>   
+                </div>
+               
                 <div>
                   <form onSubmit={event => handleSubmit(event)}>
                     <input onChange={event => handleChange(event)} name='image' type="file" id='fileInput' required
@@ -115,7 +124,10 @@ const DashboardSitter = () => {
                         handleSubmit(event)
                       }}
                       >ACTUALIZAR FOTO DE PERFIL</button>
-                    </div>        
+                    </div> 
+                    {/* {uploadSuccess && (
+                    <div className={styles.notification}>La imagen se ha subido con éxito</div>
+                    )}        */}
                   </form>            
                 </div>
 

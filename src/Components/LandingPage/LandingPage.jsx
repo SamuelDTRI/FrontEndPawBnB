@@ -50,7 +50,7 @@ const LandingPage=()=>{
                <div className={"conteiner mt-5 custom-margin"}>
                 <div className="mx-5">
                 <div className="row">
-                    <div className="col-12 col-md-6 p-2">
+                    <div className={`col-12 col-md-6 p-2 ${style.contenedorTituloSubtitulo}`}>
                         <div className={style.titulo}>
                             RESERVA UN CUIDADOR DE CONFIANZA CERCA DE TI
                         </div>
@@ -59,12 +59,12 @@ const LandingPage=()=>{
                         Permitanos brindarle la hospitalidad que se merece a través de nuestra red nacional
                         de cuidadores! 
                         </div>    
-                        <div className={style.contenedorInputs}>
+                        {/* <div className={style.contenedorInputs}>
                            <SearchBar/> 
-                        </div>
+                        </div> */}
                     </div> 
                                     
-                    <div className="col-12 col-md-6 ">
+                    <div className="col-12 col-md-6">
                          <img src={BoxerPhoto} alt="perrito" className={style.imagenBoxer}/> 
                         </div>
                     </div>            
@@ -79,8 +79,8 @@ const LandingPage=()=>{
             <div className={style.texto}>
                   <div className={style.titulo2}>EXPERIMENTA LA MAGIA DE PAWBNB</div>
                   <div className={style.subtitulo2}>
-                 Es facil y conveniente reservar su proximo cuidador, quien ha sido examinado minusiosamente 
-                  y esta respaldado por nuestra promesa de PAWBNB en reservas
+                    Es fácil y conveniente reservar su próximo cuidador, quien ha sido 
+                    examinado minuciosamente y está respaldado por nuestra promesa de PAWBNB en reservas.
                   </div>
             </div>
            </div>  
@@ -93,8 +93,8 @@ const LandingPage=()=>{
                   <div className={style.conteinerObj}>
                     <div className={style.conteinerText}>
                         <p className={style.text}>BUSCAR Y RESERVAR</p>
-                        <p className={style.text}>Cada cuidador es examinaod minuciosamente y se 
-                         verifica sus antecedentes
+                        <p className={style.text}>Cada cuidador es examinado minuciosamente 
+                        y se verifican sus antecedentes.
                          </p>
                         </div>
                   </div>
@@ -107,8 +107,7 @@ const LandingPage=()=>{
                   <div className={style.conteinerObj}>
                     <div className={style.conteinerText}>
                         <p className={style.text}>PROGRAMA TU MEET AND GREET GRATIS</p>
-                        <p className={style.text}>El cuidador se reunira contigo y tu perro para asegurarse
-                        de ser el cuidador iddeal</p>
+                        <p className={style.text}>El cuidador se reunirá contigo y tu perro para asegurarse de ser el cuidador ideal.</p>
                         </div>
                   </div>
              </div>
@@ -121,8 +120,7 @@ const LandingPage=()=>{
                   <div className={style.conteinerObj}>
                     <div className={style.conteinerText}>
                         <p className={style.text}>VIAJA CON TRANQUILIDAD</p>
-                        <p className={style.text}>Recibiras actualizaciones periodicas, incluyendo
-                        muchas fotos!</p>
+                        <p className={style.text}>Recibirás actualizaciones periódicas, ¡incluyendo muchas fotos</p>
                         </div>
                   </div>
              </div>
@@ -136,7 +134,7 @@ const LandingPage=()=>{
              ><img className={style.imagenDivisora} src={SextionDividerPhoto} alt="hola" />
         </div>   
 
-        <div className={style.texto}><p className={style.titulo2}>POR QUE ELEGIR PAWBNB?</p></div> 
+        <div className={style.texto}><p className={style.titulo2}>¿POR QUÉ ELEGIR PAWBNB?</p></div> 
 
         <div className={`container ${style.contenedorPpal}`}>
             <div className="row">

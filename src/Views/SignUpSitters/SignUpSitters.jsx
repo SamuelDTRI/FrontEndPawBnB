@@ -1,10 +1,17 @@
 import Formulario from "../../Helpers/Formulario";
-import React from "react";
+import styles from "./SignUpSitters.module.css"
 
 const SignUpSitters = () => {
   return (
-    <Formulario text= 'REGISTRATE COMO CUIDADOR' role= "DogSitter"/>
+    <>
+    <div className={styles.signUPFormContainer}>
+      <Formulario text= 'REGISTRATE COMO CUIDADOR' role= "DogSitter"/>
+    </div>
+    <div classname= {styles.containerImage}>
+    <img src="https://res.cloudinary.com/dtyqmfqi2/image/upload/v1707330244/PawBnb/log-in-dog-min_tbfeqz.png" alt="PerritoLogin" />
+  </div>
     
+    </>
   )
 };
 

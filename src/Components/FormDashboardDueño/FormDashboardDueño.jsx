@@ -126,7 +126,7 @@ const FormDashboardDueño = () => {
               </div>
             </div>
 
-            <div className="row">
+            {/* <div className="row">
               <div className="col-lg-6 col-md-12">
                 <label htmlFor="email">Email</label>
                 <Field
@@ -157,12 +157,12 @@ const FormDashboardDueño = () => {
                   )}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="row">
-              <div className="col-lg-6 col-md-12">
+              <div className="col-lg-12 col-md-12">
                 <label htmlFor="phone">Telefono</label>
                 <Field
-                  type="number"
+                  type="text"
                   id="phone"
                   name="phone"
                   placeholder={ownerInfo.phone}
@@ -174,12 +174,13 @@ const FormDashboardDueño = () => {
                   )}
                 />
               </div>
-              <div className="col-lg-6 col-md-12">
+              </div>
+              {/* <div className="col-lg-6 col-md-12">
                 <label htmlFor="dateOfBirth">Fecha de nacimiento</label>
                 <Field
-                  type="date"
-                  id="dateOfBirth"
-                  name="dateOfBirth"
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
                   value={ownerInfo.dateOfBirth}
                 />
                 <ErrorMessage
@@ -188,8 +189,7 @@ const FormDashboardDueño = () => {
                     <div className={styles.error}>{errors.dateOfBirth}</div>
                   )}
                 />
-              </div>
-            </div>
+            </div> */}
 
             <div className="row">
               <div className="col-lg-6 col-md-12">

@@ -1,3 +1,14 @@
+.contenedorDeBoton{
+    text-align: left;
+}
+
+.contenedorDeBoton button{
+    margin-top: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+}
+
 .contenedorSolicitudes{
     margin-top: 2em;
     border: 2px solid #ffa726;
@@ -23,6 +34,10 @@
     background-color:#D1FFA4;
 }
 
+.button1{
+width: 9em !important;
+margin: 0 auto;
+}
 .contenedorFechas{
     align-items: center;
     text-align: center;
@@ -37,4 +52,26 @@
     font-weight: 600;
 	font-size: 18px;
     padding: 10px;
+}
+
+.conenedorReservas{
+    margin-top: 3em;
+}
+
+.contenedorEncabezado{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     margin-top: 20px;
+}
+
+.contenedorEncabezado h2{
+    margin: 0 auto;
+}
+
+.contenedorEncabezado button{
+  
+  margin-right: 10px;
+  margin-left: 0;
+  padding: 5px 5px;
 }

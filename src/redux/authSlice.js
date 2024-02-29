@@ -21,7 +21,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.userId = action.payload.userId;
         state.userRole = action.payload.userRole;
-
+        state.userDeleted = action.payload.userDeleted
         localStorage.setItem('userData', JSON.stringify(action.payload));
         },
         loginFailure(state, action) {
@@ -42,7 +42,6 @@ export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.acti
 
 export const loginUser = (formData) => async (dispatch) => {
     dispatch(loginStart());
-    console.log({formData})
     try {
         const response = await axios.post(
             //`http://localhost:3000/login`,
@@ -51,7 +50,7 @@ export const loginUser = (formData) => async (dispatch) => {
         ); 
         const { userId, userRole, userDeleted} = response.data
         dispatch(loginSuccess(response.data)); 
-        console.log(response.data)
+
         return {
             userId,
             userRole,
@@ -74,7 +73,6 @@ export const logOutUser = () => async (dispatch) => {
 };
 
 export const googleLoginSuccess = (loginData)=> async (dispatch) => {
-    console.log(loginData)
     dispatch(loginSuccess(loginData));
 };
 export default authSlice.reducer;

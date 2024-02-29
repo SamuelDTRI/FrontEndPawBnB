@@ -1,0 +1,9 @@
+.imageMessageContainer img {
+    width: auto;
+    height: 20%;
+}
+
+.messageContainer h3{
+    color: #FAAF19;
+    font-weight: 700;
+}

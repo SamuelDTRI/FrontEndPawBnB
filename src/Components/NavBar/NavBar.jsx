@@ -13,7 +13,7 @@ const NavBar = () => {
   const userRole = useSelector((state) => state.auth.userRole);
   const adminRole = useSelector((state) => state.adminUsers.adminRole )
   const idUsuarioActual = useSelector((state) => state.auth.userId)
-
+  console.log(adminRole)
   const logOutButtonText= " SALIR";
   const registerButtonText = "REGISTRATE";
   const loginButtonText = "INGRESAR";
@@ -49,18 +49,33 @@ const handleClickMiPerfil=(userRole)=>{
   return (
     <div className={`container-fluid ${style.navbar}`}>
       <nav className="navbar border-bottom bg-white">
+        {userRole ==='DogSitter' ? (
+        <div className={style.imagen}>
+            <img src={logo} alt="PawBnb" />
+        </div>
+        ) : (
         <div className={style.imagen}>
           <Link to="/">
             <img src={logo} alt="PawBnb" />
           </Link>
         </div>
+        )}
 
-        <button onClick={() => navigate("Home")}>HOME</button>
+        {/* BLOQUEAR BOTON DE HOME PARA CUIDADORES */}
+        {userRole === 'Owner' &&
+          <button onClick={() => navigate("Home")}>HOME</button>
+        }
+        {!userRole &&
+          <button onClick={() => navigate("Home")}>HOME</button>
+        }
+
         {/* <button onClick={handleClickMiPerfil}>MI PERFIL</button> */}
         <div className="col-12 col-md-3 m-1">
           {googleUser || userRole ? (
             <div className="d-flex col-12">
-              {adminRole !== "admin" && (
+
+              {userRole !== "Admin" && (
+              
                 <button
                   className={`col-4 ${style.BtMiPerfil}`}
                   onClick={() => handleClickMiPerfil(userRole)}>

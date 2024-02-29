@@ -26,10 +26,11 @@ const ReservationRequest = () => {
   const sitters = useSelector((state) => state.dogsister.dogsisters);
   // const reservations = useSelector((state) => state.reservation.reservations);
   const URL = window.location.href.split("/");
-
   const getDogs = () => {
     dispatch(loadDogsByOwner(userId));
   };
+
+ console.log("PARA PROBAR")
 
   const getSitter = () => {
     return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
@@ -205,7 +206,6 @@ const ReservationRequest = () => {
                   <div className={styles.error}>{errors.dogId}</div>
                 )}
               />
-
               <div className="col-12">
                 <label htmlFor="note">Notas</label>
                 <Field

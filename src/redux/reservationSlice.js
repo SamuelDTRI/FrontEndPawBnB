@@ -23,8 +23,8 @@ export const sendReservation = createAsyncThunk( //envia la reserva
       console.log({ peticion: valores });
 
       let { data } = await axios.post(
-        //"https://backendpawbnb-production.up.railway.app/bookings",
-        "http://localhost:3000/bookings",
+        "https://backendpawbnb-production.up.railway.app/bookings",
+        //"http://localhost:3000/bookings",
         peticion
       );
       return data;
@@ -40,8 +40,8 @@ export const updateStatus = createAsyncThunk( //actualiza el estado de la reserv
   "reservations/updateStatus",
   async ({ id, status }) => {
     try {
-     // const { data } = await axios.put (`https://backendpawbnb-production.up.railway.app/bookings/status/${id}`,{status});
-      const { data } = await axios.put (`http://localhost:3000/bookings/status/${id}`,{status});
+      const { data } = await axios.put (`https://backendpawbnb-production.up.railway.app/bookings/status/${id}`,{status});
+      //const { data } = await axios.put (`http://localhost:3000/bookings/status/${id}`,{status});
       return data;
     }catch(error){
       console.error({ mesagge: "Error al actualizar el estado de la reserva", error });
@@ -94,8 +94,8 @@ export const getReservation = createAsyncThunk (
   async ( id ) => {
     try {
 
-      //const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/bookings/owner/${id}`);
-      const { data } = await axios.get(`http://localhost:3000/bookings/owner/${id}`);
+      const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/bookings/owner/${id}`);
+      //const { data } = await axios.get(`http://localhost:3000/bookings/owner/${id}`);
       console.log(data)
       
       return data;

@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import styles from "./Formulario.module.css";
-import { Barrios } from "./Barrios";
+
 import { signUpOwner } from "../redux/signUpSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { UserAuth } from "../context/AuthContext";
 import checkRegistration from "../utils/checkRegistration.js";
 import { googleLoginSuccess } from "../redux/authSlice.js";
-import DogSignUp from "../Components/imagenes/DogSignUp/DogSignUp.png";
+
 
 const SignupSchema = Yup.object().shape({
   password: Yup.string()

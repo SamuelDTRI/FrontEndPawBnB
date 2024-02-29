@@ -13,7 +13,8 @@ export const signUpOwner = (data, role, navigate) => async (dispatch) =>{
     console.log(data)
     if (role === "Owner") {
       console.log("llegue");
-      const endpoint = "http://localhost:3000/owners";
+      //const endpoint = "http://localhost:3000/owners";
+      const endpoint = "https://backendpawbnb-production.up.railway.app/owners";
       const response = await axios.post(endpoint, data);
 
       const userId = response.data.id;
@@ -27,7 +28,8 @@ export const signUpOwner = (data, role, navigate) => async (dispatch) =>{
 
     } else if (role === "DogSitter") {
       console.log("Llegue a DogSitters");
-      const endpoint = "http://localhost:3000/sitters";
+      //const endpoint = "http://localhost:3000/sitters";
+      const endpoint = "https://backendpawbnb-production.up.railway.app/sitters";
       const response = await axios.post(endpoint, data);
   
       const  userId = response.data.id;

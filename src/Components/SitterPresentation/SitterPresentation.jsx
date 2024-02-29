@@ -10,9 +10,9 @@ const SitterPresentation = ({ infoSitter, review }) => {
   const sitters = useSelector((state)=>state.dogsister.dogsisters)
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
-  // const getSitterId = ()=>{
-  //   //return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
-  // }
+  const getSitterId = ()=>{
+    return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
+  }
   useEffect(()=>{
     console.log({infoSitter,sitters})
     console.log({encontrado: sitters.filter((sitter)=>sitter.id == infoSitter.id)})
@@ -64,11 +64,11 @@ const SitterPresentation = ({ infoSitter, review }) => {
                 <h2 className={styles.star}><i className="bi bi-star-fill"></i></h2>
                 <p>({review.length} reseñas)</p>
               </div>
-             {/*  <Link to = {`/reservation/${getSitterId()}`}> */}
+              <Link to = {`/reservation/${getSitterId()}`}>
               <button>
                 Reserva con {infoSitter.name}
               </button>
-              {/* </Link> */}
+              </Link>
             </div>
           </div>
         </div>

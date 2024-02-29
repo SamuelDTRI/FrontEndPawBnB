@@ -89,12 +89,12 @@ const ReservationRequest = () => {
 
         //Validacion notas
 
-        if (!valores.note) {
-          errores.note = "Por favor ingresa una observacion.";
-        } else if (valores.note.length > 256) {
-          errores.note =
-            "El texto es demasiado largo, por favor ingrese menos de 256 letras";
-        }
+        // if (!valores.note) {
+        //   errores.note = "Por favor ingresa una observacion.";
+        // } else if (valores.note.length > 256) {
+        //   errores.note =
+        //     "El texto es demasiado largo, por favor ingrese menos de 256 letras";
+        // }
 
         return errores;
       }}

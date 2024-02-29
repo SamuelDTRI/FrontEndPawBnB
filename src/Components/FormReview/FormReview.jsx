@@ -19,7 +19,7 @@ const FormReview = ({dogSitterId, ownerId}) => {
 
     const handleSubmit = async () => {
         try {
-            await axios.post('http://localhost:3000/review', formData);
+            await axios.post('https://backendpawbnb-production.up.railway.app/review', formData);
 
             // Restablecer los valores de los inputs después del envío exitoso
             setFormData({

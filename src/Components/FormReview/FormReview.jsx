@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { ContainerFormReview } from "./formReview.styled";
+import Swal from 'sweetalert2';
 
-const FormReview = ({dogSitterId, ownerId}) => {
+
+const FormReview = ({dogSitterId, ownerId, reviewState}) => {
 
     const [formData, setFormData] = useState({
         dogSitterId: dogSitterId,
@@ -28,11 +30,17 @@ const FormReview = ({dogSitterId, ownerId}) => {
                 rating: '',
                 comment: '',
             });
-
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Comentario enviado",
+                showConfirmButton: false,
+                timer: 1500
+            }); 
             setBtnDisable(true);
             document.getElementById('sendBtn').style.backgroundColor = '#ffa72640';
             document.getElementById('sendBtn').style.cursor = 'default';
-
+            reviewState=false;
         } catch (error) {
             console.log('error al cargar comentario', error);
         }
@@ -70,6 +78,8 @@ const FormReview = ({dogSitterId, ownerId}) => {
 
     return(
         <ContainerFormReview>
+            <div className="container">
+
             <div className="title">
                 <h2>CUÉNTANOS TU EXPERIENCIA</h2>
             </div>
@@ -99,6 +109,7 @@ const FormReview = ({dogSitterId, ownerId}) => {
             </div>
             <div className="btn-send">
                 <button disabled={btnDisable} className="send" id="sendBtn" onClick={handleSubmit}>Enviar</button>
+            </div>
             </div>
         </ContainerFormReview>
     )

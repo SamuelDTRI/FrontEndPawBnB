@@ -33,11 +33,18 @@ const ReservationRequest = () => {
  console.log("PARA PROBAR")
 
   const getSitter = () => {
-    //return sitters.filter((s) => s.id == URL[URL.length - 1])[0];
 
-    return URL[URL.length - 1];
+    let dogSitter = sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+    return dogSitter.id
+
+    
 
   };
+  const getSitterRate =()=>{
+    let dogSitterRate = sitters.filter((s) => s.id == URL[URL.length - 1])[0];
+    console.log("DOGSITTER",dogSitterRate)
+    return dogSitterRate.rates
+  }
 
  
 
@@ -114,8 +121,11 @@ const ReservationRequest = () => {
           try {
             const response = await axios.post(
               "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
-              //"https://localhost:3000/payment/create-checkout-session",
-              { productPrice: getSitter().rates } // Aquí envías el precio del cuidador seleccionado
+
+               { productPrice: getSitterRate() } 
+              // Aquí envías el precio del cuidador seleccionado
+
+             
             );
             const url = response.data.url;
             window.location.href = url;
@@ -125,7 +135,7 @@ const ReservationRequest = () => {
         };
 
         // Llamamos a la función de pago
-        handlePayment();
+         handlePayment();
       }}
     >
       {({ errors }) => (

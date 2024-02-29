@@ -1,6 +1,20 @@
 import styled from 'styled-components';
 
 export const ContainerFormReview = styled.div`
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #ccc;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #ccc;
+
+.container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +25,8 @@ export const ContainerFormReview = styled.div`
     padding: 3% 5%;
     width: 80%;
     height: 500px;
+    background-color: #FFFFFF;
+    z-index: 5;
 
     .title{
         font-weight:bold;
@@ -64,7 +80,7 @@ export const ContainerFormReview = styled.div`
             transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
             animation: bounce 0.3s ease-in-out alternate;
         }
-
+    }
         @keyframes bounce {
             to {
                 transform: scale(1.3);

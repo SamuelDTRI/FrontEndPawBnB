@@ -39,7 +39,7 @@ const filtradasPorStatus = ()=>{
    console.log("today", today)
    if(sitterReserves.length){
       let solicitudes = sitterReserves.filter((reserva)=>reserva.status==="pendiente");
-      let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="aprobado" 
+      let proximasReservas = sitterReserves.filter((reserva)=>reserva.status==="activo" 
       && new Date(reserva.dateCheckIn)>today);
       console.log("si entre", proximasReservas) 
       let reservasActivas = sitterReserves.filter((reserva)=>reserva.status === "activo"

@@ -20,11 +20,11 @@ const LinksDashboardOwner = ({ onClick }) => {
             <i className="bi bi-calendar-week"></i> Mis reservas
           </button>
         </li>
-        <li>
+        {/* <li>
           <button onClick={() => onClick("Favoritos")}>
             <i className="bi bi-bookmark-heart"></i> Favoritos
           </button>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

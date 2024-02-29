@@ -157,7 +157,7 @@ const Panel = ()=>{
                       Dueños
                     </span>{" "}
                     <span className={`ms-auto ${styles.labelNumber}`}>
-                      {sittersList.length}
+                      {ownersList.length}
                     </span>
                   </p>
                   <p
@@ -168,7 +168,7 @@ const Panel = ()=>{
                       Cuidadores
                     </span>{" "}
                     <span className={`ms-auto ${styles.labelNumber}`}>
-                      {ownersList.length}
+                      {sittersList.length}
                     </span>
                   </p>
                 </div>

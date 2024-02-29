@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./SitterPresentation.module.css";
 import NoPhotoProfile from "../../Components/imagenes/noPhotoProfile/NoPhotoProfile.webp";
 import { Link } from "react-router-dom";
@@ -12,7 +11,9 @@ const SitterPresentation = ({ infoSitter, review }) => {
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
   const getSitterId = ()=>{
+       
     return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
+    
   }
   useEffect(()=>{
     console.log({infoSitter,sitters})
@@ -65,11 +66,11 @@ const SitterPresentation = ({ infoSitter, review }) => {
                 <h2 className={styles.star}><i className="bi bi-star-fill"></i></h2>
                 <p>({review.length} reseñas)</p>
               </div>
-             {/*  <Link to = {`/reservation/${getSitterId()}`}> */}
+              <Link to = {`/reservation/${getSitterId()}`}>
               <button>
                 Reserva con {infoSitter.name}
               </button>
-              {/* </Link> */}
+              </Link>
             </div>
           </div>
         </div>

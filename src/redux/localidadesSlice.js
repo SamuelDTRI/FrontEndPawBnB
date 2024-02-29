@@ -12,6 +12,7 @@ export const fetchNeighborhood = createAsyncThunk(
     "neighborhoods/fetchSitters",
     async () => {
         try {
+            //const { data } = await axios.get(`http://localhost:3000/sitters`);
             const { data } = await axios.get(`https://backendpawbnb-production.up.railway.app/sitters`);
             console.log("Datos cargados correctamente:", data);
             return data;

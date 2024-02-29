@@ -8,6 +8,7 @@ export const updateOwner = createAsyncThunk(
   async (updatedOwner, thunkAPI) => {
     try {
       const response = await axios.put(
+        //`http://localhost:3000/owners/${updatedOwner.id}`,
         `https://backendpawbnb-production.up.railway.app/owners/${updatedOwner.id}`,
         updatedOwner
       );

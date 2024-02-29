@@ -103,7 +103,7 @@ const OwnerReservations = () => {
                           key={reserva.id}
                           className={`col-12 col-md-4 ${styles.iFsFC}`}>
                           Cuidador: {getSitter(reserva.dogSitterId)}/
-                          {getDog(reserva.dogId)}
+                          {getDog(reserva.dogId).name}
                         </div>
                       </div>
                     </div>

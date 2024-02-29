@@ -112,8 +112,8 @@ const ReservationRequest = () => {
         const handlePayment = async () => {
           try {
             const response = await axios.post(
-             // "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
-              "https://localhost:3000/payment/create-checkout-session",
+              "https://backendpawbnb-production.up.railway.app/payment/create-checkout-session",
+              //"https://localhost:3000/payment/create-checkout-session",
               { productPrice: getSitter().rates } // Aquí envías el precio del cuidador seleccionado
             );
             const url = response.data.url;
@@ -124,7 +124,7 @@ const ReservationRequest = () => {
         };
 
         // Llamamos a la función de pago
-        //handlePayment();
+        handlePayment();
       }}
     >
       {({ errors }) => (

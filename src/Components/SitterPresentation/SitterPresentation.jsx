@@ -11,7 +11,9 @@ const SitterPresentation = ({ infoSitter, review }) => {
   const findPhoto = infoSitter.photoProfile ? infoSitter.photoProfile : NoPhotoProfile;
 
   const getSitterId = ()=>{
+       
     return sitters.filter((sitter)=>sitter.email == infoSitter.email)[0].id
+    
   }
   useEffect(()=>{
     console.log({infoSitter,sitters})
